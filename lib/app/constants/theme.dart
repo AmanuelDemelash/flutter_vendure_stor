@@ -10,9 +10,10 @@ ThemeData light = ThemeData(
   brightness:Brightness.light,
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          padding:const EdgeInsets.all(10),
+          padding:const EdgeInsets.all(15),
           backgroundColor:ColorConstant.primeryColor,
           elevation: 10,
+          shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5))
       )
   ),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {
