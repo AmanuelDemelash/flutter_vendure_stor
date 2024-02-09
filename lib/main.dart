@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vendure_stor/app/constants/theme.dart';
 
 import 'package:get/get.dart';
 
@@ -9,8 +10,10 @@ void main() {
     GetMaterialApp(
       title: "Application",
       debugShowCheckedModeBanner: false,
+      theme: light,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+
     ),
   );
 }
