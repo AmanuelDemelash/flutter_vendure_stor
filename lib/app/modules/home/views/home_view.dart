@@ -14,7 +14,7 @@ class HomeView extends GetView<HomeController> {
           NavigationDestination(icon: Icon(Icons.home), label: "Home"),
           NavigationDestination(icon: Icon(Icons.favorite), label: "Favorite"),
           NavigationDestination(icon: Icon(Icons.shopping_bag), label: "Cart"),
-          NavigationDestination(icon: Icon(Icons.home), label: "Account"),
+          NavigationDestination(icon: Icon(Icons.person), label: "Account"),
         ]),
         body: CustomScrollView(
           key: const Key("scrol"),
@@ -43,15 +43,9 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             SliverFillRemaining(
-                child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
+                padding: const EdgeInsets.all(15),
                 children: [
-                  const Text(
-                    "New Arrival",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -110,30 +104,47 @@ class HomeView extends GetView<HomeController> {
                       Text("view all")
                     ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
-                      itemCount: 7,
-                      itemBuilder: (context, index) => Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                            color: ColorConstant.primeryColor.withOpacity(0.4)),
-                      ),
-                    ),
-                  )
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
+                    itemCount: 7,
+                    itemBuilder: (context, index) => const CategoryCard(),
+                  ),
                 ],
               ),
-            ))
+            )
           ],
         ));
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration:
+          BoxDecoration(color: ColorConstant.primeryColor.withOpacity(0.1)),
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.watch,
+            color: ColorConstant.primeryColor,
+            size: 35,
+          ),
+          Text("Watch")
+        ],
+      ),
+    );
   }
 }
 
