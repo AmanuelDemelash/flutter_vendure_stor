@@ -22,4 +22,10 @@ flutter:
 
   assets:
     - assets/images/
+  fonts:
+    - family: appfont
+      fonts:
+        - asset: assets/font/Poppins-Bold.ttf
+        - asset: assets/font/Poppins-Regular.ttf
+
 

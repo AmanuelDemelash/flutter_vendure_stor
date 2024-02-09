@@ -8,6 +8,7 @@ ThemeData light = ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: ColorConstant.primeryColor),
   useMaterial3: true,
   brightness:Brightness.light,
+  fontFamily: 'aappfont',
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           padding:const EdgeInsets.all(15),

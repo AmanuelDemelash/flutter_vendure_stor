@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
-
+import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-
 import '../controllers/getstarted_controller.dart';
 
 class GetstartedView extends GetView<GetstartedController> {
@@ -11,7 +10,7 @@ class GetstartedView extends GetView<GetstartedController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -22,7 +21,9 @@ class GetstartedView extends GetView<GetstartedController> {
               child: ElevatedButton(onPressed:() {}, child: const Text("Take a look",style: TextStyle(color: Colors.white),)),
             ),
             const SizedBox(height: 25,),
-            const Text("SIGN IN",style: TextStyle(fontWeight: FontWeight.bold,color: ColorConstant.primeryColor))
+            InkWell(
+              onTap: () => Get.toNamed(Routes.AUTH),
+                child: const Text("SIGN IN",style: TextStyle(fontWeight: FontWeight.bold,color: ColorConstant.primeryColor)))
           ],
         ),
       )
