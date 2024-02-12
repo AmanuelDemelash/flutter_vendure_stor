@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -70,10 +71,10 @@ class CategoriesView extends GetView<CategoriesController> {
                               borderRadius: BorderRadius.circular(10),
                               color: ColorConstant.primeryColor.withOpacity(0.1)
                             ),
-                            child: Column(
+                            child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.safety_check_outlined),
+                                Icon(Icons.safety_check_outlined,color: ColorConstant.primeryColor,),
                                 Text("Tshert")
                               ],
                             ),
@@ -81,14 +82,53 @@ class CategoriesView extends GetView<CategoriesController> {
                         ),
                     ),
                     const SizedBox(width: 10,),
-                    Expanded(child:ListView.builder(itemBuilder:(context, index) =>
-                        ExpansionTile(title:Text("data"),
+                    Expanded(child:ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount:2,
+                        itemBuilder:(context, index) =>
+                        ExpansionTile(title:const Text("data"),
                         children: [
-                          Container(
-                            height: 100,
-                          )
+                         SizedBox(
+                           width:Get.width,
+                           height: Get.height,
+                           child: GridView.builder(
+                             gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
+                               itemCount: 15,
+                               itemBuilder:(context, index) =>
+                                    Column(
+                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                         children: [
+                                           Expanded(
+                                             child: ClipRRect(
+                                               borderRadius:const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                                               child: CachedNetworkImage(
+                                                 imageUrl:
+                                                 "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                 placeholder: (context, url) => const Icon(
+                                                   Icons.image,
+                                                   color: ColorConstant.iconColor,
+                                                 ),
+                                                 errorWidget: (context, url, error) => const Icon(Icons.error),
+                                                 fit: BoxFit.cover,
+                                                 width: Get.width,
+                                                 height:100,
+                                               ),
+                                             ),
+                                           ),
+                                           Text("name"),
+                                           Text("\$324"),
+
+
+                                         ],
+                                       ),
+
+
+                         )
+                         )
                         ],
-                        ),))
+                        ),
+                    ))
 
                   ],
                 ),
