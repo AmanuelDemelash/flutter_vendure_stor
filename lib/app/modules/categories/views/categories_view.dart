@@ -52,6 +52,7 @@ class CategoriesView extends GetView<CategoriesController> {
                 height: Get.height,
                 margin:const EdgeInsets.only(top:15,),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       width:100,
@@ -62,15 +63,32 @@ class CategoriesView extends GetView<CategoriesController> {
                       child: ListView.builder(
                         itemCount:60,
                         itemBuilder:(context, index) =>Container(
-                          width: 90,
-                          height: 100,
-                          margin:const EdgeInsets.only(bottom:5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorConstant.primeryColor.withOpacity(0.1)
+                            width: 90,
+                            height: 100,
+                            margin:const EdgeInsets.only(bottom:5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: ColorConstant.primeryColor.withOpacity(0.1)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.safety_check_outlined),
+                                Text("Tshert")
+                              ],
+                            ),
                           ),
-                        )),
-                    )
+                        ),
+                    ),
+                    const SizedBox(width: 10,),
+                    Expanded(child:ListView.builder(itemBuilder:(context, index) =>
+                        ExpansionTile(title:Text("data"),
+                        children: [
+                          Container(
+                            height: 100,
+                          )
+                        ],
+                        ),))
 
                   ],
                 ),
