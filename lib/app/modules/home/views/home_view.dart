@@ -35,6 +35,7 @@ class HomeView extends GetView<HomeController> {
         padding: const EdgeInsets.all(15),
         addAutomaticKeepAlives: true,
         children: [
+          const Text("New Arrival",style: TextStyle(color: ColorConstant.secondryColor, fontWeight: FontWeight.bold,),),
           const SizedBox(
             height: 15,
           ),
@@ -112,18 +113,21 @@ class ProductCard extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-              imageUrl:
-                  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              placeholder: (context, url) => const Icon(
-                Icons.image,
-                color: ColorConstant.iconColor,
+          Expanded(
+            child: ClipRRect(
+              borderRadius:const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+              child: CachedNetworkImage(
+                imageUrl:
+                    "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                placeholder: (context, url) => const Icon(
+                  Icons.image,
+                  color: ColorConstant.iconColor,
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
+                width: Get.width,
+                height:150,
               ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
-              width: Get.width,
             ),
           ),
           const Padding(
@@ -133,11 +137,12 @@ class ProductCard extends StatelessWidget {
                 Text(
                   "\$234",
                   style: TextStyle(
+                    fontSize:15,
                       color: ColorConstant.secondryColor,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: 15,
+                  width: 10,
                 ),
                 Text(
                   "\$432",
@@ -153,9 +158,13 @@ class ProductCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "smart watch",
-                  style: TextStyle(color: ColorConstant.secondryColor),
+                const Expanded(
+                  child: Text(
+                    "smart watch",   style: TextStyle(
+                      fontSize:15,
+                      color: ColorConstant.secondryColor,
+                      fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Container(
                     padding: const EdgeInsets.all(4),
@@ -208,7 +217,9 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration:
-          BoxDecoration(color: ColorConstant.primeryColor.withOpacity(0.1)),
+          BoxDecoration(color: ColorConstant.primeryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(10)
+          ),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -260,7 +271,7 @@ class HomePageCarousel extends StatelessWidget {
                 const Text(
                   "Super flash sale",
                   style: TextStyle(
-                      fontSize: 20, color: ColorConstant.backgroundColor),
+                      fontSize: 25, color: ColorConstant.backgroundColor),
                 ),
                 const Text(
                   "50% Off",
@@ -272,7 +283,7 @@ class HomePageCarousel extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: ColorConstant.backgroundColor,
                         borderRadius: BorderRadius.circular(6)),
-                    child: const Text("see more"))
+                    child: const Text("see more",style: TextStyle(fontSize: 11),))
               ],
             ),
           )
@@ -281,7 +292,7 @@ class HomePageCarousel extends StatelessWidget {
       options: CarouselOptions(
           height: 130,
           aspectRatio: 16 / 9,
-          viewportFraction: 0.9,
+          viewportFraction: 0.8,
           initialPage: 0,
           enableInfiniteScroll: true,
           reverse: false,
