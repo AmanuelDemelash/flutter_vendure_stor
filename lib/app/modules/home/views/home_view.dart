@@ -10,24 +10,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30)
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(40),
-          child: NavigationBar(
-            backgroundColor: ColorConstant.backgroundColor,
-              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-              destinations:const[
-            NavigationDestination(icon:Icon(Icons.home), label: "home"),
-            NavigationDestination(icon:Icon(Icons.favorite), label: "favorite"),
-            NavigationDestination(icon:Icon(Icons.card_travel_rounded), label: "cart"),
-            NavigationDestination(icon:Icon(Icons.person), label: "account"),
-          ]),
-        ),
-      ),
+      bottomNavigationBar:const BottomNavBar(),
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -50,6 +33,8 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       body: ListView(
+        scrollDirection: Axis.vertical,
+        controller: ScrollController(),
         padding: const EdgeInsets.all(15),
         addAutomaticKeepAlives: true,
         children: [
@@ -72,7 +57,7 @@ class HomeView extends GetView<HomeController> {
                       color: ColorConstant.secondryColor),
                 ),
               ),
-              Text("view all")
+              Text("view all",style: TextStyle(color: ColorConstant.secondryColor,),)
             ],
           ),
           const SizedBox(
@@ -113,6 +98,42 @@ class HomeView extends GetView<HomeController> {
             itemBuilder: (context, index) => const CategoryCard(),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.transparent
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(40),
+        child: NavigationBar(
+          selectedIndex: 2,
+          elevation: 10,
+          backgroundColor: ColorConstant.backgroundColor,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            destinations:const[
+          NavigationDestination(icon:Icon(Icons.home), label: "home"),
+          NavigationDestination(icon:Icon(Icons.favorite), label: "favorite"),
+          Badge(alignment: Alignment.centerRight,
+              backgroundColor: ColorConstant.primeryColor,
+              smallSize: 30,
+              offset: Offset(-25,-12),
+              label: Text("3"),
+              child: NavigationDestination(icon:Icon(Icons.card_travel_rounded), label: "cart")),
+          NavigationDestination(icon:Icon(Icons.person), label: "account"),
+        ]),
       ),
     );
   }
@@ -280,9 +301,18 @@ class HomePageCarousel extends StatelessWidget {
               width: Get.width,
             ),
           ),
+          Container(
+            width: Get.width,
+            height: Get.height,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(10)
+
+            ),
+          ),
           Positioned(
             top: 5,
-            left: 5,
+            left: 6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

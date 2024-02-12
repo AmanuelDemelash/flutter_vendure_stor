@@ -25,7 +25,7 @@ flutter:
   assets:
     - assets/images/
   fonts:
-    - family: appfont
+    - family: myfont
       fonts:
         - asset: assets/font/Poppins-Bold.ttf
         - asset: assets/font/Poppins-Regular.ttf
