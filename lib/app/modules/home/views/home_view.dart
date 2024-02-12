@@ -69,7 +69,7 @@ class HomeView extends GetView<HomeController> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 4,
-              itemBuilder: (context, index) => ProductCard(),
+              itemBuilder: (context, index) => const ProductCard(),
             ),
           ),
           const SizedBox(
@@ -267,7 +267,7 @@ class CategoryCard extends StatelessWidget {
             color: ColorConstant.primeryColor,
             size: 35,
           ),
-          Text("Watch")
+          Text("Watch",style: TextStyle(fontSize: 12),)
         ],
       ),
     );
