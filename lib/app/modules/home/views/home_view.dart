@@ -14,13 +14,13 @@ class HomeView extends GetView<HomeController> {
         elevation: 0,
         scrolledUnderElevation: 10,
         automaticallyImplyLeading: false,
-        actions: [
+        actions: const [
           Icon(Icons.notifications),
           SizedBox(
             width: 20,
           ),
         ],
-        title: TextField(
+        title: const TextField(
           decoration: InputDecoration(
               border: InputBorder.none,
               filled: false,
