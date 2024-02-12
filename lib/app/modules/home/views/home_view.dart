@@ -10,10 +10,28 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(
+        margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30)
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(40),
+          child: NavigationBar(
+            backgroundColor: ColorConstant.backgroundColor,
+              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+              destinations:const[
+            NavigationDestination(icon:Icon(Icons.home), label: "home"),
+            NavigationDestination(icon:Icon(Icons.favorite), label: "favorite"),
+            NavigationDestination(icon:Icon(Icons.card_travel_rounded), label: "cart"),
+            NavigationDestination(icon:Icon(Icons.person), label: "account"),
+          ]),
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
-        scrolledUnderElevation: 10,
         automaticallyImplyLeading: false,
+         scrolledUnderElevation: 0,
         actions: const [
           Icon(Icons.notifications),
           SizedBox(
