@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../../../constants/colorConstant.dart';
-import '../../home/views/home_view.dart';
 import '../controllers/categories_controller.dart';
 
 class CategoriesView extends GetView<CategoriesController> {
@@ -29,16 +26,20 @@ class CategoriesView extends GetView<CategoriesController> {
             width: 20,
           ),
         ],
-        title: const TextField(
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              filled: false,
-              hintText: "Search",
-              prefixIcon: Icon(
-                Icons.search,
-                color: ColorConstant.iconColor,
-                size:30,
-              )),
+        title:ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: TextField(
+            decoration: InputDecoration(
+               border: InputBorder.none,
+                filled: true,
+                fillColor: ColorConstant.primeryColor.withOpacity(0.07),
+                hintText: "Search",
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: ColorConstant.iconColor,
+                  size:30,
+                )),
+          ),
         ),
       ),
       body:Padding(
@@ -116,8 +117,8 @@ class CategoriesView extends GetView<CategoriesController> {
                                                ),
                                              ),
                                            ),
-                                           Text("name"),
-                                           Text("\$324"),
+                                           const Text("name"),
+                                           const Text("\$324"),
 
 
                                          ],

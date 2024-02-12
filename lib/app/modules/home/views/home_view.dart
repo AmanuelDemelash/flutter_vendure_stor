@@ -28,16 +28,20 @@ class HomeView extends GetView<HomeController> {
             width: 20,
           ),
         ],
-        title: const TextField(
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              filled: false,
-              hintText: "Search",
-              prefixIcon: Icon(
-                Icons.search,
-                size: 30,
-                color: ColorConstant.iconColor,
-              )),
+        title: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: TextField(
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                filled: true,
+                fillColor: ColorConstant.primeryColor.withOpacity(0.03),
+                hintText: "Search",
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: ColorConstant.iconColor,
+                  size:30,
+                )),
+          ),
         ),
       ),
       body: ListView(
