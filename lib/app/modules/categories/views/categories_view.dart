@@ -56,6 +56,7 @@ class CategoriesView extends GetView<CategoriesController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    //categories
                     Container(
                       width:100,
                       height: Get.height,
@@ -83,11 +84,18 @@ class CategoriesView extends GetView<CategoriesController> {
                         ),
                     ),
                     const SizedBox(width: 10,),
+                    //products
                     Expanded(child:ListView.builder(
                       scrollDirection: Axis.vertical,
-                      itemCount:2,
+                        itemCount:2,
                         itemBuilder:(context, index) =>
-                        ExpansionTile(title:const Text("data"),
+                        ExpansionTile(
+                          controller: ExpansionTileController(),
+                          collapsedShape:InputBorder.none,
+                          key:Key(index.toString()),
+                          maintainState: true,
+                          shape:LinearBorder.none,
+                          title:const Text("data"),
                           children: [
                             SizedBox(
                              width:Get.width,
