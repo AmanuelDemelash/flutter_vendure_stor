@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
+import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
@@ -16,7 +17,13 @@ class HomeView extends GetView<HomeController> {
         automaticallyImplyLeading: false,
          scrolledUnderElevation: 0,
         actions: const [
-          Icon(Icons.notifications),
+          Badge(
+              alignment: Alignment.topRight,
+              backgroundColor: ColorConstant.primeryColor,
+              smallSize: 30,
+              offset: Offset(5,-3),
+              label: Text("3"),
+              child: Icon(Icons.notifications,color: ColorConstant.iconColor,)),
           SizedBox(
             width: 20,
           ),
@@ -28,6 +35,7 @@ class HomeView extends GetView<HomeController> {
               hintText: "Search",
               prefixIcon: Icon(
                 Icons.search,
+                size: 30,
                 color: ColorConstant.iconColor,
               )),
         ),
@@ -75,10 +83,10 @@ class HomeView extends GetView<HomeController> {
           const SizedBox(
             height: 15,
           ),
-          const Row(
+           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              const Expanded(
                 child: Text(
                   "Categories",
                   style: TextStyle(
@@ -86,8 +94,13 @@ class HomeView extends GetView<HomeController> {
                       color: ColorConstant.secondryColor),
                 ),
               ),
-              Text("view all")
+              GestureDetector(
+                  onTap: () => Get.toNamed(Routes.CATEGORIES),
+                  child:const Text("view all"))
             ],
+          ),
+          const SizedBox(
+            height: 10,
           ),
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
