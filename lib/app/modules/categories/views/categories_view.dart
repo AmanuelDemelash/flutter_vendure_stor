@@ -88,14 +88,14 @@ class CategoriesView extends GetView<CategoriesController> {
                       itemCount:2,
                         itemBuilder:(context, index) =>
                         ExpansionTile(title:const Text("data"),
-                        children: [
-                         SizedBox(
-                           width:Get.width,
-                           height: Get.height,
-                           child: GridView.builder(
-                             gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
-                               itemCount: 15,
-                               itemBuilder:(context, index) =>
+                          children: [
+                            SizedBox(
+                             width:Get.width,
+                             height: Get.height-300,
+                             child: GridView.builder(
+                               gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
+                                itemCount: 15,
+                                itemBuilder:(context, index) =>
                                     Column(
                                          crossAxisAlignment: CrossAxisAlignment.start,
                                          mainAxisAlignment: MainAxisAlignment.start,

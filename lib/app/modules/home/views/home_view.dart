@@ -110,7 +110,7 @@ class HomeView extends GetView<HomeController> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
             itemCount: 7,
             itemBuilder: (context, index) => const CategoryCard(),
           ),
@@ -219,7 +219,7 @@ class ProductCard extends StatelessWidget {
                     "smart watch",   style: TextStyle(
                       fontSize:15,
                       color: ColorConstant.secondryColor,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.w200),
                   ),
                 ),
                 Container(
