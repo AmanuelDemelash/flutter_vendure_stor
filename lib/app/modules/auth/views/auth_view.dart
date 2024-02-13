@@ -21,9 +21,11 @@ class AuthView extends GetView<AuthController> {
             Container(
               width: Get.width,
               height: Get.height,
-              color: ColorConstant.primeryColor.withOpacity(0.4),
+              color: ColorConstant.primeryColor.withOpacity(0.7),
             ),
-            ListView(padding: const EdgeInsets.all(15), children: [
+            ListView(
+                padding: const EdgeInsets.all(15),
+                children: [
               const SizedBox(height: 60),
               const Text(
                 "Bazaar",
@@ -32,7 +34,7 @@ class AuthView extends GetView<AuthController> {
                     fontWeight: FontWeight.bold,
                     color: ColorConstant.backgroundColor,
                     fontSize: 26,
-                    letterSpacing: 10),
+                    letterSpacing:7),
               ),
               const SizedBox(
                 height: 40,
@@ -44,55 +46,57 @@ class AuthView extends GetView<AuthController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Sign In"),
+                        const Text("Sign In",style:TextStyle(color: ColorConstant.backgroundColor),),
                         const SizedBox(
                           height: 20,
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(
-                            filled: true,
+                          decoration:InputDecoration(
+                            filled: false,
                             hintText: "email",
-                            prefixIcon: Icon(
+                            hintStyle: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.9)),
+                            prefixIcon:const Icon(
                               Icons.person,
-                              color: ColorConstant.primeryColor,
+                              color: ColorConstant.backgroundColor,
                             ),
-                            border: UnderlineInputBorder(
+                            border:const UnderlineInputBorder(
                                 borderSide:
                                 BorderSide(color: ColorConstant.backgroundColor)),
-                            disabledBorder: UnderlineInputBorder(
+                            disabledBorder:const UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: ColorConstant.primeryColor)),
-                            enabledBorder: UnderlineInputBorder(
+                                BorderSide(color: ColorConstant.backgroundColor)),
+                            enabledBorder:const UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: ColorConstant.primeryColor)),
-                            errorBorder: UnderlineInputBorder(
+                                BorderSide(color: ColorConstant.backgroundColor)),
+                            errorBorder:const UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: ColorConstant.primeryColor)),
+                                BorderSide(color: Colors.red)),
                           ),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(
-                            filled: true,
+                          decoration: InputDecoration(
+                            filled: false,
                             hintText: "password",
-                            prefixIcon: Icon(
+                            hintStyle: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.9)),
+                            prefixIcon:const Icon(
                               Icons.lock,
-                              color: ColorConstant.primeryColor,
+                              color: ColorConstant.backgroundColor,
                             ),
-                            border: UnderlineInputBorder(
+                            border:const UnderlineInputBorder(
                                 borderSide:
                                 BorderSide(color: ColorConstant.backgroundColor)),
-                            disabledBorder: UnderlineInputBorder(
+                            disabledBorder:const UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: ColorConstant.primeryColor)),
-                            enabledBorder: UnderlineInputBorder(
+                                BorderSide(color: ColorConstant.backgroundColor)),
+                            enabledBorder:const UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: ColorConstant.primeryColor)),
-                            errorBorder: UnderlineInputBorder(
+                                BorderSide(color: ColorConstant.backgroundColor)),
+                            errorBorder:const UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: ColorConstant.primeryColor)),
+                                BorderSide(color: Colors.red)),
                           ),
                         ),
                         const SizedBox(
@@ -102,7 +106,8 @@ class AuthView extends GetView<AuthController> {
                           width: Get.width,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorConstant.backgroundColor
+                              backgroundColor: ColorConstant.backgroundColor,
+                              padding:const EdgeInsets.all(15)
                             ),
                               onPressed: () {
                                 Get.toNamed(Routes.HOME);
