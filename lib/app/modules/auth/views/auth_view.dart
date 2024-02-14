@@ -23,119 +23,139 @@ class AuthView extends GetView<AuthController> {
               height: Get.height,
               color: ColorConstant.primeryColor.withOpacity(0.7),
             ),
-            ListView(
-                padding: const EdgeInsets.all(15),
-                children: [
-              const SizedBox(height: 60),
-              const Text(
-                "Bazaar",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstant.backgroundColor,
-                    fontSize: 26,
-                    letterSpacing:7),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Container(
-                width: Get.width,
-                padding: const EdgeInsets.all(15),
-                child: Form(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                const SizedBox(height:100),
+                const Text(
+                  "Bazaar",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstant.backgroundColor,
+                      fontSize:36,
+                      letterSpacing:7),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Expanded(
+                  child: Container(
+                    width: Get.width,
+                    padding: const EdgeInsets.all(30),
+                    child: Form(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Sign In",style:TextStyle(color: ColorConstant.backgroundColor,fontWeight: FontWeight.w400,fontSize: 20),),
+                            const SizedBox(
+                              height:30
+                            ),
+                            TextFormField(
+                              cursorColor: ColorConstant.backgroundColor,
+                              style:const TextStyle(color: ColorConstant.backgroundColor),
+                              decoration:InputDecoration(
+                                filled: false,
+                                hintText: "email",
+                                hintStyle: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.9)),
+                                prefixIcon:const Icon(
+                                  Icons.person,
+                                  color: ColorConstant.backgroundColor,
+                                ),
+                                border:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                focusedBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                disabledBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                enabledBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                errorBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: Colors.red)),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            TextFormField(
+                              obscureText: true,
+                               cursorColor: ColorConstant.backgroundColor,
+                               style:const TextStyle(color: ColorConstant.backgroundColor),
+                              decoration: InputDecoration(
+                                filled: false,
+                                hintText: "password",
+                                hintStyle: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.9)),
+                                prefixIcon:const Icon(
+                                  Icons.lock,
+                                  color: ColorConstant.backgroundColor,
+                                ),
+                                border:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                focusedBorder: const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                disabledBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                enabledBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: ColorConstant.backgroundColor)),
+                                errorBorder:const UnderlineInputBorder(
+                                    borderSide:
+                                    BorderSide(color: Colors.red)),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            SizedBox(
+                              width: Get.width,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorConstant.backgroundColor,
+                                  padding:const EdgeInsets.all(15)
+                                ),
+                                  onPressed: () {
+                                    Get.toNamed(Routes.HOME);
+                                  },
+                                  child: const Text(
+                                    "Sign In",
+                                    style: TextStyle(color: ColorConstant.primeryColor),
+                                  )),
+                            )
+                          ],
+                        )),
+                  ),
+                ),
+                Container(
+                  margin:const EdgeInsets.only(bottom: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Sign In",style:TextStyle(color: ColorConstant.backgroundColor),),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          decoration:InputDecoration(
-                            filled: false,
-                            hintText: "email",
-                            hintStyle: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.9)),
-                            prefixIcon:const Icon(
-                              Icons.person,
-                              color: ColorConstant.backgroundColor,
-                            ),
-                            border:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: ColorConstant.backgroundColor)),
-                            disabledBorder:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: ColorConstant.backgroundColor)),
-                            enabledBorder:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: ColorConstant.backgroundColor)),
-                            errorBorder:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.red)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            filled: false,
-                            hintText: "password",
-                            hintStyle: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.9)),
-                            prefixIcon:const Icon(
-                              Icons.lock,
-                              color: ColorConstant.backgroundColor,
-                            ),
-                            border:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: ColorConstant.backgroundColor)),
-                            disabledBorder:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: ColorConstant.backgroundColor)),
-                            enabledBorder:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: ColorConstant.backgroundColor)),
-                            errorBorder:const UnderlineInputBorder(
-                                borderSide:
-                                BorderSide(color: Colors.red)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        SizedBox(
-                          width: Get.width,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorConstant.backgroundColor,
-                              padding:const EdgeInsets.all(15)
-                            ),
-                              onPressed: () {
-                                Get.toNamed(Routes.HOME);
-                              },
-                              child: const Text(
-                                "Sign In",
-                                style: TextStyle(color: ColorConstant.primeryColor),
-                              )),
-                        )
+                        Text("Don`t have an account ",style: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.8)),),
+                        InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              "SIGNUP",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorConstant.backgroundColor),
+                            )),
                       ],
                     )),
-              ),
-              SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don`t have an account ",style: TextStyle(color: ColorConstant.backgroundColor),),
-                      InkWell(
-                          onTap: () {},
-                          child: const Text(
-                            "SIGNUP",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: ColorConstant.primeryColor),
-                          )),
-                    ],
-                  )),
-            ])
+              ]),
+            )
 
           ],
         )
