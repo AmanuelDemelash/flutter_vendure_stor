@@ -8,6 +8,7 @@ abstract class Routes {
   static const GETSTARTED = _Paths.GETSTARTED;
   static const AUTH = _Paths.AUTH;
   static const CATEGORIES = _Paths.CATEGORIES;
+  static const ACCOUNT = _Paths.ACCOUNT;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const GETSTARTED = '/getstarted';
   static const AUTH = '/auth';
   static const CATEGORIES = '/categories';
+  static const ACCOUNT = '/account';
 }
