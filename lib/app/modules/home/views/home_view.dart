@@ -8,10 +8,42 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:const BottomNavBar(),
+      bottomNavigationBar:Container(
+          margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.transparent
+          ),
+          child: Obx(() =>
+              ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: NavigationBar(
+                    selectedIndex:controller.intialPage.value,
+                    elevation: 10,
+                    indicatorColor: ColorConstant.primeryColor,
+                    onDestinationSelected: (value) async {
+                      controller.intialPage.value=value;
+                      controller.pageController.jumpToPage(value);
+                      },
+                    backgroundColor: ColorConstant.backgroundColor,
+                    labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+                    destinations:const[
+                      NavigationDestination(icon:Icon(Icons.home), label: "home"),
+                      NavigationDestination(icon:Icon(Icons.favorite), label: "favorite"),
+                      Badge(alignment: Alignment.centerRight,
+                          backgroundColor: ColorConstant.primeryColor,
+                          smallSize: 30,
+                          offset: Offset(-25,-12),
+                          label: Text("3"),
+                          child: NavigationDestination(icon:Icon(Icons.card_travel_rounded), label: "cart")),
+                      NavigationDestination(icon:Icon(Icons.person), label: "account"),
+                    ]),
+              ),)
+      ),
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -44,117 +76,95 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        controller: ScrollController(),
-        padding: const EdgeInsets.all(15),
-        addAutomaticKeepAlives: true,
-        children: [
-          const Text("New Arrival",style: TextStyle(color: ColorConstant.secondryColor, fontWeight: FontWeight.bold,),),
-          const SizedBox(
-            height: 15,
-          ),
-          const HomePageCarousel(),
-          const SizedBox(
-            height: 15,
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  "Exclusive deal",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstant.secondryColor),
+      body:
+         PageView(
+          controller:controller.pageController,
+          physics:const NeverScrollableScrollPhysics(),
+          children: [
+            ListView(
+              scrollDirection: Axis.vertical,
+              controller: ScrollController(),
+              padding: const EdgeInsets.all(15),
+              addAutomaticKeepAlives: true,
+              children: [
+                const Text("New Arrival",style: TextStyle(color: ColorConstant.secondryColor, fontWeight: FontWeight.bold,),),
+                const SizedBox(
+                  height: 15,
                 ),
-              ),
-              Text("view all",style: TextStyle(color: ColorConstant.secondryColor,),)
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          SizedBox(
-            height: 240,
-            width: Get.width,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              itemBuilder: (context, index) => const ProductCard(),
+                const HomePageCarousel(),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Exclusive deal",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ColorConstant.secondryColor),
+                      ),
+                    ),
+                    Text("view all",style: TextStyle(color: ColorConstant.secondryColor,),)
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                SizedBox(
+                  height: 240,
+                  width: Get.width,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (context, index) => const ProductCard(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        "Categories",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ColorConstant.secondryColor),
+                      ),
+                    ),
+                    GestureDetector(
+                        onTap: () => Get.toNamed(Routes.CATEGORIES),
+                        child:const Text("view all"))
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                  itemCount: 7,
+                  itemBuilder: (context, index) => const CategoryCard(),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(
-                child: Text(
-                  "Categories",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstant.secondryColor),
-                ),
-              ),
-              GestureDetector(
-                  onTap: () => Get.toNamed(Routes.CATEGORIES),
-                  child:const Text("view all"))
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
-            itemCount: 7,
-            itemBuilder: (context, index) => const CategoryCard(),
-          ),
-        ],
-      ),
+            Container(),
+            Container(),
+            Container(),
+          ],
+
+      )
+
+
     );
   }
 }
 
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.transparent
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(40),
-        child: NavigationBar(
-          selectedIndex: 2,
-          elevation: 10,
-          backgroundColor: ColorConstant.backgroundColor,
-            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-            destinations:const[
-          NavigationDestination(icon:Icon(Icons.home), label: "home"),
-          NavigationDestination(icon:Icon(Icons.favorite), label: "favorite"),
-          Badge(alignment: Alignment.centerRight,
-              backgroundColor: ColorConstant.primeryColor,
-              smallSize: 30,
-              offset: Offset(-25,-12),
-              label: Text("3"),
-              child: NavigationDestination(icon:Icon(Icons.card_travel_rounded), label: "cart")),
-          NavigationDestination(icon:Icon(Icons.person), label: "account"),
-        ]),
-      ),
-    );
-  }
-}
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

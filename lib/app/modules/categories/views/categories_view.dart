@@ -75,9 +75,10 @@ class CategoriesView extends GetView<CategoriesController> {
                             ),
                             child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(Icons.safety_check_outlined,color: ColorConstant.primeryColor,),
-                                Text("Tshert")
+                                Text("Root Category")
                               ],
                             ),
                           ),
@@ -95,7 +96,7 @@ class CategoriesView extends GetView<CategoriesController> {
                           key:Key(index.toString()),
                           maintainState: true,
                           shape:LinearBorder.none,
-                          title:const Text("data"),
+                          title:const Text("sub category"),
                           children: [
                             SizedBox(
                              width:Get.width,
