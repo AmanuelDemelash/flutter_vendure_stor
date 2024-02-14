@@ -1,3 +1,4 @@
+import 'package:flutter_vendure_stor/app/modules/auth/views/sign_up_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/account/bindings/account_binding.dart';
@@ -39,6 +40,11 @@ class AppPages {
     GetPage(
       name: _Paths.AUTH,
       page: () => const AuthView(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGNUP,
+      page: () => const SignUpView(),
       binding: AuthBinding(),
     ),
     GetPage(

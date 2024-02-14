@@ -87,8 +87,9 @@ class AuthView extends GetView<AuthController> {
                             const SizedBox(
                               height: 15,
                             ),
+                            Obx(() =>
                             TextFormField(
-                              obscureText: true,
+                              obscureText:controller.showPassword.value,
                                cursorColor: ColorConstant.backgroundColor,
                                style:const TextStyle(color: ColorConstant.backgroundColor),
                               decoration: InputDecoration(
@@ -99,6 +100,9 @@ class AuthView extends GetView<AuthController> {
                                   Icons.lock,
                                   color: ColorConstant.backgroundColor,
                                 ),
+                                suffixIcon:controller.showPassword.value?
+                                IconButton(onPressed:() => controller.showPassword.value=false, icon:const Icon(Icons.visibility_off,color: ColorConstant.backgroundColor,)):
+                                IconButton(onPressed:() => controller.showPassword.value=true, icon:const Icon(Icons.visibility,color: ColorConstant.backgroundColor,)),
                                 border:const UnderlineInputBorder(
                                     borderSide:
                                     BorderSide(color: ColorConstant.backgroundColor)),
@@ -115,7 +119,7 @@ class AuthView extends GetView<AuthController> {
                                     borderSide:
                                     BorderSide(color: Colors.red)),
                               ),
-                            ),
+                            ),),
                             const SizedBox(
                               height: 50,
                             ),
@@ -124,7 +128,8 @@ class AuthView extends GetView<AuthController> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorConstant.backgroundColor,
-                                  padding:const EdgeInsets.all(15)
+                                  padding:const EdgeInsets.all(15),
+                                  elevation: 0
                                 ),
                                   onPressed: () {
                                     Get.toNamed(Routes.HOME);
@@ -145,7 +150,7 @@ class AuthView extends GetView<AuthController> {
                       children: [
                         Text("Don`t have an account ",style: TextStyle(color: ColorConstant.backgroundColor.withOpacity(0.8)),),
                         InkWell(
-                            onTap: () {},
+                            onTap:() => Get.toNamed(Routes.SIGNUP),
                             child: const Text(
                               "SIGNUP",
                               style: TextStyle(
