@@ -32,7 +32,7 @@ class CategoriesView extends GetView<CategoriesController> {
             decoration: InputDecoration(
                border: InputBorder.none,
                 filled: true,
-                fillColor: ColorConstant.primeryColor.withOpacity(0.07),
+                fillColor: ColorConstant.primeryColor.withOpacity(0.05),
                 hintText: "Search",
                 prefixIcon: const Icon(
                   Icons.search,
@@ -57,17 +57,15 @@ class CategoriesView extends GetView<CategoriesController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     //categories
-                    Container(
-                      width:100,
+                    SizedBox(
+                      width:90,
                       height: Get.height,
-                      decoration:const BoxDecoration(
-                       // color: ColorConstant.secondryColor
-                      ),
                       child: ListView.builder(
                         itemCount:60,
-                        itemBuilder:(context, index) =>Container(
+                        itemBuilder:(context, index) =>
+                            Container(
                             width: 90,
-                            height: 100,
+                            height:90,
                             margin:const EdgeInsets.only(bottom:5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -78,17 +76,17 @@ class CategoriesView extends GetView<CategoriesController> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(Icons.safety_check_outlined,color: ColorConstant.primeryColor,),
-                                Text("Root Category")
+                                Text("Root Category",textAlign: TextAlign.center,style: TextStyle(fontSize: 13),)
                               ],
                             ),
                           ),
                         ),
                     ),
                     const SizedBox(width: 10,),
-                    //products
+                    // sub category
                     Expanded(child:ListView.builder(
                       scrollDirection: Axis.vertical,
-                        itemCount:2,
+                        itemCount:5,
                         itemBuilder:(context, index) =>
                         ExpansionTile(
                           controller: ExpansionTileController(),
@@ -100,38 +98,39 @@ class CategoriesView extends GetView<CategoriesController> {
                           children: [
                             SizedBox(
                              width:Get.width,
-                             height: Get.height-300,
+                             height: Get.height-400,
                              child: GridView.builder(
-                               gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
+                               physics:const NeverScrollableScrollPhysics(),
+                               shrinkWrap: true,
+                               gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:3,mainAxisSpacing: 10,crossAxisSpacing: 10),
                                 itemCount: 15,
                                 itemBuilder:(context, index) =>
                                     Column(
-                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                         mainAxisAlignment: MainAxisAlignment.start,
-                                         children: [
-                                           Expanded(
-                                             child: ClipRRect(
-                                               borderRadius:const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
-                                               child: CachedNetworkImage(
-                                                 imageUrl:
-                                                 "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                                 placeholder: (context, url) => const Icon(
-                                                   Icons.image,
-                                                   color: ColorConstant.iconColor,
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                           mainAxisAlignment: MainAxisAlignment.start,
+                                           children: [
+                                             Expanded(
+                                               child: ClipRRect(
+                                                 borderRadius:const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                                                 child: CachedNetworkImage(
+                                                   imageUrl:
+                                                   "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                   placeholder: (context, url) => const Icon(
+                                                     Icons.image,
+                                                     color: ColorConstant.iconColor,
+                                                   ),
+                                                   errorWidget: (context, url, error) => const Icon(Icons.error),
+                                                   fit: BoxFit.cover,
+                                                   width: Get.width,
+                                                   height:120,
                                                  ),
-                                                 errorWidget: (context, url, error) => const Icon(Icons.error),
-                                                 fit: BoxFit.cover,
-                                                 width: Get.width,
-                                                 height:100,
                                                ),
                                              ),
-                                           ),
-                                           const Text("name"),
-                                           const Text("\$324"),
+                                             const Text("name",style: TextStyle(fontSize: 11),),
+                                             const Text("\$324",style: TextStyle(fontSize: 12)),
+                                           ],
 
-
-                                         ],
-                                       ),
+                                    ),
 
 
                          )

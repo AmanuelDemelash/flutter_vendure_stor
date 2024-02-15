@@ -54,7 +54,7 @@ class AccountView extends GetView<AccountController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                   Material(
-                    elevation:5,
+                    elevation:2,
                     borderRadius: BorderRadius.circular(15),
                     child:Container(
                     width: Get.width,
@@ -75,7 +75,7 @@ class AccountView extends GetView<AccountController> {
                   ),
                   const SizedBox(height: 10,),
                   Material(
-                    elevation:5,
+                    elevation:2,
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
                     width: Get.width,
