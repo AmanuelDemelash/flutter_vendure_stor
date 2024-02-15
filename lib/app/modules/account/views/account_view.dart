@@ -10,7 +10,7 @@ class AccountView extends GetView<AccountController> {
     return Scaffold(
       body:Stack(
         children: [
-          Container(width: Get.width,height: Get.height,color: ColorConstant.primeryColor.withOpacity(0.1),),
+          Container(width: Get.width,height: Get.height,color: ColorConstant.backgroundColor),
           Container(
             width: Get.width,
             height: 300,
@@ -53,37 +53,46 @@ class AccountView extends GetView<AccountController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                  Container(
-                  width: Get.width,
-                  padding:const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: ColorConstant.backgroundColor,
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                    child: const Column(
-                      children: [
-                        ListTile(leading: Icon(Icons.location_pin),title: Text("Shipping Address"),),
-                        ListTile(leading: Icon(Icons.payment),title: Text("Payment Method"),),
-                        ListTile(leading: Icon(Icons.history),title: Text("Order History"),),
-                        ListTile(leading: Icon(Icons.delivery_dining),title: Text("Delivery Status"),),
-                      ],
+                  Material(
+                    elevation:5,
+                    borderRadius: BorderRadius.circular(15),
+                    child:Container(
+                    width: Get.width,
+                    padding:const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: ColorConstant.backgroundColor,
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                      child: const Column(
+                        children: [
+                          ListTile(leading: Icon(Icons.location_pin),title: Text("Shipping Address"),),
+                          ListTile(leading: Icon(Icons.payment),title: Text("Payment Method"),),
+                          ListTile(leading: Icon(Icons.history),title: Text("Order History"),),
+                          ListTile(leading: Icon(Icons.delivery_dining),title: Text("Delivery Status"),),
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                  width: Get.width,
-                  margin:const EdgeInsets.only(top: 15,bottom: 15),
-                  padding:const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: ColorConstant.backgroundColor,
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                    child: const Column(
-                      children: [
-                        ListTile(leading: Icon(Icons.favorite_border),title: Text("Favorite"),),
-                        ListTile(leading: Icon(Icons.privacy_tip_outlined),title: Text("Privacy Policy"),),
-                        ListTile(leading: Icon(Icons.question_mark),title: Text("Frequently Asked Questions "),),
-                        ListTile(leading: Icon(Icons.star_rate_outlined),title: Text("Rate Our App"),),
-                      ],
+                  const SizedBox(height: 10,),
+                  Material(
+                    elevation:5,
+                    borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                    width: Get.width,
+                    margin:const EdgeInsets.only(top: 15,bottom: 15),
+                    padding:const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: ColorConstant.backgroundColor,
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                      child: const Column(
+                        children: [
+                          ListTile(leading: Icon(Icons.favorite_border),title: Text("Favorite"),),
+                          ListTile(leading: Icon(Icons.privacy_tip_outlined),title: Text("Privacy Policy"),),
+                          ListTile(leading: Icon(Icons.question_mark),title: Text("Frequently Asked Questions "),),
+                          ListTile(leading: Icon(Icons.star_rate_outlined),title: Text("Rate Our App"),),
+                        ],
+                      ),
                     ),
                   ),
                     const Row(

@@ -1,6 +1,6 @@
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:flutter_vendure_stor/app/modules/account/views/account_view.dart';
 import 'package:flutter_vendure_stor/app/modules/home/views/home_dashbord_view.dart';
@@ -8,39 +8,56 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+   HomeView({Key? key}) : super(key: key);
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar:Obx(() =>
-        SnakeNavigationBar.color(
-          behaviour:SnakeBarBehaviour.floating,
-          snakeShape:SnakeShape.rectangle,
-          //shape:ShapeBorder,
-          padding:const EdgeInsets.all(15) ,
-          ///configuration for SnakeNavigationBar.color
-          snakeViewColor:ColorConstant.primeryColor,
-          selectedItemColor:ColorConstant.backgroundColor,
-          ///configuration for SnakeNavigationBar.gradient
-          //snakeViewGradient: selectedGradient,
-          //selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-          //unselectedItemGradient: unselectedGradient,
-          showUnselectedLabels:true,
-          showSelectedLabels: true,
-          currentIndex:controller.intialPage.value,
-          onTap:(value) {
-            controller.intialPage.value=value;
-            controller.pageController.jumpToPage(value);
-
+        bottomNavigationBar:Obx(() =>CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: controller.intialPage.value,
+          backgroundColor: ColorConstant.backgroundColor,
+          buttonBackgroundColor: ColorConstant.primeryColor,
+          color: ColorConstant.primeryColor,
+          items:const[
+            Icon(Icons.home, size:25,color: ColorConstant.backgroundColor,),
+            Icon(Icons.favorite, size: 25),
+            Icon(Icons.shopping_cart, size: 25),
+            Icon(Icons.person, size: 25)
+          ],
+          onTap: (index) {
+           controller.intialPage.value=index;
+           controller.pageController.jumpToPage(index);
           },
-            items:const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-            ],
-            ),),
+        ),),
+        // SnakeNavigationBar.color(
+        //   behaviour:SnakeBarBehaviour.floating,
+        //   snakeShape:SnakeShape.rectangle,
+        //   //shape:ShapeBorder,
+        //   padding:const EdgeInsets.all(15) ,
+        //   ///configuration for SnakeNavigationBar.color
+        //   snakeViewColor:ColorConstant.primeryColor,
+        //   selectedItemColor:ColorConstant.backgroundColor,
+        //   ///configuration for SnakeNavigationBar.gradient
+        //   //snakeViewGradient: selectedGradient,
+        //   //selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
+        //   //unselectedItemGradient: unselectedGradient,
+        //   showUnselectedLabels:true,
+        //   showSelectedLabels: true,
+        //   currentIndex:controller.intialPage.value,
+        //   onTap:(value) {
+        //     controller.intialPage.value=value;
+        //     controller.pageController.jumpToPage(value);
+        //
+        //   },
+        //     items:const [
+        //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        //     BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
+        //     BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+        //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
+        //     ],
+        //     ),),
 
             // Container(
             //    margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
@@ -77,12 +94,12 @@ class HomeView extends GetView<HomeController> {
             body:
             PageView(
             controller:controller.pageController,
-          physics:const NeverScrollableScrollPhysics(),
-          children: [
-            const HomeDashbordView(),
-            Container(),
-            Container(),
-            const AccountView()
+             physics:const NeverScrollableScrollPhysics(),
+             children: [
+              const HomeDashbordView(),
+              Container(),
+              Container(),
+              const AccountView()
           ],
 
       )
