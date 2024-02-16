@@ -240,7 +240,13 @@ class ProductCard extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      elevation: 0, padding: const EdgeInsets.all(1)),
+                      elevation: 0,
+                      padding: const EdgeInsets.all(1),
+                      shape:const BeveledRectangleBorder(borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(5),
+                        bottomLeft: Radius.circular(5),
+                      ))
+                  ),
                   child: const Text(
                     "Add To Cart",
                     style: TextStyle(color: ColorConstant.backgroundColor),
