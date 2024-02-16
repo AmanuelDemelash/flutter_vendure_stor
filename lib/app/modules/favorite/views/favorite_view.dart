@@ -16,11 +16,15 @@ class FavoriteView extends GetView<FavoriteController> {
         centerTitle: false,
         titleTextStyle:const TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Colors.black),
       ),
-      body:GridView.builder(
-          padding: const EdgeInsets.all(15),
-          gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2),
-          itemCount:8,
-          itemBuilder:(context, index) =>const ProductCard() ,)
+      body:Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: GridView.builder(
+
+            padding: const EdgeInsets.only(left:15,top: 10,right: 15),
+            gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2),
+            itemCount:8,
+            itemBuilder:(context, index) =>const ProductCard() ,),
+      )
     );
   }
 }
@@ -43,7 +47,7 @@ class ProductCard extends StatelessWidget {
           Expanded(
             child:Stack(
           children: [
-          ClipRRect(
+             ClipRRect(
           borderRadius:const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
             child: CachedNetworkImage(
              imageUrl:"https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -57,7 +61,7 @@ class ProductCard extends StatelessWidget {
              height:150,
     ),
     ),
-          Positioned(
+             const Positioned(
             top: 3,
               right: 5,
               child:Icon(Icons.delete,color: ColorConstant.iconColor,))

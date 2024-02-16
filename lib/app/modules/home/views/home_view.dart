@@ -34,75 +34,15 @@ class HomeView extends GetView<HomeController> {
            controller.pageController.jumpToPage(index);
           },
         ),),
-        // SnakeNavigationBar.color(
-        //   behaviour:SnakeBarBehaviour.floating,
-        //   snakeShape:SnakeShape.rectangle,
-        //   //shape:ShapeBorder,
-        //   padding:const EdgeInsets.all(15) ,
-        //   ///configuration for SnakeNavigationBar.color
-        //   snakeViewColor:ColorConstant.primeryColor,
-        //   selectedItemColor:ColorConstant.backgroundColor,
-        //   ///configuration for SnakeNavigationBar.gradient
-        //   //snakeViewGradient: selectedGradient,
-        //   //selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-        //   //unselectedItemGradient: unselectedGradient,
-        //   showUnselectedLabels:true,
-        //   showSelectedLabels: true,
-        //   currentIndex:controller.intialPage.value,
-        //   onTap:(value) {
-        //     controller.intialPage.value=value;
-        //     controller.pageController.jumpToPage(value);
-        //
-        //   },
-        //     items:const [
-        //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        //     BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite'),
-        //     BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-        //     ],
-        //     ),),
-
-            // Container(
-            //    margin:const EdgeInsets.only(bottom: 10,right: 10,left: 10),
-            //    decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(30),
-            //         color: Colors.transparent
-            //     ),
-            //     child: Obx(() =>
-            //         ClipRRect(
-            //           borderRadius:BorderRadius.circular(40),
-            //           child: NavigationBar(
-            //               selectedIndex:controller.intialPage.value,
-            //               elevation: 10,
-            //               indicatorColor: ColorConstant.primeryColor,
-            //               onDestinationSelected: (value) async {
-            //                 controller.intialPage.value=value;
-            //                 controller.pageController.jumpToPage(value);
-            //                 },
-            //               backgroundColor: ColorConstant.backgroundColor,
-            //               labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-            //               destinations:const[
-            //                 NavigationDestination(icon:Icon(Icons.home), label: "home"),
-            //                 NavigationDestination(icon:Icon(Icons.favorite), label: "favorite"),
-            //                 Badge(alignment: Alignment.centerRight,
-            //                     backgroundColor: ColorConstant.primeryColor,
-            //                     smallSize: 30,
-            //                     offset: Offset(-25,-12),
-            //                     label: Text("3"),
-            //                     child: NavigationDestination(icon:Icon(Icons.card_travel_rounded), label: "cart")),
-            //                 NavigationDestination(icon:Icon(Icons.person), label: "account"),
-            //               ]),
-            //         ),)
-            // ),
             body:
             PageView(
             controller:controller.pageController,
              physics:const NeverScrollableScrollPhysics(),
-             children: [
-              const HomeDashbordView(),
-              const FavoriteView(),
-              const CartView(),
-               const AccountView()
+             children: const[
+               HomeDashbordView(),
+               FavoriteView(),
+               CartView(),
+                AccountView()
           ],
 
       )

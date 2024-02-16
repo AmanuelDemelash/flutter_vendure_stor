@@ -7,6 +7,7 @@ import '../../../routes/app_pages.dart';
 
 class HomeDashbordView extends GetView {
   const HomeDashbordView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +20,12 @@ class HomeDashbordView extends GetView {
               alignment: Alignment.topRight,
               backgroundColor: ColorConstant.primeryColor,
               smallSize: 30,
-              offset: Offset(5,-3),
+              offset: Offset(5, -3),
               label: Text("3"),
-              child: Icon(Icons.notifications,color: ColorConstant.iconColor,)),
+              child: Icon(
+                Icons.notifications,
+                color: ColorConstant.iconColor,
+              )),
           SizedBox(
             width: 20,
           ),
@@ -37,7 +41,7 @@ class HomeDashbordView extends GetView {
                 prefixIcon: const Icon(
                   Icons.search,
                   color: ColorConstant.iconColor,
-                  size:30,
+                  size: 30,
                 )),
           ),
         ),
@@ -48,7 +52,13 @@ class HomeDashbordView extends GetView {
         padding: const EdgeInsets.all(15),
         addAutomaticKeepAlives: true,
         children: [
-          const Text("New Arrival",style: TextStyle(color: ColorConstant.secondryColor, fontWeight: FontWeight.bold,),),
+          const Text(
+            "New Arrival",
+            style: TextStyle(
+              color: ColorConstant.secondryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(
             height: 15,
           ),
@@ -67,7 +77,12 @@ class HomeDashbordView extends GetView {
                       color: ColorConstant.secondryColor),
                 ),
               ),
-              Text("view all",style: TextStyle(color: ColorConstant.secondryColor,),)
+              Text(
+                "view all",
+                style: TextStyle(
+                  color: ColorConstant.secondryColor,
+                ),
+              )
             ],
           ),
           const SizedBox(
@@ -98,7 +113,7 @@ class HomeDashbordView extends GetView {
               ),
               GestureDetector(
                   onTap: () => Get.toNamed(Routes.CATEGORIES),
-                  child:const Text("view all"))
+                  child: const Text("view all"))
             ],
           ),
           const SizedBox(
@@ -118,7 +133,6 @@ class HomeDashbordView extends GetView {
   }
 }
 
-
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
@@ -133,22 +147,31 @@ class ProductCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius:const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
-              child: CachedNetworkImage(
-                imageUrl:
-                "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                placeholder: (context, url) => const Icon(
-                  Icons.image,
-                  color: ColorConstant.iconColor,
+              child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  placeholder: (context, url) => const Icon(
+                    Icons.image,
+                    color: ColorConstant.iconColor,
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  width: Get.width,
+                  height: 150,
                 ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
-                width: Get.width,
-                height:150,
               ),
-            ),
-          ),
+               const Positioned(
+                   right: 6,
+                   top: 3,
+                   child: Icon(Icons.favorite_border,color: ColorConstant.iconColor,))
+            ],
+          )),
           const Padding(
             padding: EdgeInsets.only(left: 10, top: 6),
             child: Row(
@@ -156,7 +179,7 @@ class ProductCard extends StatelessWidget {
                 Text(
                   "\$234",
                   style: TextStyle(
-                      fontSize:15,
+                      fontSize: 15,
                       color: ColorConstant.secondryColor,
                       fontWeight: FontWeight.bold),
                 ),
@@ -179,10 +202,11 @@ class ProductCard extends StatelessWidget {
               children: [
                 const Expanded(
                   child: Text(
-                    "smart watch",   style: TextStyle(
-                      fontSize:15,
-                      color: ColorConstant.secondryColor,
-                      fontWeight: FontWeight.w200),
+                    "smart watch",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: ColorConstant.secondryColor,
+                        fontWeight: FontWeight.w200),
                   ),
                 ),
                 Container(
@@ -235,10 +259,9 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-      BoxDecoration(color: ColorConstant.primeryColor.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(10)
-      ),
+      decoration: BoxDecoration(
+          color: ColorConstant.primeryColor.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(10)),
       child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -247,7 +270,10 @@ class CategoryCard extends StatelessWidget {
             color: ColorConstant.primeryColor,
             size: 35,
           ),
-          Text("Watch",style: TextStyle(fontSize: 12),)
+          Text(
+            "Watch",
+            style: TextStyle(fontSize: 12),
+          )
         ],
       ),
     );
@@ -265,58 +291,59 @@ class HomePageCarousel extends StatelessWidget {
       itemCount: 15,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
           Stack(
-            clipBehavior: Clip.hardEdge,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CachedNetworkImage(
-                  imageUrl:
+        clipBehavior: Clip.hardEdge,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: CachedNetworkImage(
+              imageUrl:
                   "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  placeholder: (context, url) => const Icon(
-                    Icons.image,
-                    color: ColorConstant.iconColor,
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
-                  width: Get.width,
-                ),
+              placeholder: (context, url) => const Icon(
+                Icons.image,
+                color: ColorConstant.iconColor,
               ),
-              Container(
-                width: Get.width,
-                height: Get.height,
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(10)
-
-                ),
-              ),
-              Positioned(
-                top: 5,
-                left: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Super flash sale",
-                      style: TextStyle(
-                          fontSize: 25, color: ColorConstant.backgroundColor),
-                    ),
-                    const Text(
-                      "50% Off",
-                      style: TextStyle(
-                          fontSize: 20, color: ColorConstant.backgroundColor),
-                    ),
-                    Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                            color: ColorConstant.backgroundColor,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: const Text("see more",style: TextStyle(fontSize: 11),))
-                  ],
-                ),
-              )
-            ],
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              fit: BoxFit.cover,
+              width: Get.width,
+            ),
           ),
+          Container(
+            width: Get.width,
+            height: Get.height,
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(10)),
+          ),
+          Positioned(
+            top: 5,
+            left: 6,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Super flash sale",
+                  style: TextStyle(
+                      fontSize: 25, color: ColorConstant.backgroundColor),
+                ),
+                const Text(
+                  "50% Off",
+                  style: TextStyle(
+                      fontSize: 20, color: ColorConstant.backgroundColor),
+                ),
+                Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        color: ColorConstant.backgroundColor,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Text(
+                      "see more",
+                      style: TextStyle(fontSize: 11),
+                    ))
+              ],
+            ),
+          )
+        ],
+      ),
       options: CarouselOptions(
           height: 130,
           aspectRatio: 16 / 9,
