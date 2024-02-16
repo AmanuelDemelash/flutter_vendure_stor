@@ -68,7 +68,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CART,
-      page: () => const CartView(),
+      page: () => CartView(),
       binding: CartBinding(),
     ),
   ];

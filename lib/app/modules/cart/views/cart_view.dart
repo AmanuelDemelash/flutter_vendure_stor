@@ -1,15 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/cart_controller.dart';
 
-class CartView extends GetView<CartController> {
-  const CartView({Key? key}) : super(key: key);
+class CartView extends GetView<CartController>{
+    const CartView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+   var cartController=Get.lazyPut(() => CartController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -17,23 +16,44 @@ class CartView extends GetView<CartController> {
         centerTitle: false,
         elevation: 0,
         excludeHeaderSemantics:true,
+        actions:const[
+          Badge(
+              alignment: Alignment.topRight,
+              backgroundColor: ColorConstant.primeryColor,
+              smallSize: 30,
+              offset: Offset(5, -3),
+              label: Text("3"),
+              child: Icon(
+                Icons.notifications,
+                color: ColorConstant.iconColor,
+              )),
+          SizedBox(
+            width: 20,
+          ),
+        ],
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: 6,
+            child:Obx(() =>
+              ListView.builder(
+              padding:const EdgeInsets.only(left: 10,right: 10),
+              itemCount:Get.find<CartController>().count.value,
               itemBuilder:(context, index) =>
                   Dismissible(
                     key: Key(index.toString()),
-                    onDismissed: (direction){},
-                    child: Material(
-                      elevation: 10,
-                      borderRadius: BorderRadius.circular(10),
+                    background:const Icon(Icons.delete),
+                    secondaryBackground:const Icon(Icons.delete),
+                    direction: DismissDirection.endToStart,// this will only allow slide to left.
+                    onDismissed:(direction) => Get.find<CartController>().increment(),
+                    child: Card(
+                      elevation:15,
+                      surfaceTintColor: ColorConstant.backgroundColor,
+                      shadowColor: ColorConstant.primeryColor.withOpacity(0.6),
                       child: SizedBox(
-                        width: Get.width,
-                        height: 100,
-                        child:
+                          width: Get.width,
+                          height: 100,
+                          child:
                           Row(
                             children: [
                               ClipRRect(
@@ -51,10 +71,10 @@ class CartView extends GetView<CartController> {
                                   height: 100,
                                 ),
                               ),
-                              const Expanded(child: Column(
+                              Expanded(child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     child: ListTile(
                                       title:Text("Pilot Bags"),
                                       subtitle: Text("description about the product"),
@@ -62,33 +82,34 @@ class CartView extends GetView<CartController> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(left:20),
-                                    child: Text("\$345.00",style: TextStyle(color: ColorConstant.primeryColor,fontSize: 16,fontWeight: FontWeight.w700),),
+                                    padding:const EdgeInsets.only(left:20,bottom: 5),
+                                    child: Text("\$345.00",style: TextStyle(color: ColorConstant.primeryColor.withOpacity(0.9),fontSize: 16,fontWeight: FontWeight.w700),),
                                   ),
-                              ],)),
+                                ],)),
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                 const  Icon(Icons.add),
+                                  const  Icon(Icons.add,color: ColorConstant.iconColor,),
                                   Container(
-                                    width: 30,
+                                      width: 30,
                                       height: 30,
                                       decoration:BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                           border: const Border.fromBorderSide(BorderSide(width:1,color: ColorConstant.primeryColor))
                                       ),
-                                      child: Center(child: Text("3"))),
-                                  const Icon(Icons.minimize)
+                                      child: const Center(child: Text("3",style: TextStyle(fontWeight: FontWeight.bold),))),
+                                  const Icon(Icons.minimize,color: ColorConstant.iconColor,)
                                 ],
-                              )
+                              ),
+                              const SizedBox(width:10,)
                             ],
                           )
-                        ),
+                      ),
                     ),
 
                   ),
-            ),
-          ),
+            ),),),
+
           Container(
             width: Get.width,
             height: 200,
@@ -152,3 +173,5 @@ class CartView extends GetView<CartController> {
     );
   }
 }
+
+

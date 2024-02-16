@@ -12,6 +12,7 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
    HomeView({Key? key}) : super(key: key);
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +32,18 @@ class HomeView extends GetView<HomeController> {
           ],
           onTap: (index) {
            controller.intialPage.value=index;
-           controller.pageController.jumpToPage(index);
+           _pageController.jumpToPage(index);
           },
         ),),
             body:
             PageView(
-            controller:controller.pageController,
+            controller:_pageController,
              physics:const NeverScrollableScrollPhysics(),
-             children: const[
+             children:[
                HomeDashbordView(),
                FavoriteView(),
                CartView(),
-                AccountView()
+               AccountView()
           ],
 
       )
