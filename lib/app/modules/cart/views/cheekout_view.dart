@@ -234,7 +234,7 @@ class CheekOutView extends GetView {
                 ),
                 SizedBox(
                     width: 200,
-                    child: ElevatedButton(onPressed:(){}, child:const Text("Place Order",style: TextStyle(color: ColorConstant.backgroundColor),))),
+                    child: ElevatedButton(onPressed:(){Get.toNamed(Routes.STATUS);}, child:const Text("Place Order",style: TextStyle(color: ColorConstant.backgroundColor),))),
               ],
             ),
           )

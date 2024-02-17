@@ -1,5 +1,3 @@
-import 'package:flutter_vendure_stor/app/modules/cart/views/cheekout_view.dart';
-import 'package:flutter_vendure_stor/app/modules/cart/views/payment_method_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/account/bindings/account_binding.dart';
@@ -9,6 +7,8 @@ import '../modules/auth/views/auth_view.dart';
 import '../modules/auth/views/sign_up_view.dart';
 import '../modules/cart/bindings/cart_binding.dart';
 import '../modules/cart/views/cart_view.dart';
+import '../modules/cart/views/cheekout_view.dart';
+import '../modules/cart/views/payment_method_view.dart';
 import '../modules/categories/bindings/categories_binding.dart';
 import '../modules/categories/views/categories_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
@@ -19,6 +19,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/status/bindings/status_binding.dart';
+import '../modules/status/views/status_view.dart';
 
 part 'app_routes.dart';
 
@@ -82,6 +84,11 @@ class AppPages {
       name: _Paths.PAYMENTMETHOD,
       page: () => PaymentMethodView(),
       binding: CartBinding(),
+    ),
+    GetPage(
+      name: _Paths.STATUS,
+      page: () => const StatusView(),
+      binding: StatusBinding(),
     ),
   ];
 }
