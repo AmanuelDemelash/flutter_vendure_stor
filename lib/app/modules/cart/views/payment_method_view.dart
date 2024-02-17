@@ -16,7 +16,7 @@ class PaymentMethodView extends GetView {
       ),
       body:ListView(
         padding:const EdgeInsets.all(15),
-        children: [
+        children:const [
            Text('Payment Methods',style: TextStyle(fontSize: 24,color: ColorConstant.secondryColor),),
 
         ],
