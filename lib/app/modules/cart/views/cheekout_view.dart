@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
-
 import 'package:get/get.dart';
 
 class CheekOutView extends GetView {
@@ -22,9 +22,9 @@ class CheekOutView extends GetView {
             child: ListView(
               padding:const EdgeInsets.all(15),
               children: [
-                 const Text("Shipping Address",style: TextStyle(fontWeight: FontWeight.w500),),
+                 const Text("Shipping Address",style: TextStyle(fontWeight: FontWeight.bold),),
                  Material(
-                   elevation:5,
+                   elevation:10,
                    shadowColor: ColorConstant.primeryColor.withOpacity(0.2),
                    borderRadius: BorderRadius.circular(10),
                    child: Container(
@@ -64,9 +64,61 @@ class CheekOutView extends GetView {
                    
                    ),
                  ),
-                const SizedBox(height: 15,),
-                const Text("Payment Method",style: TextStyle(fontWeight: FontWeight.w500),),
-                Material(
+                 const SizedBox(height: 15,), const Text("Shipping Method",style: TextStyle(fontWeight: FontWeight.bold),),
+                 Material(
+                   elevation:10,
+                   shadowColor: ColorConstant.primeryColor.withOpacity(0.2),
+                   borderRadius: BorderRadius.circular(10),
+                   child: Container(
+                     width: Get.width,
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(10)
+                     ),
+                     child:Column(
+                       children: [
+                         ListTile(
+                           leading:Radio.adaptive(value:true, groupValue:true, onChanged:(value) {},activeColor: ColorConstant.primeryColor),
+                           title:const Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Text("shipping method 1"),
+                               Text("\$23",style: TextStyle(color: ColorConstant.primeryColor),),
+                             ],
+                           ),
+                           titleTextStyle:const TextStyle(fontSize: 14,color: ColorConstant.secondryColor),
+                         ),
+                         ListTile(
+                           leading:Radio.adaptive(value:true, groupValue:true, onChanged:(value) {},activeColor: ColorConstant.primeryColor,),
+                           title:const Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                                Text("shipping method 2"),
+                               Text("\$53",style: TextStyle(color: ColorConstant.primeryColor),),
+                             ],
+                           ),
+                           titleTextStyle:const TextStyle(fontSize: 14,color: ColorConstant.secondryColor),
+
+                         ),
+                         ListTile(
+                           leading:Radio.adaptive(value:true, groupValue:true, onChanged:(value) {},activeColor: ColorConstant.primeryColor,),
+                           title:const Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                                Text("shipping method 2"),
+                               Text("\$23",style: TextStyle(color: ColorConstant.primeryColor),),
+                             ],
+                           ),
+                           titleTextStyle:const TextStyle(fontSize: 14,color: ColorConstant.secondryColor),
+
+                         )
+                       ],
+                     )
+
+                   ),
+                 ),
+                 const SizedBox(height: 15,),
+                 const Text("Payment Method",style: TextStyle(fontWeight: FontWeight.bold),),
+                 Material(
                   elevation: 4,
                   shadowColor: ColorConstant.primeryColor.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(10),
@@ -78,7 +130,7 @@ class CheekOutView extends GetView {
                       borderRadius: BorderRadius.circular(10)
                     ),
                     child:ListTile(
-                      leading:Icon(Icons.payment,color: ColorConstant.primeryColor.withOpacity(0.5),size: 35,),
+                      leading:Icon(Icons.payment_outlined,color: ColorConstant.primeryColor.withOpacity(0.8),size: 35,),
                       title:  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -97,7 +149,65 @@ class CheekOutView extends GetView {
                       subtitle:const Text("*********54",style: TextStyle(color: ColorConstant.iconColor),),
                     )
                   ),
-                )
+                ),
+                const SizedBox(height: 20,),
+                //items
+                Row(
+                  children: [
+                    const Text("Items",style: TextStyle(fontWeight: FontWeight.bold),),
+                    const SizedBox(width: 10,),
+                    Container(
+                      width:20,
+                      height:20,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ColorConstant.primeryColor.withOpacity(0.5),
+                      ),
+                      child:const Center(child: Text("3",style: TextStyle(color: ColorConstant.backgroundColor),)),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 10,),
+                 SizedBox(
+                    width: Get.width,
+                    height: 200,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                        itemCount: 4,
+                        itemBuilder:(context, index) => Container(
+                          width: 100,
+                          height: 100,
+                          margin:const EdgeInsets.only(right: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          child:Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                  "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                  placeholder: (context, url) => const Icon(
+                                    Icons.image,
+                                    color: ColorConstant.iconColor,
+                                  ),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                  fit: BoxFit.cover,
+                                  width:100,
+                                  height:80,
+                                ),
+                              ),
+                              const Text("Nike jordan",style: TextStyle(fontSize: 12),)
+
+                            ],
+                          )
+                        ),
+                    ),
+                  ),
+
+
               ],
             ),
 

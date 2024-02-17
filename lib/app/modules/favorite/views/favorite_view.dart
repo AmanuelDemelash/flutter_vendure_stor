@@ -14,7 +14,7 @@ class FavoriteView extends GetView<FavoriteController> {
         automaticallyImplyLeading: false,
         title: const Text('My Favorite'),
         centerTitle: false,
-        titleTextStyle:const TextStyle(fontWeight: FontWeight.w500,fontSize: 25,color: Colors.black),
+        titleTextStyle:const TextStyle(fontSize: 27,color: Colors.black),
       ),
       body:Padding(
         padding: const EdgeInsets.only(bottom: 20),
