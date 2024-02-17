@@ -27,7 +27,16 @@ class HomeView extends GetView<HomeController> {
           items:const[
             Icon(Icons.home, size:25,color: ColorConstant.backgroundColor,),
             Icon(Icons.favorite, size: 25,color: ColorConstant.backgroundColor,),
-            Icon(Icons.shopping_cart, size: 25,color: ColorConstant.backgroundColor,),
+            Badge(
+                alignment: Alignment.topRight,
+                backgroundColor: Colors.deepOrange,
+                smallSize: 30,
+               // offset: Offset(5, -3),
+                label: Text("3"),
+                child: Icon(
+                  Icons.shopping_cart,
+                  size: 25,color: ColorConstant.backgroundColor,
+                )),
             Icon(Icons.person, size: 25,color: ColorConstant.backgroundColor,)
           ],
           onTap: (index) {

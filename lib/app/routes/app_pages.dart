@@ -1,3 +1,4 @@
+import 'package:flutter_vendure_stor/app/modules/cart/views/cheekout_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/account/bindings/account_binding.dart';
@@ -69,6 +70,10 @@ class AppPages {
     GetPage(
       name: _Paths.CART,
       page: () => CartView(),
+      binding: CartBinding(),
+    ), GetPage(
+      name: _Paths.CHEEKOUT,
+      page: () => CheekOutView(),
       binding: CartBinding(),
     ),
   ];

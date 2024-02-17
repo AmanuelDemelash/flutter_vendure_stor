@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
 
-  final count =6.obs;
+  final count =3.obs;
   @override
   void onInit() {
     super.onInit();
@@ -20,5 +20,6 @@ class CartController extends GetxController {
 
   void increment(){
     count.value=count.value-1;
+    update();
   }
 }

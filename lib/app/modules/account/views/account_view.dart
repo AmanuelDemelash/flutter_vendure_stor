@@ -69,24 +69,6 @@ class AccountView extends GetView<AccountController> {
                           ListTile(leading: Icon(Icons.payment),title: Text("Payment Method"),),
                           ListTile(leading: Icon(Icons.history),title: Text("Order History"),),
                           ListTile(leading: Icon(Icons.delivery_dining),title: Text("Delivery Status"),),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Material(
-                    elevation:2,
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                    width: Get.width,
-                    margin:const EdgeInsets.only(top: 15,bottom: 15),
-                    padding:const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: ColorConstant.backgroundColor,
-                      borderRadius: BorderRadius.circular(15)
-                    ),
-                      child: const Column(
-                        children: [
                           ListTile(leading: Icon(Icons.favorite_border),title: Text("Favorite"),),
                           ListTile(leading: Icon(Icons.privacy_tip_outlined),title: Text("Privacy Policy"),),
                           ListTile(leading: Icon(Icons.question_mark),title: Text("Frequently Asked Questions "),),
@@ -95,6 +77,8 @@ class AccountView extends GetView<AccountController> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10,),
+
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

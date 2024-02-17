@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
+import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import '../controllers/cart_controller.dart';
 
@@ -15,7 +16,7 @@ class CartView extends GetView<CartController>{
         title: const Text('Cart',style: TextStyle(fontSize: 27),),
         centerTitle: false,
         elevation: 0,
-        excludeHeaderSemantics:true,
+        scrolledUnderElevation: 0,
         actions:const[
           Badge(
               alignment: Alignment.topRight,
@@ -109,11 +110,11 @@ class CartView extends GetView<CartController>{
 
                   ),
             ),),),
-
+          const SizedBox(height: 15,),
           Container(
             width: Get.width,
-            height: 200,
-            padding:const EdgeInsets.all(15),
+          //  height: 200,
+            padding:const EdgeInsets.only( left: 15,right: 15,bottom:25),
             decoration:const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15),
@@ -123,6 +124,14 @@ class CartView extends GetView<CartController>{
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:4,right:4),
+                  child: Divider(
+                    thickness: 0.7,
+                    color: ColorConstant.primeryColor.withOpacity(0.9),
+                  ),
+                ),
+                //promo
                 Row(children: [
                   Expanded(
                     child: TextField(
@@ -156,14 +165,21 @@ class CartView extends GetView<CartController>{
                   ),
                 ),
                 const SizedBox(height: 15,),
-                ListTile(
-                  title:const Text("Total",style: TextStyle(fontSize: 11,color: ColorConstant.iconColor),),
-                  subtitle:const Text("\$234.00",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-                  trailing: SizedBox(
-                    width: 200,
-                      child: ElevatedButton(onPressed:(){}, child:const Text("CheckOut",style: TextStyle(color: ColorConstant.backgroundColor),))),
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Total",style: TextStyle(fontSize: 13,color: ColorConstant.iconColor),),
+                        Text("\$234.00",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
+                      ],
+                    ),
+                    SizedBox(
+                        width: 200,
+                        child: ElevatedButton(onPressed:() => Get.toNamed(Routes.CHEEKOUT), child:const Text("CheckOut",style: TextStyle(color: ColorConstant.backgroundColor),))),
+                  ],
                 )
-
               ],
             ),
 
