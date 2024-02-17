@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
+
 class CheekOutView extends GetView {
   const CheekOutView({Key? key}) : super(key: key);
   @override
@@ -22,7 +24,7 @@ class CheekOutView extends GetView {
             child: ListView(
               padding:const EdgeInsets.all(15),
               children: [
-                 const Text("Shipping Address",style: TextStyle(fontWeight: FontWeight.bold),),
+                 const Text("Shipping Address",style: TextStyle(fontWeight: FontWeight.normal),),
                  Material(
                    elevation:10,
                    shadowColor: ColorConstant.primeryColor.withOpacity(0.2),
@@ -38,7 +40,7 @@ class CheekOutView extends GetView {
                        title: Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                         const Text("full name"),
+                         const Text("full name",style: TextStyle(color: ColorConstant.secondryColor,fontWeight: FontWeight.w600),),
                            Container(
                                width: 30,
                                height: 30,
@@ -53,9 +55,9 @@ class CheekOutView extends GetView {
                        subtitle:const Column(
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
-                           Text("23wes,sub Streat"),
-                           Text("phone,"),
-                           Text("City name,province COuntry"),
+                           Text("23wes,sub Street",style: TextStyle(color: ColorConstant.secondryColor),),
+                           Text("phone,",style: TextStyle(color: ColorConstant.secondryColor),),
+                           Text("City name,province CCountry",style: TextStyle(color: ColorConstant.secondryColor),),
                    
                          ],
                        ),
@@ -64,7 +66,7 @@ class CheekOutView extends GetView {
                    
                    ),
                  ),
-                 const SizedBox(height: 15,), const Text("Shipping Method",style: TextStyle(fontWeight: FontWeight.bold),),
+                 const SizedBox(height: 15,), const Text("Shipping Method",style: TextStyle(fontWeight: FontWeight.normal),),
                  Material(
                    elevation:10,
                    shadowColor: ColorConstant.primeryColor.withOpacity(0.2),
@@ -117,7 +119,7 @@ class CheekOutView extends GetView {
                    ),
                  ),
                  const SizedBox(height: 15,),
-                 const Text("Payment Method",style: TextStyle(fontWeight: FontWeight.bold),),
+                 const Text("Payment Method",style: TextStyle(fontWeight: FontWeight.normal),),
                  Material(
                   elevation: 4,
                   shadowColor: ColorConstant.primeryColor.withOpacity(0.3),
@@ -130,19 +132,24 @@ class CheekOutView extends GetView {
                       borderRadius: BorderRadius.circular(10)
                     ),
                     child:ListTile(
-                      leading:Icon(Icons.payment_outlined,color: ColorConstant.primeryColor.withOpacity(0.8),size: 35,),
+                      leading:Hero(
+                        tag: "pay",
+                          child: Icon(Icons.payment_outlined,color: ColorConstant.primeryColor.withOpacity(0.8),size: 35,)),
                       title:  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text("CBE"),
-                          Container(
-                              width: 30,
-                              height: 30,
-                              decoration:const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ColorConstant.iconColor
-                              ),
-                              child:const Center(child: Icon(Icons.edit,color: ColorConstant.backgroundColor,size:20,))
+                          GestureDetector(
+                            onTap: () => Get.toNamed(Routes.PAYMENTMETHOD),
+                            child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration:const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ColorConstant.iconColor
+                                ),
+                                child:const Center(child: Icon(Icons.edit,color: ColorConstant.backgroundColor,size:20,))
+                            ),
                           ),
                         ],
                       ),
@@ -168,7 +175,7 @@ class CheekOutView extends GetView {
                   ],
                 ),
                 const SizedBox(height: 10,),
-                 SizedBox(
+                SizedBox(
                     width: Get.width,
                     height: 200,
                     child: ListView.builder(
