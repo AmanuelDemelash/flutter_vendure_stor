@@ -15,6 +15,7 @@ abstract class Routes {
   static const CHEEKOUT = _Paths.CHEEKOUT;
   static const PAYMENTMETHOD = _Paths.PAYMENTMETHOD;
   static const STATUS = _Paths.STATUS;
+  static const PRODUCT = _Paths.PRODUCT;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const CHEEKOUT = '/cheekout';
   static const PAYMENTMETHOD = '/paymentmethod';
   static const STATUS = '/status';
+  static const PRODUCT = '/product';
 }

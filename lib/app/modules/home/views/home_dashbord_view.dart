@@ -89,7 +89,7 @@ class HomeDashbordView extends GetView {
             height: 15,
           ),
           SizedBox(
-            height: 240,
+            height: 280,
             width: Get.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -141,118 +141,123 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width / 2 - 20,
-      margin: const EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        children: [
-          Expanded(
-              child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  placeholder: (context, url) => const Icon(
-                    Icons.image,
-                    color: ColorConstant.iconColor,
+        width: Get.width / 2 - 20,
+        margin: const EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          children: [
+            Expanded(
+                child: Stack(
+                    children: [
+                    InkWell(
+                    onTap: () => Get.toNamed(Routes.PRODUCT),
+                 child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    placeholder: (context, url) => const Icon(
+                      Icons.image,
+                      color: ColorConstant.iconColor,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                    width: Get.width,
+                    height: 150,
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
-                  width: Get.width,
-                  height: 150,
-                ),
-              ),
-               const Positioned(
-                   right: 6,
-                   top: 3,
-                   child: Icon(Icons.favorite_border,color: ColorConstant.iconColor,))
-            ],
-          )),
-          const Padding(
-            padding: EdgeInsets.only(left: 10, top: 6),
-            child: Row(
-              children: [
-                Text(
-                  "\$234",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: ColorConstant.secondryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "\$432",
-                  style: TextStyle(
-                      color: ColorConstant.primeryColor,
-                      decoration: TextDecoration.lineThrough),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 3, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Expanded(
-                  child: Text(
-                    "smart watch",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: ColorConstant.secondryColor,
-                        fontWeight: FontWeight.w200),
-                  ),
-                ),
-                Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: ColorConstant.primeryColor,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Row(
-                      children: [
-                        Text(
-                          "3.5",
-                          style: TextStyle(
-                              fontSize: 11,
-                              color: ColorConstant.backgroundColor),
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: ColorConstant.backgroundColor,
-                          size: 10,
-                        )
-                      ],
-                    ))
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-              width: Get.width,
-              child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      padding: const EdgeInsets.all(1),
-                      shape:const BeveledRectangleBorder(borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                      ))
-                  ),
-                  child: const Text(
-                    "Add To Cart",
-                    style: TextStyle(color: ColorConstant.backgroundColor),
-                  )))
-        ],
-      ),
+                ),),
+            const Positioned(
+                right: 6,
+                top: 3,
+                child: Icon(
+                  Icons.favorite_border, color: ColorConstant.iconColor,))
+          ],
+        )),
+
+    const Padding(
+    padding: EdgeInsets.only(left: 10, top: 6),
+    child: Row(
+    children: [
+    Text(
+    "\$234",
+    style: TextStyle(
+    fontSize: 15,
+    color: ColorConstant.secondryColor,
+    fontWeight: FontWeight.bold),
+    ),
+    SizedBox(
+    width: 10,
+    ),
+    Text(
+    "\$432",
+    style: TextStyle(
+    color: ColorConstant.primeryColor,
+    decoration: TextDecoration.lineThrough),
+    )
+    ],
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.only(left: 10, top: 3, right: 10),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+    const Expanded(
+    child: Text(
+    "smart watch",
+    style: TextStyle(
+    fontSize: 15,
+    color: ColorConstant.secondryColor,
+    fontWeight: FontWeight.w200),
+    ),
+    ),
+    Container(
+    padding: const EdgeInsets.all(4),
+    decoration: BoxDecoration(
+    color: ColorConstant.primeryColor,
+    borderRadius: BorderRadius.circular(5)),
+    child: const Row(
+    children: [
+    Text(
+    "3.5",
+    style: TextStyle(
+    fontSize: 11,
+    color: ColorConstant.backgroundColor),
+    ),
+    Icon(
+    Icons.star,
+    color: ColorConstant.backgroundColor,
+    size: 10,
+    )
+    ],
+    ))
+    ],
+    ),
+    ),
+    const SizedBox(
+    height: 10,
+    ),
+    SizedBox(
+    width: Get.width,
+    child: ElevatedButton(
+    onPressed: () {},
+    style: ElevatedButton.styleFrom(
+    elevation: 0,
+    padding: const EdgeInsets.all(1),
+    shape:const BeveledRectangleBorder(borderRadius: BorderRadius.only(
+    bottomRight: Radius.circular(5),
+    bottomLeft: Radius.circular(5),
+    ))
+    ),
+    child: const Text(
+    "Add To Cart",
+    style: TextStyle(color: ColorConstant.backgroundColor),
+    )))
+    ],
+    ),
     );
   }
 }
@@ -297,59 +302,60 @@ class HomePageCarousel extends StatelessWidget {
       itemCount: 15,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
           Stack(
-        clipBehavior: Clip.hardEdge,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-              imageUrl:
+            clipBehavior: Clip.hardEdge,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl:
                   "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              placeholder: (context, url) => const Icon(
-                Icons.image,
-                color: ColorConstant.iconColor,
+                  placeholder: (context, url) =>
+                  const Icon(
+                    Icons.image,
+                    color: ColorConstant.iconColor,
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  width: Get.width,
+                ),
               ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
-              width: Get.width,
-            ),
-          ),
-          Container(
-            width: Get.width,
-            height: Get.height,
-            decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10)),
-          ),
-          Positioned(
-            top: 5,
-            left: 6,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Super flash sale",
-                  style: TextStyle(
-                      fontSize: 25, color: ColorConstant.backgroundColor),
+              Container(
+                width: Get.width,
+                height: Get.height,
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+              Positioned(
+                top: 5,
+                left: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Super flash sale",
+                      style: TextStyle(
+                          fontSize: 25, color: ColorConstant.backgroundColor),
+                    ),
+                    const Text(
+                      "50% Off",
+                      style: TextStyle(
+                          fontSize: 20, color: ColorConstant.backgroundColor),
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                            color: ColorConstant.backgroundColor,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: const Text(
+                          "see more",
+                          style: TextStyle(fontSize: 11),
+                        ))
+                  ],
                 ),
-                const Text(
-                  "50% Off",
-                  style: TextStyle(
-                      fontSize: 20, color: ColorConstant.backgroundColor),
-                ),
-                Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                        color: ColorConstant.backgroundColor,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: const Text(
-                      "see more",
-                      style: TextStyle(fontSize: 11),
-                    ))
-              ],
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
       options: CarouselOptions(
           height: 130,
           aspectRatio: 16 / 9,

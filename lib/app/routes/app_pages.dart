@@ -17,6 +17,8 @@ import '../modules/getstarted/bindings/getstarted_binding.dart';
 import '../modules/getstarted/views/getstarted_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/product/bindings/product_binding.dart';
+import '../modules/product/views/product_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/status/bindings/status_binding.dart';
@@ -89,6 +91,11 @@ class AppPages {
       name: _Paths.STATUS,
       page: () => const StatusView(),
       binding: StatusBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT,
+      page: () => const ProductView(),
+      binding: ProductBinding(),
     ),
   ];
 }

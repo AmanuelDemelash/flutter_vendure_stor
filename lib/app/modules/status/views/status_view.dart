@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
-
 import 'package:get/get.dart';
-import 'package:timelines/timelines.dart';
 
 import '../controllers/status_controller.dart';
 
