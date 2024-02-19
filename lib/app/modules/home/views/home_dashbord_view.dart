@@ -149,26 +149,29 @@ class ProductCard extends StatelessWidget {
             Expanded(
                 child: Stack(
                     children: [
-                    InkWell(
-                    onTap: () => Get.toNamed(Routes.PRODUCT),
-                 child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    placeholder: (context, url) => const Icon(
-                      Icons.image,
-                      color: ColorConstant.iconColor,
+                    Hero(
+                      tag: "prod",
+                      child: InkWell(
+                      onTap: () => Get.toNamed(Routes.PRODUCT),
+                                       child: ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10)),
+                                        child: CachedNetworkImage(
+                      imageUrl:
+                          "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      placeholder: (context, url) => const Icon(
+                        Icons.image,
+                        color: ColorConstant.iconColor,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.cover,
+                      width: Get.width,
+                      height: 150,
+                                        ),
+                                      ),),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit.cover,
-                    width: Get.width,
-                    height: 150,
-                  ),
-                ),),
             const Positioned(
                 right: 6,
                 top: 3,
