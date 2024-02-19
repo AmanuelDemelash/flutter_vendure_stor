@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class ProductController extends GetxController {
 
-  RxList<String> productDescMenu=RxList<String>(["Product","Details","Reviews"]);
+  RxList<String> productDescMenu=RxList<String>(["Items","Details","Reviews"]);
   RxInt selectedIndex=0.obs;
   @override
   void onInit() {
