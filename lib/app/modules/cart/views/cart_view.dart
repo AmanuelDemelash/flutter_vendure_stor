@@ -13,6 +13,7 @@ class CartView extends GetView<CartController>{
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: IconButton(onPressed:() => Get.back(), icon:const Icon(Icons.arrow_back_ios,color: ColorConstant.iconColor,)),
         title: const Text('Cart',style: TextStyle(fontSize: 27),),
         centerTitle: false,
         elevation: 0,

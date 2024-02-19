@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
 class ProductController extends GetxController {
-  //TODO: Implement ProductController
 
-  final count = 0.obs;
+  RxList<String> productDescMenu=RxList<String>(["Product","Details","Reviews"]);
+  RxInt selectedIndex=0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +19,4 @@ class ProductController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }
