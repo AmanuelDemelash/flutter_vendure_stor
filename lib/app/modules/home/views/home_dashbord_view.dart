@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:flutter_vendure_stor/app/modules/home/controllers/home_controller.dart';
+import 'package:flutter_vendure_stor/app/modules/home/views/widgets/categoryShimmer.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
@@ -91,9 +92,13 @@ class HomeDashbordView extends GetView<HomeController> {
           Query(options:QueryOptions(document: gql(QueryApp.readRepositories)),
               builder:(result, {fetchMore, refetch}) {
             if(result.hasException){
-              return const SizedBox(
-                width: 100,
-                height: 50,
+              return SizedBox(
+                width: Get.width,
+                height: 80,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children:List.generate(4, (index) => const CategoryShimmer()),
+                ),
               );
             }
              if(result.isLoading){
