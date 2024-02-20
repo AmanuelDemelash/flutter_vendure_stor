@@ -91,7 +91,10 @@ class HomeDashbordView extends GetView<HomeController> {
           Query(options:QueryOptions(document: gql(QueryApp.readRepositories)),
               builder:(result, {fetchMore, refetch}) {
             if(result.hasException){
-              print(result.exception);
+              return const SizedBox(
+                width: 100,
+                height: 50,
+              );
             }
              if(result.isLoading){
                return const CircularProgressIndicator(
