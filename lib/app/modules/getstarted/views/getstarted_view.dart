@@ -18,7 +18,7 @@ class GetstartedView extends GetView<GetstartedController> {
             const Image(image:AssetImage("assets/images/getstarted.png")),
             SizedBox(
               width: Get.width,
-              child: ElevatedButton(onPressed:() {}, child: const Text("Take a look",style: TextStyle(color: Colors.white),)),
+              child: ElevatedButton(onPressed:() => Get.offAllNamed(Routes.HOME), child: const Text("Take a look",style: TextStyle(color: Colors.white),)),
             ),
             const SizedBox(height: 25,),
             InkWell(

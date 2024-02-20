@@ -6,6 +6,8 @@ class HomeController extends GetxController {
   RxInt intialPage=0.obs;
   final  PageController pageController=PageController(initialPage: 0);
 
+  RxList<dynamic> allCategories=RxList<dynamic>([]);
+
   @override
   void onInit() {
     super.onInit();
