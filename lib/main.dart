@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vendure_stor/app/constants/configConstant.dart';
 import 'package:flutter_vendure_stor/app/constants/theme.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
@@ -7,9 +8,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 void main()async {
   await initHiveForFlutter();
 
-  final HttpLink httpLink = HttpLink(
-    'http://10.0.2.2:3000/shop-api',
-  );
+  final HttpLink httpLink = HttpLink(ConfigConstant.httpLink,);
 
   final AuthLink authLink = AuthLink(
     getToken: () async => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
