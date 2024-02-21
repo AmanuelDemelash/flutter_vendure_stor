@@ -9,8 +9,9 @@ class HomeController extends GetxController {
   RxList<dynamic> allCategories=RxList<dynamic>([]);
 
   @override
-  void onInit() {
+  void onInit()async{
     super.onInit();
+
   }
 
   @override

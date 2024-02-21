@@ -1,7 +1,7 @@
 
 class QueryApp{
 
-  static String readRepositories = """
+  static String allCategory="""
   query{
    collections{
     totalItems
@@ -12,7 +12,7 @@ class QueryApp{
       featuredAsset{
         preview
       }
-     
+    
     }
     
   }

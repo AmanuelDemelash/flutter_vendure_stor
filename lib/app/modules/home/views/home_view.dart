@@ -11,7 +11,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
    HomeView({Key? key}) : super(key: key);
-  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  // final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -28,16 +28,16 @@ class HomeView extends GetView<HomeController> {
               child: NavigationBar(
                 selectedIndex: controller.intialPage.value,
                 indicatorColor: ColorConstant.primeryColor,
-                destinations:const[
-                  NavigationDestination(icon: Icon(Icons.home), label:"Home"),
-                  NavigationDestination(icon: Icon(Icons.favorite), label:"Favorite"),
+                destinations:[
+                  NavigationDestination(icon: Icon(Icons.home,color: controller.intialPage.value==0?ColorConstant.backgroundColor:ColorConstant.secondryColor,), label:"Home"),
+                  NavigationDestination(icon: Icon(Icons.favorite,color: controller.intialPage.value==1?ColorConstant.backgroundColor:ColorConstant.secondryColor,), label:"Favorite"),
                   NavigationDestination(icon: Badge(
                       alignment: Alignment.topRight,
                               backgroundColor: Colors.deepOrange,
                               smallSize: 30,
                               label: Text("3"),
-                      child: Icon(Icons.shopping_cart)), label:"Cart"),
-                  NavigationDestination(icon: Icon(Icons.person), label:"Account"),
+                      child: Icon(Icons.shopping_cart,color: controller.intialPage.value==2?ColorConstant.backgroundColor:ColorConstant.secondryColor,)), label:"Cart"),
+                  NavigationDestination(icon: Icon(Icons.person,color: controller.intialPage.value==3?ColorConstant.backgroundColor:ColorConstant.secondryColor,), label:"Account"),
               ],
                 onDestinationSelected: (value) async{
                      controller.intialPage.value=value;
@@ -76,7 +76,7 @@ class HomeView extends GetView<HomeController> {
         // ),
         body:
             PageView(
-            controller:_pageController,
+             controller:_pageController,
              physics:const NeverScrollableScrollPhysics(),
              children:[
                HomeDashbordView(),

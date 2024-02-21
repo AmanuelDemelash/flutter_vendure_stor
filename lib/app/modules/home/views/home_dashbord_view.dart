@@ -70,9 +70,6 @@ class HomeDashbordView extends GetView<HomeController> {
           const SizedBox(
             height: 15,
           ),
-          const SizedBox(
-            height: 15,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -86,37 +83,56 @@ class HomeDashbordView extends GetView<HomeController> {
               ),
               GestureDetector(
                   onTap: () => Get.toNamed(Routes.CATEGORIES),
-                  child: const Text("view all"))
+                  child: const Row(
+                    children: [
+                      Text("view all"),
+                      Icon(Icons.arrow_forward_ios,size: 14,color: ColorConstant.iconColor,)
+                    ],
+                  ))
             ],
           ),
-          Query(options:QueryOptions(document: gql(QueryApp.readRepositories)),
+          const SizedBox(
+            height:5,
+          ),
+          Query(options:QueryOptions(document: gql(QueryApp.allCategory)),
               builder:(result, {fetchMore, refetch}) {
             if(result.hasException){
-              return SizedBox(
+               return SizedBox(
                 width: Get.width,
                 height: 80,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children:List.generate(4, (index) => const CategoryShimmer()),
+                  children:List.generate(5, (index) => const CategoryShimmer()),
                 ),
               );
             }
              if(result.isLoading){
-               return const CircularProgressIndicator(
-                 strokeWidth: 20,
+               return SizedBox(
+                 width: Get.width,
+                 height: 80,
+                 child: ListView(
+                   scrollDirection: Axis.horizontal,
+                   children:List.generate(5, (index) => const CategoryShimmer()),
+                 ),
                );
              }
              if(result.data!.isNotEmpty){
               controller.allCategories.value=result.data!["collections"]["items"];
              }
-                return GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
-                  itemCount:result.data!["collections"]["totalItems"],
-                  itemBuilder: (context, index) =>CategoryCard(category:controller.allCategories[index]),
-                );
+                return
+                    SizedBox(
+                      width: Get.width,
+                      height: 90,
+                      child: ListView.builder(
+                        // physics: const NeverScrollableScrollPhysics(),
+                        // shrinkWrap: true,
+                        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        //     crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                        scrollDirection: Axis.horizontal,
+                        itemCount:result.data!["collections"]["totalItems"],
+                        itemBuilder: (context, index) =>CategoryCard(category:controller.allCategories[index]),
+                      ),
+                    );
               },),
 
           const SizedBox(
@@ -302,6 +318,7 @@ class CategoryCard extends StatelessWidget {
     return Container(
       width: 100,
       height: 100,
+      margin:const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
           color: ColorConstant.primeryColor.withOpacity(0.05),
           borderRadius: BorderRadius.circular(10)),
@@ -330,8 +347,8 @@ class CategoryCard extends StatelessWidget {
             child: Container(
               width: Get.width,
               decoration: BoxDecoration(
-                color: ColorConstant.iconColor.withOpacity(0.5),
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10))
+                color: ColorConstant.backgroundColor.withOpacity(0.7),
+                borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10))
               ),
               child: Text(
                 category["name"],
