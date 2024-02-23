@@ -1,63 +1,73 @@
 class QueryApp {
   static String allCategory = """
   query{
-   collections{
+  collections(options: { topLevelOnly: true, }) {
     totalItems
-    items{
+    items {
       id
+      slug
       name
-      featuredAsset{
+      parentId
+      featuredAsset {
+        id
         preview
       }
-    
     }
-    
   }
 }
 """;
-
-  static String category = """
-   query getcategory(\$id: ID!){
-  collection(id:\$id){
+  static String categoryOfSelectedCollection = """
+query GetCollection(\$slug: String!) {
+  collection(slug: \$slug) {
     id
     name
     slug
     description
-    children{
+    featuredAsset {
+      id
+      preview
+    }
+     children{
       id
       name
+      slug
       featuredAsset{
         preview
       }
     }
-    productVariants{
-      totalItems
-      items{
+  }
+}
+""";
+
+  static String getCollectionProducts = """
+query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
+  search(
+    input: {
+      collectionSlug: \$slug,
+      groupByProduct: true,
+      skip: \$skip,
+      take: \$take }
+  ) {
+    totalItems
+    items {
+      productName
+      slug
+      productAsset {
         id
-        name
-        sku
-        facetValues{
-          name
-          code
-        }
-        productId
-        product{
-          id
-          name
-          featuredAsset{
-            preview
-          }
-        }
-        featuredAsset{
-          preview
-        }
-        price
-        priceWithTax
-        
+        preview
       }
+      priceWithTax {
+        ... on SinglePrice {
+          value
+        }
+        ... on PriceRange {
+          min
+          max
+        }
+      }
+      currencyCode
     }
   }
 }
-
 """;
 }

@@ -330,7 +330,7 @@ class CategoryCard extends StatelessWidget {
       key: Key(category['name']),
       behavior: HitTestBehavior.translucent,
       onTap: () async {
-        Get.toNamed(Routes.CATEGORIEDETAIL, arguments: category["id"]);
+        Get.toNamed(Routes.CATEGORIEDETAIL, arguments: category);
       },
       child: Container(
         width: 100,
