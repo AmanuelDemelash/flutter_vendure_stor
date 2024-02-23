@@ -308,7 +308,7 @@ class ProductCard extends StatelessWidget {
 }
 
 class CategoryCard extends StatelessWidget {
-  Map<String,dynamic> category={};
+   Map<String,dynamic> category={};
    CategoryCard({
     super.key,
    required this.category
@@ -316,49 +316,56 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      margin:const EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-          color: ColorConstant.primeryColor.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(10)),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-              imageUrl:
-              category["featuredAsset"]["preview"],
-              placeholder: (context, url) => const Icon(
-                Icons.image,
-                color: ColorConstant.iconColor,
-              ),
-              errorWidget: (context, url, error) =>
-              const Icon(Icons.error),
-              fit: BoxFit.cover,
-              width:100,
-              height:100,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                color: ColorConstant.backgroundColor.withOpacity(0.8),
-                borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10))
-              ),
-              child: Text(
-                category["name"],
-                textAlign: TextAlign.center,
-                style:const TextStyle(fontSize: 14,color: ColorConstant.secondryColor),
+    return GestureDetector(
+      key: Key(category['name']),
+      behavior: HitTestBehavior.translucent,
+      onTap: ()async{
+        Get.toNamed(Routes.CATEGORIEDETAIL);
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        margin:const EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+            color: ColorConstant.primeryColor.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(10)),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                imageUrl:
+                category["featuredAsset"]["preview"],
+                placeholder: (context, url) => const Icon(
+                  Icons.image,
+                  color: ColorConstant.iconColor,
+                ),
+                errorWidget: (context, url, error) =>
+                const Icon(Icons.error),
+                fit: BoxFit.cover,
+                width:100,
+                height:100,
               ),
             ),
-          )
-        ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: ColorConstant.backgroundColor.withOpacity(0.8),
+                  borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10))
+                ),
+                child: Text(
+                  category["name"],
+                  textAlign: TextAlign.center,
+                  style:const TextStyle(fontSize: 14,color: ColorConstant.secondryColor),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

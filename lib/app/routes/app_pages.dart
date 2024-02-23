@@ -1,3 +1,4 @@
+import 'package:flutter_vendure_stor/app/modules/categories/views/categori_detail_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/account/bindings/account_binding.dart';
@@ -53,6 +54,11 @@ class AppPages {
     GetPage(
       name: _Paths.CATEGORIES,
       page: () => const CategoriesView(),
+      binding: CategoriesBinding(),
+    ),
+    GetPage(
+      name: _Paths.CATEGORIEDETAIL,
+      page: () => const CategoriDetailView(),
       binding: CategoriesBinding(),
     ),
     GetPage(
