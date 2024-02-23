@@ -85,57 +85,70 @@ class HomeDashbordView extends GetView<HomeController> {
                   onTap: () => Get.toNamed(Routes.CATEGORIES),
                   child: const Row(
                     children: [
-                      Text("view all",style: TextStyle(color: ColorConstant.secondryColor),),
-                      SizedBox(width: 5,),
-                      Icon(Icons.arrow_forward_ios,size: 14,color: ColorConstant.iconColor,)
+                      Text(
+                        "view all",
+                        style: TextStyle(color: ColorConstant.secondryColor),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14,
+                        color: ColorConstant.iconColor,
+                      )
                     ],
                   ))
             ],
           ),
           const SizedBox(
-            height:5,
+            height: 5,
           ),
-          Query(options:QueryOptions(document: gql(QueryApp.allCategory)),
-              builder:(result, {fetchMore, refetch}) {
-            if(result.hasException){
-               return SizedBox(
+          Query(
+            options: QueryOptions(document: gql(QueryApp.allCategory)),
+            builder: (result, {fetchMore, refetch}) {
+              if (result.hasException) {
+                return SizedBox(
+                  width: Get.width,
+                  height: 80,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children:
+                        List.generate(5, (index) => const CategoryShimmer()),
+                  ),
+                );
+              }
+              if (result.isLoading) {
+                return SizedBox(
+                  width: Get.width,
+                  height: 80,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children:
+                        List.generate(5, (index) => const CategoryShimmer()),
+                  ),
+                );
+              }
+              if (result.data!.isNotEmpty) {
+                controller.allCategories.value =
+                    result.data!["collections"]["items"];
+              }
+              return SizedBox(
                 width: Get.width,
-                height: 80,
-                child: ListView(
+                height: 90,
+                child: ListView.builder(
+                  // physics: const NeverScrollableScrollPhysics(),
+                  // shrinkWrap: true,
+                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  //     crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
                   scrollDirection: Axis.horizontal,
-                  children:List.generate(5, (index) => const CategoryShimmer()),
+                  itemCount: result.data!["collections"]["totalItems"],
+                  itemBuilder: (context, index) =>
+                      CategoryCard(category: controller.allCategories[index]),
                 ),
               );
-            }
-             if(result.isLoading){
-               return SizedBox(
-                 width: Get.width,
-                 height: 80,
-                 child: ListView(
-                   scrollDirection: Axis.horizontal,
-                   children:List.generate(5, (index) => const CategoryShimmer()),
-                 ),
-               );
-             }
-             if(result.data!.isNotEmpty){
-              controller.allCategories.value=result.data!["collections"]["items"];
-             }
-                return
-                    SizedBox(
-                      width: Get.width,
-                      height: 90,
-                      child: ListView.builder(
-                        // physics: const NeverScrollableScrollPhysics(),
-                        // shrinkWrap: true,
-                        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        //     crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
-                        scrollDirection: Axis.horizontal,
-                        itemCount:result.data!["collections"]["totalItems"],
-                        itemBuilder: (context, index) =>CategoryCard(category:controller.allCategories[index]),
-                      ),
-                    );
-              },),
-
+            },
+          ),
           const SizedBox(
             height: 10,
           ),
@@ -223,7 +236,7 @@ class ProductCard extends StatelessWidget {
             ],
           )),
           const Padding(
-            padding: EdgeInsets.only(left: 10, top:1),
+            padding: EdgeInsets.only(left: 10, top: 1),
             child: Row(
               children: [
                 Text(
@@ -308,24 +321,21 @@ class ProductCard extends StatelessWidget {
 }
 
 class CategoryCard extends StatelessWidget {
-   Map<String,dynamic> category={};
-   CategoryCard({
-    super.key,
-   required this.category
-  });
+  Map<String, dynamic> category = {};
+  CategoryCard({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       key: Key(category['name']),
       behavior: HitTestBehavior.translucent,
-      onTap: ()async{
-        Get.toNamed(Routes.CATEGORIEDETAIL);
+      onTap: () async {
+        Get.toNamed(Routes.CATEGORIEDETAIL, arguments: category["id"]);
       },
       child: Container(
         width: 100,
         height: 100,
-        margin:const EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
             color: ColorConstant.primeryColor.withOpacity(0.05),
             borderRadius: BorderRadius.circular(10)),
@@ -334,17 +344,15 @@ class CategoryCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
-                imageUrl:
-                category["featuredAsset"]["preview"],
+                imageUrl: category["featuredAsset"]["preview"],
                 placeholder: (context, url) => const Icon(
                   Icons.image,
                   color: ColorConstant.iconColor,
                 ),
-                errorWidget: (context, url, error) =>
-                const Icon(Icons.error),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
                 fit: BoxFit.cover,
-                width:100,
-                height:100,
+                width: 100,
+                height: 100,
               ),
             ),
             Positioned(
@@ -354,13 +362,15 @@ class CategoryCard extends StatelessWidget {
               child: Container(
                 width: Get.width,
                 decoration: BoxDecoration(
-                  color: ColorConstant.backgroundColor.withOpacity(0.8),
-                  borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10))
-                ),
+                    color: ColorConstant.backgroundColor.withOpacity(0.8),
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
                 child: Text(
                   category["name"],
                   textAlign: TextAlign.center,
-                  style:const TextStyle(fontSize: 14,color: ColorConstant.secondryColor),
+                  style: const TextStyle(
+                      fontSize: 14, color: ColorConstant.secondryColor),
                 ),
               ),
             )

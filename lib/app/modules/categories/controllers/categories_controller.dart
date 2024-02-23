@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 
 class CategoriesController extends GetxController {
-  //TODO: Implement CategoriesController
-
-  final count = 0.obs;
+  final selectedSubCategory = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +16,4 @@ class CategoriesController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

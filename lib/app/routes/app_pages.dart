@@ -58,7 +58,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CATEGORIEDETAIL,
-      page: () => const CategoriDetailView(),
+      page: () => CategoriDetailView(),
       binding: CategoriesBinding(),
     ),
     GetPage(
