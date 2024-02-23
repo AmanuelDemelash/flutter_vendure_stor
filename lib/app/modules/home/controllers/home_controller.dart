@@ -11,7 +11,6 @@ class HomeController extends GetxController {
   @override
   void onInit()async{
     super.onInit();
-
   }
 
   @override
@@ -23,4 +22,6 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
+
+
 }

@@ -85,7 +85,8 @@ class HomeDashbordView extends GetView<HomeController> {
                   onTap: () => Get.toNamed(Routes.CATEGORIES),
                   child: const Row(
                     children: [
-                      Text("view all"),
+                      Text("view all",style: TextStyle(color: ColorConstant.secondryColor),),
+                      SizedBox(width: 5,),
                       Icon(Icons.arrow_forward_ios,size: 14,color: ColorConstant.iconColor,)
                     ],
                   ))
@@ -347,7 +348,7 @@ class CategoryCard extends StatelessWidget {
             child: Container(
               width: Get.width,
               decoration: BoxDecoration(
-                color: ColorConstant.backgroundColor.withOpacity(0.7),
+                color: ColorConstant.backgroundColor.withOpacity(0.8),
                 borderRadius:const BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10))
               ),
               child: Text(

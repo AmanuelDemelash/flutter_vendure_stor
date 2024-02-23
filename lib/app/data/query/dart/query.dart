@@ -8,7 +8,6 @@ class QueryApp{
     items{
       id
       name
-      slug
       featuredAsset{
         preview
       }
