@@ -213,20 +213,23 @@ class CollectionProductCart extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: image,
-                    placeholder: (context, url) => const Icon(
-                      Icons.image,
-                      color: ColorConstant.iconColor,
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit.cover,
-                    width: 200,
-                    height: 110,
-                  )),
+              child: Hero(
+                tag: slug,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CachedNetworkImage(
+                      imageUrl: image,
+                      placeholder: (context, url) => const Icon(
+                        Icons.image,
+                        color: ColorConstant.iconColor,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.cover,
+                      width: 200,
+                      height: 110,
+                    )),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 3, right: 10),

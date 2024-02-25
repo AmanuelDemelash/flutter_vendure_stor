@@ -12,6 +12,8 @@ class ProductView extends GetView<ProductController> {
   ProductView({Key? key}) : super(key: key);
 
   String slug = Get.arguments;
+  final PageController _pageController = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +77,6 @@ class ProductView extends GetView<ProductController> {
                           children: [
                             SizedBox(
                               width: Get.width,
-                              height: 235,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -83,7 +84,7 @@ class ProductView extends GetView<ProductController> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: List.generate(
-                                      3,
+                                      result.data!["product"]["assets"].length,
                                       (index) => Container(
                                         margin:
                                             const EdgeInsets.only(bottom: 2),
@@ -91,8 +92,8 @@ class ProductView extends GetView<ProductController> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: CachedNetworkImage(
-                                            imageUrl:
-                                                "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                            imageUrl: result.data!["product"]
+                                                ["assets"][index]["preview"],
                                             placeholder: (context, url) =>
                                                 const Icon(
                                               Icons.image,
@@ -111,7 +112,7 @@ class ProductView extends GetView<ProductController> {
                                   ),
                                   Expanded(
                                     child: Hero(
-                                      tag: "prod",
+                                      tag: slug,
                                       child: Container(
                                         width: Get.width,
                                         margin: const EdgeInsets.all(10),
@@ -120,8 +121,8 @@ class ProductView extends GetView<ProductController> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: CachedNetworkImage(
-                                            imageUrl:
-                                                "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                            imageUrl: result.data!["product"]
+                                                ["featuredAsset"]["preview"],
                                             placeholder: (context, url) =>
                                                 const Icon(
                                               Icons.image,
@@ -145,7 +146,9 @@ class ProductView extends GetView<ProductController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  result.data!['description'][''],
+                                  "${result.data!["product"]["variants"][0]["priceWithTax"] / 100} " +
+                                      result.data!["product"]["variants"][0]
+                                          ["currencyCode"],
                                   style: const TextStyle(
                                       fontSize: 23,
                                       color: ColorConstant.primeryColor,
@@ -216,12 +219,19 @@ class ProductView extends GetView<ProductController> {
                                   children: List.generate(
                                       controller.productDescMenu.length,
                                       (index) => GestureDetector(
-                                            onTap: () => controller
-                                                .selectedIndex.value = index,
+                                            onTap: () async {
+                                              controller.selectedIndex.value =
+                                                  index;
+                                              _pageController.jumpToPage(index);
+                                            },
                                             child: AnimatedContainer(
                                               duration: const Duration(
                                                   microseconds: 10),
-                                              padding: const EdgeInsets.all(7),
+                                              padding: const EdgeInsets.only(
+                                                  left: 15,
+                                                  right: 15,
+                                                  bottom: 7,
+                                                  top: 7),
                                               margin: const EdgeInsets.only(
                                                   right: 7),
                                               decoration: BoxDecoration(
@@ -261,17 +271,76 @@ class ProductView extends GetView<ProductController> {
                                           ))),
                             ),
                             //indexed stack
-                            Obx(
-                              () => IndexedStack(
-                                key: Key(
-                                    controller.selectedIndex.value.toString()),
-                                index: controller.selectedIndex.value,
+                            SizedBox(
+                              width: Get.width,
+                              height: Get.height / 2,
+                              child: PageView(
+                                controller: _pageController,
+                                scrollDirection: Axis.horizontal,
+                                onPageChanged: (value) {
+                                  controller.selectedIndex.value = value;
+                                },
                                 children: [
                                   AnimatedContainer(
                                       duration:
                                           const Duration(milliseconds: 100),
                                       width: Get.width,
-                                      child: Text("data")),
+                                      child: ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: result
+                                            .data!["product"]["variants"]
+                                            .length,
+                                        itemBuilder: (context, index) =>
+                                            ListTile(
+                                          leading: Checkbox.adaptive(
+                                            value: true,
+                                            onChanged: (value) {},
+                                          ),
+                                          title: Text(result.data!["product"]
+                                              ["variants"][index]["name"]),
+                                          subtitle: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const Text("Price"),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                      (result.data!["product"][
+                                                                          "variants"]
+                                                                      [index][
+                                                                  "priceWithTax"] /
+                                                              100)
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          color: ColorConstant
+                                                              .primeryColor)),
+                                                  Text(
+                                                    " " +
+                                                        result.data!["product"]
+                                                                    ["variants"]
+                                                                [index]
+                                                            ["currencyCode"],
+                                                    style: const TextStyle(
+                                                        color: ColorConstant
+                                                            .primeryColor),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          trailing: Text(result.data!["product"]
+                                                  ["variants"][index]
+                                              ["stockLevel"]),
+                                        ),
+                                      )),
                                   AnimatedContainer(
                                     duration: const Duration(microseconds: 100),
                                     child: ListView(
@@ -358,6 +427,13 @@ class ProductView extends GetView<ProductController> {
                                   ),
                                 ],
                               ),
+
+                              //  IndexedStack(
+                              //   key: Key(
+                              //       controller.selectedIndex.value.toString()),
+                              //   index: controller.selectedIndex.value,
+
+                              // ),
                             )
                           ]),
                     ),

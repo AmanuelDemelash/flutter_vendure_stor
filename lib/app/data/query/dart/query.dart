@@ -85,6 +85,11 @@ query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
       id
       preview
     }
+    facetValues{
+      id
+      name
+      code
+    }
     variants {
       id
       name
