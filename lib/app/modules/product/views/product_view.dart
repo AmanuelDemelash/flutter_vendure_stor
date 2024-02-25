@@ -69,6 +69,10 @@ class ProductView extends GetView<ProductController> {
                     child: CircularProgressIndicator(),
                   );
                 }
+                if (result.data!.isNotEmpty) {
+                  controller.productDetail.value = result.data!;
+                }
+
                 return Column(
                   children: [
                     Expanded(
@@ -84,7 +88,8 @@ class ProductView extends GetView<ProductController> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: List.generate(
-                                      result.data!["product"]["assets"].length,
+                                      controller.productDetail
+                                          .value["product"]["assets"].length,
                                       (index) => Container(
                                         margin:
                                             const EdgeInsets.only(bottom: 2),
@@ -92,8 +97,9 @@ class ProductView extends GetView<ProductController> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: CachedNetworkImage(
-                                            imageUrl: result.data!["product"]
-                                                ["assets"][index]["preview"],
+                                            imageUrl: controller.productDetail
+                                                    .value["product"]["assets"]
+                                                [index]["preview"],
                                             placeholder: (context, url) =>
                                                 const Icon(
                                               Icons.image,
@@ -115,7 +121,7 @@ class ProductView extends GetView<ProductController> {
                                       tag: slug,
                                       child: Container(
                                         width: Get.width,
-                                        margin: const EdgeInsets.all(10),
+                                        margin: const EdgeInsets.only(left: 10),
                                         height: 230,
                                         child: ClipRRect(
                                           borderRadius:
@@ -146,9 +152,9 @@ class ProductView extends GetView<ProductController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${result.data!["product"]["variants"][0]["priceWithTax"] / 100} " +
-                                      result.data!["product"]["variants"][0]
-                                          ["currencyCode"],
+                                  "${controller.productDetail.value["product"]["variants"][0]["priceWithTax"] / 100} " +
+                                      controller.productDetail.value["product"]
+                                          ["variants"][0]["currencyCode"],
                                   style: const TextStyle(
                                       fontSize: 23,
                                       color: ColorConstant.primeryColor,
@@ -176,7 +182,8 @@ class ProductView extends GetView<ProductController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  result.data!["product"]["name"],
+                                  controller.productDetail.value["product"]
+                                      ["name"],
                                   style: const TextStyle(
                                       color: ColorConstant.secondryColor),
                                 ),
@@ -204,7 +211,8 @@ class ProductView extends GetView<ProductController> {
                               "Description",
                               style: TextStyle(fontWeight: FontWeight.w700),
                             ),
-                            Text(result.data!["product"]["description"]),
+                            Text(controller.productDetail.value["product"]
+                                ["description"]),
                             Divider(
                               thickness: 1,
                               color:
