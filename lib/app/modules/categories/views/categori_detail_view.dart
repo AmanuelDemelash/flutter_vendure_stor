@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:flutter_vendure_stor/app/modules/categories/controllers/categories_controller.dart';
+import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
@@ -84,6 +85,7 @@ class CategoriDetailView extends GetView<CategoriesController> {
                 ],
               ),
             ),
+            //sub category
             Query(
               options: QueryOptions(
                   document: gql(QueryApp.categoryOfSelectedCollection),
@@ -94,15 +96,23 @@ class CategoriDetailView extends GetView<CategoriesController> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (result.hasException) {}
-                if (result.data!.isNotEmpty) {}
+                if (result.hasException) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (result.data!.isEmpty) {
+                  return const Center(
+                    child: Text("No product found"),
+                  );
+                }
                 return result.data?["collection"]["children"].length == 0
                     ? SizedBox(
                         width: Get.width,
                         height: 12,
                       )
                     : SizedBox(
-                        height: 90,
+                        height: 75,
                         width: Get.width,
                         child: ListView.builder(
                             padding: const EdgeInsets.only(left: 10),
@@ -119,6 +129,10 @@ class CategoriDetailView extends GetView<CategoriesController> {
                       );
               },
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            //category products
             Expanded(
                 child: Query(
               options: QueryOptions(
@@ -128,13 +142,25 @@ class CategoriDetailView extends GetView<CategoriesController> {
                     "skip": 0,
                   }),
               builder: (result, {fetchMore, refetch}) {
-                if (result.isLoading) {}
-                if (result.hasException) {}
-                if (result.data!.isNotEmpty) {}
+                if (result.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (result.hasException) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (result.data!.isEmpty) {
+                  return const Center(
+                    child: Text("No product found"),
+                  );
+                }
                 return GridView.builder(
                     padding: const EdgeInsets.all(15),
                     controller: ScrollController(),
-                    //physics:const BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: result.data?["search"]["totalItems"],
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -142,14 +168,16 @@ class CategoriDetailView extends GetView<CategoriesController> {
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10),
                     itemBuilder: (context, index) => CollectionProductCart(
-                        image: result.data?["search"]["items"][index]
-                            ["productAsset"]["preview"],
-                        name: result.data?["search"]["items"][index]
-                            ["productName"],
-                        min: result.data!["search"]["items"][index]
-                            ["priceWithTax"]["min"],
-                        max: result.data!["search"]["items"][index]
-                            ["priceWithTax"]["max"]));
+                          image: result.data?["search"]["items"][index]
+                              ["productAsset"]["preview"],
+                          name: result.data?["search"]["items"][index]
+                              ["productName"],
+                          min: result.data!["search"]["items"][index]
+                              ["priceWithTax"]["min"],
+                          max: result.data!["search"]["items"][index]
+                              ["priceWithTax"]["max"],
+                          slug: result.data!["search"]["items"][index]["slug"],
+                        ));
               },
             ))
           ],
@@ -163,77 +191,85 @@ class CollectionProductCart extends StatelessWidget {
       required this.image,
       required this.name,
       required this.min,
-      required this.max});
+      required this.max,
+      required this.slug});
 
   String image;
   String name;
   int min;
   int max;
+  String slug;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CachedNetworkImage(
-                  imageUrl: image,
-                  placeholder: (context, url) => const Icon(
-                    Icons.image,
-                    color: ColorConstant.iconColor,
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 110,
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 3, right: 10),
-            child: Text(
-              name,
-              maxLines: 1,
-              style: const TextStyle(
-                color: ColorConstant.secondryColor,
+      child: GestureDetector(
+        onTap: () async {
+          Get.toNamed(Routes.PRODUCT, arguments: slug);
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    placeholder: (context, url) => const Icon(
+                      Icons.image,
+                      color: ColorConstant.iconColor,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                    width: 200,
+                    height: 110,
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 3, right: 10),
+              child: Text(
+                name,
+                maxLines: 1,
+                style: const TextStyle(
+                  color: ColorConstant.secondryColor,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 1),
-            child: min == max
-                ? Text(
-                    (min / 100).toString(),
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: ColorConstant.secondryColor,
-                        fontWeight: FontWeight.bold),
-                  )
-                : Row(
-                    children: [
-                      Text(
-                        (min / 100).toString(),
-                        style: const TextStyle(
-                            fontSize: 15,
-                            color: ColorConstant.secondryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Text(" - "),
-                      Text(
-                        (max / 100).toString(),
-                        style: const TextStyle(
-                            fontSize: 15,
-                            color: ColorConstant.secondryColor,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 1),
+              child: min == max
+                  ? Text(
+                      (min / 100).toString(),
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: ColorConstant.secondryColor,
+                          fontWeight: FontWeight.bold),
+                    )
+                  : Row(
+                      children: [
+                        Text(
+                          (min / 100).toString(),
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: ColorConstant.secondryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Text(" - "),
+                        Text(
+                          (max / 100).toString(),
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: ColorConstant.secondryColor,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -248,8 +284,8 @@ class ChildCollectionCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 90,
-        height: 90,
+        width: 75,
+        height: 70,
         margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

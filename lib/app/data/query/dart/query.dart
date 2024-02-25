@@ -70,4 +70,40 @@ query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
   }
 }
 """;
+
+  static String ProductDetail = """
+  query GetProductDetail(\$slug: String!) {
+   product(slug: \$slug) {
+    id
+    name
+    description
+    featuredAsset {
+      id
+      preview
+    }
+    assets {
+      id
+      preview
+    }
+    variants {
+      id
+      name
+      sku
+      stockLevel
+      currencyCode
+      price
+      priceWithTax
+      featuredAsset {
+        id
+        preview
+      }
+      assets {
+        id
+        preview
+      }
+    }
+  }
+}
+
+""";
 }
