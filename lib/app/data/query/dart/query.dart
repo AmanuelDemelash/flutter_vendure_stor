@@ -89,6 +89,9 @@ query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
       id
       name
       code
+      facet{
+        name
+      }
     }
     variants {
       id

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -71,6 +73,7 @@ class ProductView extends GetView<ProductController> {
                 }
                 if (result.data!.isNotEmpty) {
                   controller.productDetail.value = result.data!;
+                  controller.getAllVariantInfo();
                 }
 
                 return Column(
@@ -79,8 +82,9 @@ class ProductView extends GetView<ProductController> {
                       child: ListView(
                           padding: const EdgeInsets.all(10),
                           children: [
-                            SizedBox(
+                            Container(
                               width: Get.width,
+                              margin: const EdgeInsets.only(bottom: 10),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -127,7 +131,8 @@ class ProductView extends GetView<ProductController> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: CachedNetworkImage(
-                                            imageUrl: result.data!["product"]
+                                            imageUrl: controller.productDetail
+                                                    .value["product"]
                                                 ["featuredAsset"]["preview"],
                                             placeholder: (context, url) =>
                                                 const Icon(
@@ -234,7 +239,7 @@ class ProductView extends GetView<ProductController> {
                                             },
                                             child: AnimatedContainer(
                                               duration: const Duration(
-                                                  microseconds: 10),
+                                                  microseconds: 50),
                                               padding: const EdgeInsets.only(
                                                   left: 15,
                                                   right: 15,
@@ -280,169 +285,200 @@ class ProductView extends GetView<ProductController> {
                             ),
                             //indexed stack
                             SizedBox(
-                              width: Get.width,
-                              height: Get.height / 2,
-                              child: PageView(
-                                controller: _pageController,
-                                scrollDirection: Axis.horizontal,
-                                onPageChanged: (value) {
-                                  controller.selectedIndex.value = value;
-                                },
-                                children: [
-                                  AnimatedContainer(
+                                width: Get.width,
+                                height: Get.height / 2,
+                                child: PageView(
+                                  controller: _pageController,
+                                  scrollDirection: Axis.horizontal,
+                                  onPageChanged: (value) {
+                                    controller.selectedIndex.value = value;
+                                  },
+                                  children: [
+                                    AnimatedContainer(
+                                        duration:
+                                            const Duration(milliseconds: 100),
+                                        width: Get.width,
+                                        child: ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: controller
+                                              .productVariants.value.length,
+                                          itemBuilder: (context, index) =>
+                                              ListTile(
+                                            leading:
+                                                Obx(() => Checkbox.adaptive(
+                                                      value: controller
+                                                                  .selectedVariant
+                                                                  .value ==
+                                                              index
+                                                          ? true
+                                                          : false,
+                                                      onChanged: (value) async {
+                                                        controller
+                                                            .selectedVariant
+                                                            .value = index!;
+                                                      },
+                                                    )),
+                                            title: Text(controller
+                                                .productVariants
+                                                .value[index]["name"]),
+                                            subtitle: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const Text("Price"),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                        (controller.productVariants
+                                                                            .value[
+                                                                        index][
+                                                                    "priceWithTax"] /
+                                                                100)
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            color: ColorConstant
+                                                                .primeryColor)),
+                                                    Text(
+                                                      " " +
+                                                          controller
+                                                                  .productVariants
+                                                                  .value[index]
+                                                              ["currencyCode"],
+                                                      style: const TextStyle(
+                                                          color: ColorConstant
+                                                              .primeryColor),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            trailing: Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: Colors.green),
+                                              child: Text(
+                                                controller.productVariants
+                                                    .value[index]["stockLevel"],
+                                                style: const TextStyle(
+                                                    color: ColorConstant
+                                                        .backgroundColor),
+                                              ),
+                                            ),
+                                          ),
+                                        )),
+                                    AnimatedContainer(
                                       duration:
-                                          const Duration(milliseconds: 100),
+                                          const Duration(microseconds: 100),
+                                      child: ListView(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        children: [
+                                          ListTile(
+                                              title: const Text("Category"),
+                                              subtitle: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: List.generate(
+                                                    controller.category.length,
+                                                    (index) => Row(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons
+                                                                  .arrow_drop_down,
+                                                              color:
+                                                                  ColorConstant
+                                                                      .iconColor,
+                                                            ),
+                                                            Text(controller
+                                                                    .category[
+                                                                index]),
+                                                          ],
+                                                        )),
+                                              )),
+                                          ListTile(
+                                            title: const Text("Brand"),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: List.generate(
+                                                  controller.brand.length,
+                                                  (index) => Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons
+                                                                .arrow_drop_down,
+                                                            color: ColorConstant
+                                                                .iconColor,
+                                                          ),
+                                                          Text(controller
+                                                              .brand[index]),
+                                                        ],
+                                                      )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    AnimatedContainer(
+                                      duration:
+                                          const Duration(microseconds: 20),
                                       width: Get.width,
                                       child: ListView.builder(
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
-                                        itemCount: result
-                                            .data!["product"]["variants"]
-                                            .length,
+                                        itemCount: 4,
                                         itemBuilder: (context, index) =>
                                             ListTile(
-                                          leading: Checkbox.adaptive(
-                                            value: true,
-                                            onChanged: (value) {},
+                                          leading: const CircleAvatar(
+                                            radius: 20,
                                           ),
-                                          title: Text(result.data!["product"]
-                                              ["variants"][index]["name"]),
-                                          subtitle: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                          title: const Text("andrew"),
+                                          subtitle: const Text(
+                                            "review message from customer",
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          trailing: Column(
                                             children: [
-                                              Row(
-                                                children: [
-                                                  const Text("Price"),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                      (result.data!["product"][
-                                                                          "variants"]
-                                                                      [index][
-                                                                  "priceWithTax"] /
-                                                              100)
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          color: ColorConstant
-                                                              .primeryColor)),
-                                                  Text(
-                                                    " " +
-                                                        result.data!["product"]
-                                                                    ["variants"]
-                                                                [index]
-                                                            ["currencyCode"],
-                                                    style: const TextStyle(
-                                                        color: ColorConstant
-                                                            .primeryColor),
-                                                  ),
-                                                ],
+                                              Text(DateTime.now()
+                                                  .year
+                                                  .toString()),
+                                              RatingBar.builder(
+                                                glow: true,
+                                                itemSize: 10,
+                                                initialRating: 3,
+                                                minRating: 1,
+                                                direction: Axis.horizontal,
+                                                allowHalfRating: true,
+                                                itemCount: 5,
+                                                itemPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 1),
+                                                itemBuilder: (context, _) =>
+                                                    const Icon(
+                                                  Icons.star,
+                                                  color: ColorConstant
+                                                      .primeryColor,
+                                                ),
+                                                onRatingUpdate: (rating) {},
                                               )
                                             ],
                                           ),
-                                          trailing: Text(result.data!["product"]
-                                                  ["variants"][index]
-                                              ["stockLevel"]),
-                                        ),
-                                      )),
-                                  AnimatedContainer(
-                                    duration: const Duration(microseconds: 100),
-                                    child: ListView(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      children: const [
-                                        ListTile(
-                                          title: Text("Brand"),
-                                          subtitle: Text("Nike"),
-                                          trailing: Column(
-                                            children: [
-                                              Text("SKU"),
-                                              Text("sd223r3665618")
-                                            ],
-                                          ),
-                                        ),
-                                        ListTile(
-                                          title: Text("Brand"),
-                                          subtitle: Text("Nike"),
-                                          trailing: Column(
-                                            children: [
-                                              Text("SKU"),
-                                              Text("sd223r3665618")
-                                            ],
-                                          ),
-                                        ),
-                                        ListTile(
-                                          title: Text("Brand"),
-                                          subtitle: Text("Nike"),
-                                          trailing: Column(
-                                            children: [
-                                              Text("SKU"),
-                                              Text("sd223r3665618")
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  AnimatedContainer(
-                                    duration: const Duration(microseconds: 20),
-                                    width: Get.width,
-                                    child: ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: 5,
-                                      itemBuilder: (context, index) => ListTile(
-                                        leading: const CircleAvatar(
-                                          radius: 20,
-                                        ),
-                                        title: const Text("andrew"),
-                                        subtitle: const Text(
-                                          "review message from customer",
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-                                        trailing: Column(
-                                          children: [
-                                            Text(
-                                                DateTime.now().year.toString()),
-                                            RatingBar.builder(
-                                              glow: true,
-                                              itemSize: 10,
-                                              initialRating: 3,
-                                              minRating: 1,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 1),
-                                              itemBuilder: (context, _) =>
-                                                  const Icon(
-                                                Icons.star,
-                                                color:
-                                                    ColorConstant.primeryColor,
-                                              ),
-                                              onRatingUpdate: (rating) {},
-                                            )
-                                          ],
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-
-                              //  IndexedStack(
-                              //   key: Key(
-                              //       controller.selectedIndex.value.toString()),
-                              //   index: controller.selectedIndex.value,
-
-                              // ),
-                            )
+                                  ],
+                                ))
                           ]),
                     ),
                     Container(
