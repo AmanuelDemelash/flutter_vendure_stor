@@ -187,7 +187,7 @@ class ProductView extends GetView<ProductController> {
                                   style: const TextStyle(
                                       color: ColorConstant.secondryColor),
                                 ),
-                                Row(
+                                const Row(
                                   children: [
                                     Text('20 sold'),
                                     Divider(
