@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
+import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
 import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -317,7 +318,7 @@ class ProductView extends GetView<ProductController> {
                                                       onChanged: (value) async {
                                                         controller
                                                             .selectedVariant
-                                                            .value = index!;
+                                                            .value = index;
                                                       },
                                                     )),
                                             title: Text(controller
@@ -495,7 +496,24 @@ class ProductView extends GetView<ProductController> {
                                           ColorConstant.backgroundColor,
                                       side: const BorderSide(
                                           color: ColorConstant.primeryColor)),
-                                  onPressed: () => Get.toNamed(Routes.CART),
+                                  onPressed: () async {
+                                    Get.dialog(AlertDialog(
+                                      backgroundColor:
+                                          ColorConstant.backgroundColor,
+                                      content: SizedBox(
+                                        height: 100,
+                                        width: Get.width / 3,
+                                        child: const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("Adding Item"),
+                                            WidgetConstant.spinkitLoading
+                                          ],
+                                        ),
+                                      ),
+                                    ));
+                                  },
                                   child: const Text("Add To Cart")),
                             ),
                           ),
