@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
 import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:flutter_vendure_stor/app/modules/categories/controllers/categories_controller.dart';
 import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
@@ -144,12 +145,12 @@ class CategoriDetailView extends GetView<CategoriesController> {
               builder: (result, {fetchMore, refetch}) {
                 if (result.isLoading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: WidgetConstant.spinkitLoading,
                   );
                 }
                 if (result.hasException) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: WidgetConstant.spinkitLoading,
                   );
                 }
                 if (result.data!.isEmpty) {

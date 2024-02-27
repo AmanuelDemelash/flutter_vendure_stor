@@ -59,17 +59,17 @@ class ProductView extends GetView<ProductController> {
               builder: (result, {fetchMore, refetch}) {
                 if (result.isLoading) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: WidgetConstant.spinkitLoading,
                   );
                 }
                 if (result.hasException) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: WidgetConstant.spinkitLoading,
                   );
                 }
                 if (result.data!.isEmpty) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: WidgetConstant.spinkitLoading,
                   );
                 }
                 if (result.data!.isNotEmpty) {
@@ -515,30 +515,38 @@ class ProductView extends GetView<ProductController> {
                             child: SizedBox(
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      backgroundColor:
-                                          ColorConstant.backgroundColor,
-                                      side: const BorderSide(
-                                          color: ColorConstant.primeryColor)),
+                                    elevation: 0,
+                                    backgroundColor: ColorConstant.primeryColor,
+                                  ),
                                   onPressed: () async {
-                                    Get.dialog(AlertDialog(
-                                      backgroundColor:
-                                          ColorConstant.backgroundColor,
-                                      content: SizedBox(
-                                        height: 100,
-                                        width: Get.width / 3,
-                                        child: const Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text("Adding Item"),
-                                            WidgetConstant.spinkitLoading
-                                          ],
-                                        ),
-                                      ),
-                                    ));
+                                    // Get.dialog(AlertDialog(
+                                    //   backgroundColor:
+                                    //       ColorConstant.backgroundColor,
+                                    //   content: SizedBox(
+                                    //     height: 100,
+                                    //     width: Get.width / 3,
+                                    //     child: const Column(
+                                    //       mainAxisAlignment:
+                                    //           MainAxisAlignment.center,
+                                    //       children: [
+                                    //         Text("Adding Item"),
+                                    //         WidgetConstant.spinkitLoading
+                                    //       ],
+                                    //     ),
+                                    //   ),
+                                    // ));
+                                    Get.snackbar(
+                                        "Adding to cart", "add item to cart",
+                                        padding: const EdgeInsets.all(15),
+                                        showProgressIndicator: true,
+                                        progressIndicatorBackgroundColor:
+                                            ColorConstant.primeryColor);
                                   },
-                                  child: const Text("Add To Cart")),
+                                  child: const Text(
+                                    "Add To Cart",
+                                    style: TextStyle(
+                                        color: ColorConstant.backgroundColor),
+                                  )),
                             ),
                           ),
                         ],
