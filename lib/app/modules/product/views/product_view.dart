@@ -488,6 +488,30 @@ class ProductView extends GetView<ProductController> {
                       child: Row(
                         children: [
                           Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "price with tax",
+                                style:
+                                    TextStyle(color: ColorConstant.iconColor),
+                              ),
+                              Obx(
+                                () => Text(
+                                  "${controller.productVariants.value[controller.selectedVariant.value]["priceWithTax"] / 100} " +
+                                      controller.productDetail.value["product"]
+                                                  ["variants"]
+                                              [controller.selectedVariant.value]
+                                          ["currencyCode"],
+                                  style: const TextStyle(
+                                      fontSize: 23,
+                                      color: ColorConstant.primeryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          )),
+                          Expanded(
                             child: SizedBox(
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -517,21 +541,6 @@ class ProductView extends GetView<ProductController> {
                                   child: const Text("Add To Cart")),
                             ),
                           ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(elevation: 0),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    "Buy Now",
-                                    style: TextStyle(
-                                        color: ColorConstant.backgroundColor),
-                                  )),
-                            ),
-                          )
                         ],
                       ),
                     )
