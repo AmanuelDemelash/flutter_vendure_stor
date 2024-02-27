@@ -499,9 +499,8 @@ class ProductView extends GetView<ProductController> {
                               Obx(
                                 () => Text(
                                   "${controller.productVariants.value[controller.selectedVariant.value]["priceWithTax"] / 100} " +
-                                      controller.productDetail.value["product"]
-                                                  ["variants"]
-                                              [controller.selectedVariant.value]
+                                      controller.productVariants.value[
+                                              controller.selectedVariant.value]
                                           ["currencyCode"],
                                   style: const TextStyle(
                                       fontSize: 23,
