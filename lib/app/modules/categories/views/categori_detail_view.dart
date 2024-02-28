@@ -83,10 +83,13 @@ class CategoriDetailView extends GetView<CategoriesController> {
               padding: const EdgeInsets.only(left: 8, bottom: 8),
               child: Row(
                 children: [
-                  const Text("Slug:  "),
+                  Text("Slug:  ",
+                      style: TextStyle(
+                          color: ColorConstant.secondryColor.withOpacity(0.6))),
                   Text(
                     category["slug"],
-                    style: const TextStyle(color: ColorConstant.secondryColor),
+                    style: TextStyle(
+                        color: ColorConstant.secondryColor.withOpacity(0.6)),
                   ),
                 ],
               ),
@@ -257,11 +260,16 @@ class BottomSheetContent extends StatelessWidget {
                           children: [
                             Checkbox.adaptive(
                               value: Get.find<CategoriesController>()
-                                          .selectedSubCategory
+                                          .subCategorySlug
                                           .value ==
-                                      index
-                                  ? true
-                                  : false,
+                                      ""
+                                  ? false
+                                  : Get.find<CategoriesController>()
+                                              .selectedSubCategory
+                                              .value ==
+                                          index
+                                      ? true
+                                      : false,
                               onChanged: (value) async {
                                 Get.find<CategoriesController>()
                                     .selectedSubCategory

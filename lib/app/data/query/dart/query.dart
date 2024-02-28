@@ -46,7 +46,9 @@ query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
       collectionSlug: \$slug,
       groupByProduct: true,
       skip: \$skip,
-      take: \$take }
+      take: \$take
+      
+      }
   ) {
     totalItems
     facetValues {

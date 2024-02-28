@@ -4,8 +4,8 @@ class CategoriesController extends GetxController {
   final selectedSubCategory = 0.obs;
   RxString subCategorySlug = "".obs;
   RxList<dynamic> subCategorys = RxList<dynamic>([]);
-  Map<String, dynamic> products = <String, dynamic>{};
   RxList brandFacet = [].obs;
+  Map<String, dynamic> products = <String, dynamic>{};
 
   @override
   void onInit() {
