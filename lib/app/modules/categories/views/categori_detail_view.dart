@@ -49,11 +49,16 @@ class CategoriDetailView extends GetView<CategoriesController> {
               icon: const Icon(
                 Icons.filter_list_alt,
                 color: ColorConstant.iconColor,
+                size: 30,
               ),
-              onPressed: () => Get.bottomSheet(BottomSheet(
-                onClosing: () {},
-                builder: (context) => Container(),
-              )),
+              onPressed: () => Get.bottomSheet(
+                  ignoreSafeArea: true,
+                  BottomSheet(
+                    enableDrag: true,
+                    elevation: 10,
+                    onClosing: () {},
+                    builder: (context) => BottomSheetContent(),
+                  )),
             ),
             const SizedBox(
               width: 20,
@@ -107,7 +112,11 @@ class CategoriDetailView extends GetView<CategoriesController> {
                     child: Text("No product found"),
                   );
                 }
-                return result.data?["collection"]["children"].length == 0
+                if (result.data!.isNotEmpty) {
+                  controller.subCategorys.value =
+                      result.data?["collection"]["children"];
+                }
+                return controller.subCategorys.isEmpty
                     ? SizedBox(
                         width: Get.width,
                         height: 12,
@@ -118,14 +127,23 @@ class CategoriDetailView extends GetView<CategoriesController> {
                         child: ListView.builder(
                             padding: const EdgeInsets.only(left: 10),
                             scrollDirection: Axis.horizontal,
-                            itemCount:
-                                result.data?["collection"]["children"].length,
-                            itemBuilder: (context, index) =>
-                                ChildCollectionCart(
-                                  image: result.data?["collection"]["children"]
-                                      [index]["featuredAsset"]["preview"],
-                                  name: result.data?["collection"]["children"]
-                                      [index]["name"],
+                            itemCount: controller.subCategorys.length,
+                            itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () async {
+                                    controller.subCategorySlug.value =
+                                        result.data?["collection"]["children"]
+                                            [index]["slug"];
+                                    controller.selectedSubCategory.value =
+                                        index;
+                                  },
+                                  child: ChildCollectionCart(
+                                    image: controller.subCategorys[index]
+                                        ["featuredAsset"]["preview"],
+                                    name: controller.subCategorys[index]
+                                        ["name"],
+                                    slug: controller.subCategorys[index]
+                                        ["slug"],
+                                  ),
                                 )),
                       );
               },
@@ -135,59 +153,173 @@ class CategoriDetailView extends GetView<CategoriesController> {
             ),
             //category products
             Expanded(
-                child: Query(
-              options: QueryOptions(
-                  document: gql(QueryApp.getCollectionProducts),
-                  variables: {
-                    "slug": category["slug"],
-                    "skip": 0,
-                  }),
-              builder: (result, {fetchMore, refetch}) {
-                if (result.isLoading) {
-                  return const Center(
-                    child: WidgetConstant.spinkitLoading,
-                  );
-                }
-                if (result.hasException) {
-                  return const Center(
-                    child: WidgetConstant.spinkitLoading,
-                  );
-                }
-                if (result.data!.isEmpty) {
-                  return const Center(
-                    child: Text("No product found"),
-                  );
-                }
-                return GridView.builder(
-                    padding: const EdgeInsets.all(15),
-                    controller: ScrollController(),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: result.data?["search"]["totalItems"],
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10),
-                    itemBuilder: (context, index) => CollectionProductCart(
-                          image: result.data?["search"]["items"][index]
-                              ["productAsset"]["preview"],
-                          name: result.data?["search"]["items"][index]
-                              ["productName"],
-                          min: result.data!["search"]["items"][index]
-                              ["priceWithTax"]["min"],
-                          max: result.data!["search"]["items"][index]
-                              ["priceWithTax"]["max"],
-                          slug: result.data!["search"]["items"][index]["slug"],
-                        ));
-              },
-            ))
+                child: Obx(() => Query(
+                      options: QueryOptions(
+                          document: gql(QueryApp.getCollectionProducts),
+                          variables: {
+                            "slug": controller.subCategorySlug.value == ""
+                                ? category["slug"]
+                                : controller.subCategorySlug.value,
+                            "skip": 0,
+                          }),
+                      builder: (result, {fetchMore, refetch}) {
+                        if (result.isLoading) {
+                          return const Center(
+                            child: WidgetConstant.spinkitLoading,
+                          );
+                        }
+                        if (result.hasException) {
+                          return const Center(
+                            child: WidgetConstant.spinkitLoading,
+                          );
+                        }
+                        if (result.data!.isEmpty) {
+                          return const Center(
+                            child: Text("No product found"),
+                          );
+                        }
+                        return GridView.builder(
+                            padding: const EdgeInsets.all(15),
+                            controller: ScrollController(),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: result.data?["search"]["totalItems"],
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10),
+                            itemBuilder: (context, index) =>
+                                CollectionProductCart(
+                                  image: result.data?["search"]["items"][index]
+                                      ["productAsset"]["preview"],
+                                  name: result.data?["search"]["items"][index]
+                                      ["productName"],
+                                  min: result.data!["search"]["items"][index]
+                                      ["priceWithTax"]["min"],
+                                  max: result.data!["search"]["items"][index]
+                                      ["priceWithTax"]["max"],
+                                  slug: result.data!["search"]["items"][index]
+                                      ["slug"],
+                                ));
+                      },
+                    )))
           ],
         ));
   }
 }
 
+class BottomSheetContent extends StatelessWidget {
+  const BottomSheetContent({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Get.width,
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Divider(
+            indent: 150,
+            endIndent: 150,
+            thickness: 5,
+            color: ColorConstant.iconColor,
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Expanded(
+              child: ListView(
+            children: [
+              const Text(
+                "Category",
+                style: TextStyle(color: ColorConstant.secondryColor),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Wrap(
+                alignment: WrapAlignment.start,
+                direction: Axis.horizontal,
+                verticalDirection: VerticalDirection.down,
+                children: List.generate(
+                    Get.find<CategoriesController>().subCategorys.length,
+                    (index) => Obx(() => Row(
+                          children: [
+                            Checkbox.adaptive(
+                              value: Get.find<CategoriesController>()
+                                          .selectedSubCategory
+                                          .value ==
+                                      index
+                                  ? true
+                                  : false,
+                              onChanged: (value) async {
+                                Get.find<CategoriesController>()
+                                    .selectedSubCategory
+                                    .value = index;
+                                Get.find<CategoriesController>()
+                                        .subCategorySlug
+                                        .value =
+                                    Get.find<CategoriesController>()
+                                        .subCategorys[index]["slug"];
+                              },
+                            ),
+                            Text(Get.find<CategoriesController>()
+                                .subCategorys[index]["name"])
+                          ],
+                        ))),
+              ),
+              const Text(
+                "Brand",
+                style: TextStyle(color: ColorConstant.secondryColor),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Wrap(
+                alignment: WrapAlignment.start,
+                direction: Axis.horizontal,
+                verticalDirection: VerticalDirection.down,
+                children: List.generate(
+                    5,
+                    (index) => Row(
+                          children: [
+                            Checkbox.adaptive(
+                              value: false,
+                              onChanged: (value) {},
+                            ),
+                            const Text("brand name")
+                          ],
+                        )),
+              )
+            ],
+          )),
+          SizedBox(
+            width: Get.width,
+            child: ElevatedButton.icon(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.filter_list_alt,
+                  color: ColorConstant.backgroundColor,
+                ),
+                label: const Text(
+                  "Apply filter",
+                  style: TextStyle(color: ColorConstant.backgroundColor),
+                )),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class CollectionProductCart extends StatelessWidget {
-  CollectionProductCart(
+  const CollectionProductCart(
       {super.key,
       required this.image,
       required this.name,
@@ -195,11 +327,11 @@ class CollectionProductCart extends StatelessWidget {
       required this.max,
       required this.slug});
 
-  String image;
-  String name;
-  int min;
-  int max;
-  String slug;
+  final String image;
+  final String name;
+  final int min;
+  final int max;
+  final String slug;
 
   @override
   Widget build(BuildContext context) {
@@ -280,23 +412,25 @@ class CollectionProductCart extends StatelessWidget {
 }
 
 class ChildCollectionCart extends StatelessWidget {
-  ChildCollectionCart({super.key, required this.image, required this.name});
+  const ChildCollectionCart(
+      {super.key, required this.image, required this.name, required this.slug});
 
-  String image;
-  String name;
+  final String image;
+  final String name;
+  final String slug;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: 75,
-        height: 70,
+    return Obx(() => Container(
+        width: 76,
+        height: 71,
         margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          // border: Border.all(
-          //     color: ColorConstant.primeryColor,
-          //     width: 1)
-        ),
+            borderRadius: BorderRadius.circular(10),
+            border:
+                Get.find<CategoriesController>().subCategorySlug.value == slug
+                    ? Border.all(color: ColorConstant.primeryColor, width: 1)
+                    : Border.all(color: ColorConstant.backgroundColor)),
         child: Stack(
           children: [
             ClipRRect(
@@ -332,6 +466,6 @@ class ChildCollectionCart extends StatelessWidget {
               ),
             )
           ],
-        ));
+        )));
   }
 }

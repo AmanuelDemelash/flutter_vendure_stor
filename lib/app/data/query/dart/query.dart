@@ -1,7 +1,7 @@
 class QueryApp {
   static String allCategory = """
   query{
-  collections(options: { topLevelOnly: true, }) {
+  collections(options: { topLevelOnly: false, }) {
     totalItems
     items {
       id
@@ -49,6 +49,17 @@ query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
       take: \$take }
   ) {
     totalItems
+    facetValues {
+      count
+      facetValue {
+        id
+        name
+        facet {
+          id
+          name
+        }
+      }
+    }
     items {
       productName
       slug

@@ -514,26 +514,10 @@ class ProductView extends GetView<ProductController> {
                             child: SizedBox(
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    elevation: 0,
+                                    elevation: 10,
                                     backgroundColor: ColorConstant.primeryColor,
                                   ),
                                   onPressed: () async {
-                                    // Get.dialog(AlertDialog(
-                                    //   backgroundColor:
-                                    //       ColorConstant.backgroundColor,
-                                    //   content: SizedBox(
-                                    //     height: 100,
-                                    //     width: Get.width / 3,
-                                    //     child: const Column(
-                                    //       mainAxisAlignment:
-                                    //           MainAxisAlignment.center,
-                                    //       children: [
-                                    //         Text("Adding Item"),
-                                    //         WidgetConstant.spinkitLoading
-                                    //       ],
-                                    //     ),
-                                    //   ),
-                                    // ));
                                     Get.snackbar(
                                         "Adding to cart", "add item to cart",
                                         padding: const EdgeInsets.all(15),
