@@ -4,6 +4,8 @@ class CategoriesController extends GetxController {
   final selectedSubCategory = 0.obs;
   RxString subCategorySlug = "".obs;
   RxList<dynamic> subCategorys = RxList<dynamic>([]);
+  Map<String, dynamic> products = <String, dynamic>{};
+  RxList brandFacet = [].obs;
 
   @override
   void onInit() {
@@ -18,5 +20,13 @@ class CategoriesController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  getBrands(List<dynamic> facetvalue) {
+    if (products.values.isNotEmpty) {
+      brandFacet.value = facetvalue
+          .where((element) => element['facetValue']['facet']['name'] == 'brand')
+          .toList();
+    }
   }
 }

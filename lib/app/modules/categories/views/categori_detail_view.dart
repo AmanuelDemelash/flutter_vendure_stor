@@ -178,11 +178,17 @@ class CategoriDetailView extends GetView<CategoriesController> {
                             child: Text("No product found"),
                           );
                         }
+                        if (result.data!.isNotEmpty) {
+                          controller.products = result.data!;
+                          controller.getBrands(
+                              controller.products["search"]["facetValues"]);
+                        }
                         return GridView.builder(
                             padding: const EdgeInsets.all(15),
                             controller: ScrollController(),
                             physics: const BouncingScrollPhysics(),
-                            itemCount: result.data?["search"]["totalItems"],
+                            itemCount: controller.products["search"]
+                                ["totalItems"],
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
@@ -190,16 +196,16 @@ class CategoriDetailView extends GetView<CategoriesController> {
                                     crossAxisSpacing: 10),
                             itemBuilder: (context, index) =>
                                 CollectionProductCart(
-                                  image: result.data?["search"]["items"][index]
-                                      ["productAsset"]["preview"],
-                                  name: result.data?["search"]["items"][index]
-                                      ["productName"],
-                                  min: result.data!["search"]["items"][index]
-                                      ["priceWithTax"]["min"],
-                                  max: result.data!["search"]["items"][index]
-                                      ["priceWithTax"]["max"],
-                                  slug: result.data!["search"]["items"][index]
-                                      ["slug"],
+                                  image: controller.products["search"]["items"]
+                                      [index]["productAsset"]["preview"],
+                                  name: controller.products["search"]["items"]
+                                      [index]["productName"],
+                                  min: controller.products["search"]["items"]
+                                      [index]["priceWithTax"]["min"],
+                                  max: controller.products["search"]["items"]
+                                      [index]["priceWithTax"]["max"],
+                                  slug: controller.products["search"]["items"]
+                                      [index]["slug"],
                                 ));
                       },
                     )))
@@ -284,14 +290,15 @@ class BottomSheetContent extends StatelessWidget {
                 direction: Axis.horizontal,
                 verticalDirection: VerticalDirection.down,
                 children: List.generate(
-                    5,
+                    Get.find<CategoriesController>().brandFacet.length,
                     (index) => Row(
                           children: [
                             Checkbox.adaptive(
                               value: false,
                               onChanged: (value) {},
                             ),
-                            const Text("brand name")
+                            Text(Get.find<CategoriesController>()
+                                .brandFacet[index]["facetValue"]['name'])
                           ],
                         )),
               )
