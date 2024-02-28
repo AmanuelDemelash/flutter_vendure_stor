@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  RxInt intialPage = 0.obs;
+  final PageController pageController = PageController(initialPage: 0);
 
-  RxInt intialPage=0.obs;
-  final  PageController pageController=PageController(initialPage: 0);
-
-  RxList<dynamic> allCategories=RxList<dynamic>([]);
+  RxList<dynamic> allCategories = RxList<dynamic>([]);
+  RxMap<String, dynamic> allproducts = RxMap<String, dynamic>();
 
   @override
-  void onInit()async{
+  void onInit() async {
     super.onInit();
   }
 
@@ -22,6 +22,4 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-
 }

@@ -144,4 +144,29 @@ query GetCollectionProducts(\$slug: String!, \$skip: Int, \$take: Int) {
 }
 
 """;
+
+  static const homeProducts = """
+query MyQuery {
+  search(input: {groupByProduct: true,take: 14}) {
+    totalItems
+    items {
+      productName
+      productVariantName
+      productVariantId
+      slug
+      productAsset {
+        preview
+      }
+      priceWithTax {
+        ... on PriceRange {
+          __typename
+          max
+          min
+        }
+      }
+    }
+  }
+}
+
+""";
 }

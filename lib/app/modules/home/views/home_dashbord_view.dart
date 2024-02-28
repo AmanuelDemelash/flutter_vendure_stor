@@ -7,6 +7,7 @@ import 'package:flutter_vendure_stor/app/modules/home/views/widgets/categoryShim
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
+import '../../../constants/widgetConstant.dart';
 import '../../../routes/app_pages.dart';
 
 class HomeDashbordView extends GetView<HomeController> {
@@ -137,10 +138,6 @@ class HomeDashbordView extends GetView<HomeController> {
                 width: Get.width,
                 height: 90,
                 child: ListView.builder(
-                  // physics: const NeverScrollableScrollPhysics(),
-                  // shrinkWrap: true,
-                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
                   scrollDirection: Axis.horizontal,
                   itemCount: result.data!["collections"]["totalItems"],
                   itemBuilder: (context, index) =>
@@ -163,26 +160,48 @@ class HomeDashbordView extends GetView<HomeController> {
                       color: ColorConstant.secondryColor),
                 ),
               ),
-              Text(
-                "view all",
-                style: TextStyle(
-                  color: ColorConstant.secondryColor,
-                ),
-              )
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-          SizedBox(
-            height: 280,
-            width: Get.width,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              itemBuilder: (context, index) => const ProductCard(),
-            ),
-          ),
+          Expanded(
+              child: Query(
+            options: QueryOptions(document: gql(QueryApp.homeProducts)),
+            builder: (result, {fetchMore, refetch}) {
+              if (result.isLoading) {
+                return const Center(
+                  child: WidgetConstant.spinkitLoading,
+                );
+              }
+              if (result.hasException) {
+                return const Center(
+                  child: WidgetConstant.spinkitLoading,
+                );
+              }
+              if (result.data!.isEmpty) {
+                return const Center(
+                  child: Text("No product found"),
+                );
+              }
+              if (result.data!.isNotEmpty) {
+                controller.allproducts.value = result.data!;
+              }
+              return GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisExtent: 260,
+                    mainAxisSpacing: 10),
+                itemCount: controller.allproducts["search"]["items"].length,
+                itemBuilder: (context, index) => ProductCard(
+                    product: controller.allproducts["search"]["items"][index],
+                    key: Key(index.toString())),
+              );
+            },
+          )),
         ],
       ),
     );
@@ -190,30 +209,28 @@ class HomeDashbordView extends GetView<HomeController> {
 }
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
+  const ProductCard({super.key, required this.product});
+
+  final Map<String, dynamic> product;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Get.width / 2 - 20,
-      margin: const EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        children: [
-          Expanded(
-              child: Stack(
-            children: [
-              InkWell(
-                onTap: () => Get.toNamed(Routes.PRODUCT),
+    return Column(
+      children: [
+        Expanded(
+            child: Stack(
+          children: [
+            InkWell(
+              onTap: () =>
+                  Get.toNamed(Routes.PRODUCT, arguments: product["slug"]),
+              child: Hero(
+                tag: product["slug"],
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
                   child: CachedNetworkImage(
-                    imageUrl:
-                        "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    imageUrl: product["productAsset"]["preview"],
                     placeholder: (context, url) => const Icon(
                       Icons.image,
                       color: ColorConstant.iconColor,
@@ -226,103 +243,103 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
-                  right: 6,
-                  top: 3,
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: ColorConstant.iconColor,
-                  ))
+            ),
+            const Positioned(
+                right: 6,
+                top: 3,
+                child: Icon(
+                  Icons.favorite_border,
+                  color: ColorConstant.iconColor,
+                ))
+          ],
+        )),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, top: 1),
+          child: Row(
+            children: [
+              Text(
+                product["priceWithTax"]["min"].toString(),
+                style: const TextStyle(
+                    fontSize: 15,
+                    color: ColorConstant.secondryColor,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                product["priceWithTax"]["max"].toString(),
+                style: const TextStyle(
+                  color: ColorConstant.primeryColor,
+                ),
+              )
             ],
-          )),
-          const Padding(
-            padding: EdgeInsets.only(left: 10, top: 1),
-            child: Row(
-              children: [
-                Text(
-                  "\$234",
-                  style: TextStyle(
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, top: 3, right: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  product["productName"],
+                  maxLines: 1,
+                  style: const TextStyle(
                       fontSize: 15,
                       color: ColorConstant.secondryColor,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.w200),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "\$432",
-                  style: TextStyle(
+              ),
+              Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
                       color: ColorConstant.primeryColor,
-                      decoration: TextDecoration.lineThrough),
-                )
-              ],
-            ),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: const Row(
+                    children: [
+                      Text(
+                        "3.5",
+                        style: TextStyle(
+                            fontSize: 11, color: ColorConstant.backgroundColor),
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: ColorConstant.backgroundColor,
+                        size: 10,
+                      )
+                    ],
+                  ))
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 3, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Expanded(
-                  child: Text(
-                    "smart watch",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: ColorConstant.secondryColor,
-                        fontWeight: FontWeight.w200),
-                  ),
-                ),
-                Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: ColorConstant.primeryColor,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Row(
-                      children: [
-                        Text(
-                          "3.5",
-                          style: TextStyle(
-                              fontSize: 11,
-                              color: ColorConstant.backgroundColor),
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: ColorConstant.backgroundColor,
-                          size: 10,
-                        )
-                      ],
-                    ))
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-              width: Get.width,
-              child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      padding: const EdgeInsets.all(1),
-                      shape: const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                      ))),
-                  child: const Text(
-                    "Add To Cart",
-                    style: TextStyle(color: ColorConstant.backgroundColor),
-                  )))
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+            width: Get.width,
+            child: ElevatedButton(
+                onPressed: () => Get.snackbar("Add to cart", "item to cart"),
+                style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    padding: const EdgeInsets.all(1),
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(5),
+                      bottomLeft: Radius.circular(5),
+                    ))),
+                child: const Text(
+                  "Add To Cart",
+                  style: TextStyle(color: ColorConstant.backgroundColor),
+                )))
+      ],
     );
   }
 }
 
 class CategoryCard extends StatelessWidget {
-  Map<String, dynamic> category = {};
-  CategoryCard({super.key, required this.category});
+  final Map<String, dynamic> category;
+  const CategoryCard({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {

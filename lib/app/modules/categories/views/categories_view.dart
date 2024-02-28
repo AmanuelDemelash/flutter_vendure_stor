@@ -109,9 +109,9 @@ class CategoriesView extends GetView<CategoriesController> {
                                 controller: ScrollController(),
                                 diameterRatio: 2,
                                 children: List.generate(
-                                    controller.allCategory["collections"]
-                                        ["totalItems"],
-                                    (index) => Obx(() => GestureDetector(
+                                    controller.allCategory["collections"]["totalItems"],
+                                    (index) => Obx(() => 
+                                    GestureDetector(
                                           onTap: () {
                                             controller.subCategorySlug
                                                 .value = controller
