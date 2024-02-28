@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-void main()async {
+void main() async {
   await initHiveForFlutter();
 
-  final HttpLink httpLink = HttpLink(ConfigConstant.httpLink,);
-
+  final HttpLink httpLink = HttpLink(
+    ConfigConstant.httpLink,
+  );
   final AuthLink authLink = AuthLink(
     getToken: () async => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
   );
@@ -31,7 +32,6 @@ void main()async {
         theme: light,
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
-
       ),
     ),
   );

@@ -105,7 +105,7 @@ class HomeDashbordView extends GetView<HomeController> {
             height: 5,
           ),
           Query(
-            options: QueryOptions(document: gql(QueryApp.allCategory)),
+            options: QueryOptions(document: gql(QueryApp.allhomeCategory)),
             builder: (result, {fetchMore, refetch}) {
               if (result.hasException) {
                 return SizedBox(

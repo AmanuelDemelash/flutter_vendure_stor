@@ -1,4 +1,21 @@
 class QueryApp {
+  static String allhomeCategory = """
+  query{
+  collections(options: { topLevelOnly: true, }) {
+    totalItems
+    items {
+      id
+      slug
+      name
+      parentId
+      featuredAsset {
+        id
+        preview
+      }
+    }
+  }
+}
+""";
   static String allCategory = """
   query{
   collections(options: { topLevelOnly: false, }) {

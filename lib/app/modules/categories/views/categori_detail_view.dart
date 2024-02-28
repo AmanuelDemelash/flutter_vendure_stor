@@ -57,9 +57,19 @@ class CategoriDetailView extends GetView<CategoriesController> {
                     enableDrag: true,
                     elevation: 10,
                     onClosing: () {},
-                    builder: (context) => BottomSheetContent(),
+                    builder: (context) => const BottomSheetContent(),
                   )),
             ),
+            const Badge(
+                alignment: Alignment.topRight,
+                backgroundColor: ColorConstant.primeryColor,
+                smallSize: 30,
+                offset: Offset(5, -3),
+                label: Text("3"),
+                child: Icon(
+                  Icons.notifications,
+                  color: ColorConstant.iconColor,
+                )),
             const SizedBox(
               width: 20,
             ),
@@ -101,13 +111,11 @@ class CategoriDetailView extends GetView<CategoriesController> {
                   variables: {"slug": category["slug"]}),
               builder: (result, {fetchMore, refetch}) {
                 if (result.isLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: WidgetConstant.spinkitLoading);
                 }
                 if (result.hasException) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: WidgetConstant.spinkitLoading,
                   );
                 }
                 if (result.data!.isEmpty) {
@@ -470,8 +478,10 @@ class ChildCollectionCart extends StatelessWidget {
                 width: Get.width,
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                  color: ColorConstant.backgroundColor.withOpacity(0.7),
-                ),
+                    color: ColorConstant.backgroundColor.withOpacity(0.7),
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
                 child: Text(
                   name,
                   textAlign: TextAlign.center,

@@ -6,6 +6,7 @@ class CategoriesController extends GetxController {
   RxList<dynamic> subCategorys = RxList<dynamic>([]);
   RxList brandFacet = [].obs;
   Map<String, dynamic> products = <String, dynamic>{};
+  Map<String, dynamic> allCategory = <String, dynamic>{};
 
   @override
   void onInit() {
