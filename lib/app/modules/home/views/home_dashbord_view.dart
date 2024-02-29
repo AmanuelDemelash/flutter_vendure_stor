@@ -68,6 +68,22 @@ class HomeDashbordView extends GetView<HomeController> {
             height: 15,
           ),
           const HomePageCarousel(),
+          SizedBox(
+            height: 30,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                  4,
+                  (index) => Container(
+                        width: 5,
+                        height: 5,
+                        margin: const EdgeInsets.only(right: 4),
+                        decoration: const BoxDecoration(
+                            color: ColorConstant.primeryColor,
+                            shape: BoxShape.circle),
+                      )),
+            ),
+          ),
           const SizedBox(
             height: 15,
           ),
@@ -91,7 +107,7 @@ class HomeDashbordView extends GetView<HomeController> {
                         style: TextStyle(color: ColorConstant.secondryColor),
                       ),
                       SizedBox(
-                        width: 5,
+                        width: 3,
                       ),
                       Icon(
                         Icons.arrow_forward_ios,
@@ -163,10 +179,9 @@ class HomeDashbordView extends GetView<HomeController> {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
-          Expanded(
-              child: Query(
+          Query(
             options: QueryOptions(document: gql(QueryApp.homeProducts)),
             builder: (result, {fetchMore, refetch}) {
               if (result.isLoading) {
@@ -201,7 +216,7 @@ class HomeDashbordView extends GetView<HomeController> {
                     key: Key(index.toString())),
               );
             },
-          )),
+          ),
         ],
       ),
     );

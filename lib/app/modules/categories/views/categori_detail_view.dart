@@ -11,7 +11,7 @@ import '../../../constants/colorConstant.dart';
 class CategoriDetailView extends GetView<CategoriesController> {
   CategoriDetailView({Key? key}) : super(key: key);
 
-  var category = Get.arguments;
+  final category = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -104,80 +104,25 @@ class CategoriDetailView extends GetView<CategoriesController> {
                 ],
               ),
             ),
-            //sub category
-            Query(
-              options: QueryOptions(
-                  document: gql(QueryApp.categoryOfSelectedCollection),
-                  variables: {"slug": category["slug"]}),
-              builder: (result, {fetchMore, refetch}) {
-                if (result.isLoading) {
-                  return const Center(child: WidgetConstant.spinkitLoading);
-                }
-                if (result.hasException) {
-                  return const Center(
-                    child: WidgetConstant.spinkitLoading,
-                  );
-                }
-                if (result.data!.isEmpty) {
-                  return const Center(
-                    child: Text("No product found"),
-                  );
-                }
-                if (result.data!.isNotEmpty) {
-                  controller.subCategorys.value =
-                      result.data?["collection"]["children"];
-                }
-                return controller.subCategorys.isEmpty
-                    ? SizedBox(
-                        width: Get.width,
-                        height: 12,
-                      )
-                    : SizedBox(
-                        height: 75,
-                        width: Get.width,
-                        child: ListView.builder(
-                            padding: const EdgeInsets.only(left: 10),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.subCategorys.length,
-                            itemBuilder: (context, index) => GestureDetector(
-                                  onTap: () async {
-                                    controller.subCategorySlug.value =
-                                        result.data?["collection"]["children"]
-                                            [index]["slug"];
-                                    controller.selectedSubCategory.value =
-                                        index;
-                                  },
-                                  child: ChildCollectionCart(
-                                    image: controller.subCategorys[index]
-                                        ["featuredAsset"]["preview"],
-                                    name: controller.subCategorys[index]
-                                        ["name"],
-                                    slug: controller.subCategorys[index]
-                                        ["slug"],
-                                  ),
-                                )),
-                      );
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            //category products
             Expanded(
-                child: Obx(() => Query(
+                child: Container(
+              width: Get.width,
+              height: Get.height,
+              margin: const EdgeInsets.only(top: 15, left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 90,
+                    child: Query(
                       options: QueryOptions(
-                          document: gql(QueryApp.getCollectionProducts),
-                          variables: {
-                            "slug": controller.subCategorySlug.value == ""
-                                ? category["slug"]
-                                : controller.subCategorySlug.value,
-                            "skip": 0,
-                          }),
+                          document: gql(QueryApp.categoryOfSelectedCollection),
+                          variables: {"slug": category["slug"]}),
                       builder: (result, {fetchMore, refetch}) {
                         if (result.isLoading) {
                           return const Center(
-                            child: WidgetConstant.spinkitLoading,
-                          );
+                              child: WidgetConstant.spinkitLoading);
                         }
                         if (result.hasException) {
                           return const Center(
@@ -190,36 +135,102 @@ class CategoriDetailView extends GetView<CategoriesController> {
                           );
                         }
                         if (result.data!.isNotEmpty) {
-                          controller.products = result.data!;
-                          controller.getBrands(
-                              controller.products["search"]["facetValues"]);
+                          controller.subCategorys.value =
+                              result.data?["collection"]["children"];
                         }
-                        return GridView.builder(
-                            padding: const EdgeInsets.all(15),
-                            controller: ScrollController(),
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: controller.products["search"]
-                                ["totalItems"],
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10),
-                            itemBuilder: (context, index) =>
-                                CollectionProductCart(
-                                  image: controller.products["search"]["items"]
-                                      [index]["productAsset"]["preview"],
-                                  name: controller.products["search"]["items"]
-                                      [index]["productName"],
-                                  min: controller.products["search"]["items"]
-                                      [index]["priceWithTax"]["min"],
-                                  max: controller.products["search"]["items"]
-                                      [index]["priceWithTax"]["max"],
-                                  slug: controller.products["search"]["items"]
-                                      [index]["slug"],
-                                ));
+                        return ListWheelScrollView(
+                          itemExtent: 90,
+                          magnification: 1,
+                          useMagnifier: false,
+                          controller: ScrollController(),
+                          diameterRatio: 2,
+                          children: List.generate(
+                              controller.subCategorys.length,
+                              (index) => GestureDetector(
+                                    onTap: () async {
+                                      controller.subCategorySlug.value =
+                                          result.data?["collection"]["children"]
+                                              [index]["slug"];
+                                      controller.selectedSubCategory.value =
+                                          index;
+                                    },
+                                    child: ChildCollectionCart(
+                                      image: controller.subCategorys[index]
+                                          ["featuredAsset"]["preview"],
+                                      name: controller.subCategorys[index]
+                                          ["name"],
+                                      slug: controller.subCategorys[index]
+                                          ["slug"],
+                                    ),
+                                  )),
+                        );
                       },
-                    )))
+                    ),
+                  ),
+                  //products
+                  Expanded(
+                      child: Obx(() => Query(
+                            options: QueryOptions(
+                                document: gql(QueryApp.getCollectionProducts),
+                                variables: {
+                                  "slug": controller.subCategorySlug.value == ""
+                                      ? category["slug"]
+                                      : controller.subCategorySlug.value,
+                                  "skip": 0,
+                                }),
+                            builder: (result, {fetchMore, refetch}) {
+                              if (result.isLoading) {
+                                return const Center(
+                                  child: WidgetConstant.spinkitLoading,
+                                );
+                              }
+                              if (result.hasException) {
+                                return const Center(
+                                  child: WidgetConstant.spinkitLoading,
+                                );
+                              }
+                              if (result.data!.isEmpty) {
+                                return const Center(
+                                  child: Text("No product found"),
+                                );
+                              }
+                              if (result.data!.isNotEmpty) {
+                                controller.products = result.data!;
+                                controller.getBrands(controller
+                                    .products["search"]["facetValues"]);
+                              }
+                              return GridView.builder(
+                                  padding: const EdgeInsets.all(15),
+                                  controller: ScrollController(),
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: controller.products["search"]
+                                      ["totalItems"],
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 10,
+                                          crossAxisSpacing: 10),
+                                  itemBuilder: (context, index) =>
+                                      CollectionProductCart(
+                                        image: controller.products["search"]
+                                                ["items"][index]["productAsset"]
+                                            ["preview"],
+                                        name: controller.products["search"]
+                                            ["items"][index]["productName"],
+                                        min: controller.products["search"]
+                                                ["items"][index]["priceWithTax"]
+                                            ["min"],
+                                        max: controller.products["search"]
+                                                ["items"][index]["priceWithTax"]
+                                            ["max"],
+                                        slug: controller.products["search"]
+                                            ["items"][index]["slug"],
+                                      ));
+                            },
+                          )))
+                ],
+              ),
+            )),
           ],
         ));
   }
@@ -444,53 +455,67 @@ class ChildCollectionCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Container(
-        width: 76,
-        height: 71,
-        margin: const EdgeInsets.only(right: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border:
-                Get.find<CategoriesController>().subCategorySlug.value == slug
-                    ? Border.all(color: ColorConstant.primeryColor, width: 1)
-                    : Border.all(color: ColorConstant.backgroundColor)),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImage(
-                imageUrl: image,
-                placeholder: (context, url) => const Icon(
-                  Icons.image,
-                  color: ColorConstant.iconColor,
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
-                width: 90,
-                height: 90,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                width: Get.width,
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    color: ColorConstant.backgroundColor.withOpacity(0.7),
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10))),
-                child: Text(
-                  name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontSize: 12, color: ColorConstant.secondryColor),
-                ),
-              ),
-            )
-          ],
-        )));
+    return Obx(() => Material(
+          elevation:
+              Get.find<CategoriesController>().subCategorySlug.value == slug
+                  ? 10
+                  : 0,
+          animationDuration: const Duration(microseconds: 20),
+          type: MaterialType.card,
+          borderOnForeground: true,
+          shadowColor: ColorConstant.primeryColor.withOpacity(0.4),
+          color: Colors.transparent,
+          child: Container(
+              width: 90,
+              height: 71,
+              margin: const EdgeInsets.only(right: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Get.find<CategoriesController>()
+                              .subCategorySlug
+                              .value ==
+                          slug
+                      ? Border.all(color: ColorConstant.primeryColor, width: 1)
+                      : Border.all(color: ColorConstant.backgroundColor)),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CachedNetworkImage(
+                      imageUrl: image,
+                      placeholder: (context, url) => const Icon(
+                        Icons.image,
+                        color: ColorConstant.iconColor,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.cover,
+                      width: 90,
+                      height: 90,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      width: Get.width,
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                          color: ColorConstant.backgroundColor.withOpacity(0.7),
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10))),
+                      child: Text(
+                        name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 12, color: ColorConstant.secondryColor),
+                      ),
+                    ),
+                  )
+                ],
+              )),
+        ));
   }
 }
