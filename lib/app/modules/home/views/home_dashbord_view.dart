@@ -37,17 +37,22 @@ class HomeDashbordView extends GetView<HomeController> {
         ],
         title: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: TextField(
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: ColorConstant.primeryColor.withOpacity(0.03),
-                hintText: "Search",
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: ColorConstant.iconColor,
-                  size: 30,
-                )),
+          child: GestureDetector(
+            onTap: () => Get.toNamed(Routes.SEARCH_PRODUCT),
+            child: TextField(
+              autofocus: false,
+              enabled: false,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  filled: true,
+                  fillColor: ColorConstant.primeryColor.withOpacity(0.03),
+                  hintText: "Search",
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: ColorConstant.iconColor,
+                    size: 35,
+                  )),
+            ),
           ),
         ),
       ),

@@ -169,4 +169,37 @@ query MyQuery {
 }
 
 """;
+
+  static const search = """
+query SearchProducts(\$term: String!, \$skip: Int, \$take: Int) {
+  search(
+    input: {
+      term: \$term,
+      groupByProduct: true,
+      skip: \$skip,
+      take:\$take }
+  ) {
+    totalItems
+    items {
+      productName
+      slug
+      productAsset {
+        id
+        preview
+      }
+      priceWithTax {
+        ... on SinglePrice {
+          value
+        }
+        ... on PriceRange {
+          min
+          max
+        }
+      }
+      currencyCode
+    }
+  }
+}
+
+""";
 }

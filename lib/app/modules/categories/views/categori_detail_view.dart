@@ -54,6 +54,7 @@ class CategoriDetailView extends GetView<CategoriesController> {
               onPressed: () => Get.bottomSheet(
                   ignoreSafeArea: true,
                   BottomSheet(
+                    backgroundColor: ColorConstant.backgroundColor,
                     enableDrag: true,
                     elevation: 10,
                     onClosing: () {},
@@ -246,6 +247,7 @@ class BottomSheetContent extends StatelessWidget {
     return Container(
       width: Get.width,
       padding: const EdgeInsets.all(15),
+      color: ColorConstant.backgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
