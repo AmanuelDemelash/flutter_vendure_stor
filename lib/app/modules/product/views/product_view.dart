@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
-import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import '../../../data/query/query.dart';
 import '../controllers/product_controller.dart';
 
 class ProductView extends GetView<ProductController> {

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
-import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:flutter_vendure_stor/app/modules/categories/views/categori_detail_view.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
+import '../../../data/query/query.dart';
 import '../controllers/categories_controller.dart';
 
 class CategoriesView extends GetView<CategoriesController> {

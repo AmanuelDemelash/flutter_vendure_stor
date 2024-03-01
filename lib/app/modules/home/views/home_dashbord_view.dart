@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vendure_stor/app/data/query/dart/query.dart';
 import 'package:flutter_vendure_stor/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_vendure_stor/app/modules/home/views/widgets/categoryShimmer.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
 import '../../../constants/widgetConstant.dart';
+import '../../../data/query/query.dart';
 import '../../../routes/app_pages.dart';
 
 class HomeDashbordView extends GetView<HomeController> {
@@ -213,7 +213,7 @@ class HomeDashbordView extends GetView<HomeController> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
-                    mainAxisExtent: 223,
+                    mainAxisExtent: 260,
                     mainAxisSpacing: 10),
                 itemCount: controller.allproducts["search"]["items"].length,
                 itemBuilder: (context, index) => ProductCard(
@@ -259,7 +259,7 @@ class ProductCard extends StatelessWidget {
                         const Icon(Icons.error),
                     fit: BoxFit.cover,
                     width: Get.width,
-                    height: 120,
+                    height: 150,
                   ),
                 ),
               ),
