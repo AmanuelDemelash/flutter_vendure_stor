@@ -213,7 +213,7 @@ class HomeDashbordView extends GetView<HomeController> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
-                    mainAxisExtent: 260,
+                    mainAxisExtent: 223,
                     mainAxisSpacing: 10),
                 itemCount: controller.allproducts["search"]["items"].length,
                 itemBuilder: (context, index) => ProductCard(
@@ -259,7 +259,7 @@ class ProductCard extends StatelessWidget {
                         const Icon(Icons.error),
                     fit: BoxFit.cover,
                     width: Get.width,
-                    height: 150,
+                    height: 120,
                   ),
                 ),
               ),
@@ -280,17 +280,14 @@ class ProductCard extends StatelessWidget {
               Text(
                 product["priceWithTax"]["min"].toString(),
                 style: const TextStyle(
-                    fontSize: 15,
-                    color: ColorConstant.secondryColor,
-                    fontWeight: FontWeight.bold),
+                  color: ColorConstant.secondryColor,
+                ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const Text("-"),
               Text(
                 product["priceWithTax"]["max"].toString(),
                 style: const TextStyle(
-                  color: ColorConstant.primeryColor,
+                  color: ColorConstant.secondryColor,
                 ),
               )
             ],
