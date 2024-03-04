@@ -259,7 +259,7 @@ class ProductCard extends StatelessWidget {
                         const Icon(Icons.error),
                     fit: BoxFit.cover,
                     width: Get.width,
-                    height: 150,
+                    height: 140,
                   ),
                 ),
               ),

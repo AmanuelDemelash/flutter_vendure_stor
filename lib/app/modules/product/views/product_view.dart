@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
+import 'package:flutter_vendure_stor/app/data/mutation/mutation.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../data/query/query.dart';
@@ -45,11 +46,11 @@ class ProductView extends GetView<ProductController> {
           ],
         ),
         body: Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-            ),
-            child: Query(
+          padding: const EdgeInsets.only(
+            left: 10,
+            right: 10,
+          ),
+          child: Query(
               options: QueryOptions(
                   document: gql(QueryApp.ProductDetail),
                   variables: {"slug": slug}),
@@ -73,7 +74,6 @@ class ProductView extends GetView<ProductController> {
                   controller.productDetail.value = result.data!;
                   controller.getAllVariantInfo();
                 }
-
                 return Column(
                   children: [
                     Expanded(
@@ -484,8 +484,7 @@ class ProductView extends GetView<ProductController> {
                       padding: const EdgeInsets.all(15),
                       child: Row(
                         children: [
-                          Expanded(
-                              child: Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
@@ -506,35 +505,44 @@ class ProductView extends GetView<ProductController> {
                                 ),
                               )
                             ],
-                          )),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
                           Expanded(
                             child: SizedBox(
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 10,
-                                    backgroundColor: ColorConstant.primeryColor,
-                                  ),
-                                  onPressed: () async {
-                                    Get.snackbar(
-                                        "Adding to cart", "add item to cart",
-                                        padding: const EdgeInsets.all(15),
-                                        showProgressIndicator: true,
-                                        progressIndicatorBackgroundColor:
-                                            ColorConstant.primeryColor);
-                                  },
-                                  child: const Text(
-                                    "Add To Cart",
-                                    style: TextStyle(
-                                        color: ColorConstant.backgroundColor),
-                                  )),
-                            ),
+                                child: Mutation(
+                              options: MutationOptions(
+                                  document: gql(MutationAPp.addItemToOrder)),
+                              builder: (runMutation, result) {
+                                if (result!.isLoading) {
+                                  print("object");
+                                  Get.snackbar("title", "message");
+                                }
+                                return ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 10,
+                                      backgroundColor:
+                                          ColorConstant.primeryColor,
+                                    ),
+                                    onPressed: () async {
+                                      runMutation(
+                                          {"variantId": "4", "quantity": 1});
+                                    },
+                                    child: const Text(
+                                      "Add To Cart",
+                                      style: TextStyle(
+                                          color: ColorConstant.backgroundColor),
+                                    ));
+                              },
+                            )),
                           ),
                         ],
                       ),
                     )
                   ],
                 );
-              },
-            )));
+              }),
+        ));
   }
 }

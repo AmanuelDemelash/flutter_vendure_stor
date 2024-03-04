@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../constants/colorConstant.dart';
+import '../../../constants/widgetConstant.dart';
 
 class ProductController extends GetxController {
   RxList<String> productDescMenu =
@@ -35,5 +39,20 @@ class ProductController extends GetxController {
         brand.value.add(element["name"]);
       }
     }
+  }
+
+  SnackBarForAddItemToOrder() async {
+    Get.snackbar("Adding to cart", "add item to cart",
+        padding: const EdgeInsets.all(15),
+        showProgressIndicator: true,
+        progressIndicatorBackgroundColor: ColorConstant.primeryColor);
+  }
+
+  showDialog() async {
+    Get.defaultDialog(
+        content: const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [WidgetConstant.spinkitLoading, Text("Loading")],
+    ));
   }
 }
