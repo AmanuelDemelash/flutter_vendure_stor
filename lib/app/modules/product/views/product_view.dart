@@ -515,9 +515,17 @@ class ProductView extends GetView<ProductController> {
                               options: MutationOptions(
                                   document: gql(MutationAPp.addItemToOrder)),
                               builder: (runMutation, result) {
-                                if (result!.isLoading) {
-                                  print("object");
-                                  Get.snackbar("title", "message");
+                                if (result!.isLoading){
+                                  controller.SnackBarForAddItemToOrder();
+
+                                }
+                                if(result.hasException){
+                                  controller.SnackBarForAddItemToOrder();
+
+                                }
+                                if(result.data!.isNotEmpty){
+                                  controller.SnackBarForAddItemToOrder();
+
                                 }
                                 return ElevatedButton(
                                     style: ElevatedButton.styleFrom(

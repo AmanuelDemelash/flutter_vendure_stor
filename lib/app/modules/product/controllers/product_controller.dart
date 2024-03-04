@@ -6,7 +6,7 @@ import '../../../constants/widgetConstant.dart';
 
 class ProductController extends GetxController {
   RxList<String> productDescMenu =
-      RxList<String>(["Items", "Details", "Reviews"]);
+  RxList<String>(["Items", "Details", "Reviews"]);
   RxInt selectedIndex = 0.obs;
   RxInt selectedVariant = 0.obs;
 
@@ -15,6 +15,7 @@ class ProductController extends GetxController {
   RxList<String> category = RxList<String>([]);
   RxList<String> brand = RxList<String>([]);
 
+  RxBool isAddingItem=false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -46,13 +47,5 @@ class ProductController extends GetxController {
         padding: const EdgeInsets.all(15),
         showProgressIndicator: true,
         progressIndicatorBackgroundColor: ColorConstant.primeryColor);
-  }
-
-  showDialog() async {
-    Get.defaultDialog(
-        content: const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [WidgetConstant.spinkitLoading, Text("Loading")],
-    ));
   }
 }
