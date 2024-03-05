@@ -510,19 +510,21 @@ class ProductView extends GetView<ProductController> {
                             width: 15,
                           ),
                           Expanded(
-                            flex: 1,
-                            child: Obx(() =>  SizedBox(
-                                child:controller.isAddingItem.value==true? WidgetConstant.spinkitLoading:
-                                Mutation(
+                            child: SizedBox(
+                                child: Mutation(
                               options: MutationOptions(
                                   document: gql(MutationAPp.addItemToOrder)),
                               builder: (runMutation, result) {
+                                if (result!.isLoading){
+                                  controller.SnackBarForAddItemToOrder();
 
-                                if(result!.hasException){
-                                  controller.isAddingItem.value=false;
                                 }
-                                if(result.data?['addItemToOrder']!=null){
-                                  controller.isAddingItem.value=false;
+                                if(result.hasException){
+                                  controller.SnackBarForAddItemToOrder();
+
+                                }
+                                if(result.data!.isNotEmpty){
+                                  controller.SnackBarForAddItemToOrder();
 
                                 }
                                 return ElevatedButton(
@@ -532,9 +534,8 @@ class ProductView extends GetView<ProductController> {
                                           ColorConstant.primeryColor,
                                     ),
                                     onPressed: () async {
-                                      controller.isAddingItem.value=true;
                                       runMutation(
-                                          {"variantId":controller.productVariants.value[controller.selectedVariant.value]["id"], "quantity": 1});
+                                          {"variantId": "4", "quantity": 1});
                                     },
                                     child: const Text(
                                       "Add To Cart",
@@ -542,7 +543,7 @@ class ProductView extends GetView<ProductController> {
                                           color: ColorConstant.backgroundColor),
                                     ));
                               },
-                            )),)
+                            )),
                           ),
                         ],
                       ),
