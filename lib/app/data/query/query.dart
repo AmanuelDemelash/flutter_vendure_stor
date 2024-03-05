@@ -1,4 +1,43 @@
 class QueryApp {
+  static const ACTIVE_ORDER_FRAGMENT = /*GraphQL*/"""
+  fragment ActiveOrder on Order {
+  __typename
+  id
+  code
+  couponCodes
+  state
+  currencyCode
+  totalQuantity
+  subTotalWithTax
+  shippingWithTax
+  totalWithTax
+  discounts {
+  description
+  amountWithTax
+}
+lines {
+id
+unitPriceWithTax
+quantity
+linePriceWithTax
+productVariant {
+id
+name
+sku
+}
+featuredAsset {
+id
+preview
+}
+}
+shippingLines {
+shippingMethod {
+description
+}
+priceWithTax
+}
+}""";
+
   static String allhomeCategory = """
   query{
   collections(options: { topLevelOnly: true, }) {
@@ -202,4 +241,46 @@ query SearchProducts(\$term: String!, \$skip: Int, \$take: Int) {
 }
 
 """;
+  static String GetActiveOrder="""
+    query GetActiveOrder {
+    activeOrder {
+      __typename
+  id
+  code
+  couponCodes
+  state
+  currencyCode
+  totalQuantity
+  subTotalWithTax
+  shippingWithTax
+  totalWithTax
+  discounts {
+  description
+  amountWithTax
+}
+lines {
+id
+unitPriceWithTax
+quantity
+linePriceWithTax
+productVariant {
+id
+name
+sku
+}
+featuredAsset {
+id
+preview
+}
+}
+shippingLines {
+shippingMethod {
+description
+}
+priceWithTax
+}
+    }
+  }
+  """;
+
 }

@@ -512,19 +512,18 @@ class ProductView extends GetView<ProductController> {
                           Expanded(
                             flex: 1,
                             child: Obx(() =>  SizedBox(
-                                child:controller.isAddingItem.value? WidgetConstant.spinkitLoading:
+                                child:controller.isAddingItem.value==true? WidgetConstant.spinkitLoading:
                                 Mutation(
                               options: MutationOptions(
                                   document: gql(MutationAPp.addItemToOrder)),
                               builder: (runMutation, result) {
-                                if (result!.isLoading){
-                                  controller.isAddingItem.value=true;
-                                }
-                                if(result.hasException){
+
+                                if(result!.hasException){
                                   controller.isAddingItem.value=false;
                                 }
-                                if(result.data!=null){
+                                if(result.data?['addItemToOrder']!=null){
                                   controller.isAddingItem.value=false;
+
                                 }
                                 return ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -535,7 +534,7 @@ class ProductView extends GetView<ProductController> {
                                     onPressed: () async {
                                       controller.isAddingItem.value=true;
                                       runMutation(
-                                          {"variantId":controller.productVariants.value[controller.selectedVariant.value], "quantity": 1});
+                                          {"variantId":controller.productVariants.value[controller.selectedVariant.value]["id"], "quantity": 1});
                                     },
                                     child: const Text(
                                       "Add To Cart",
