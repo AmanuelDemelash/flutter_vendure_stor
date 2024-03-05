@@ -47,7 +47,7 @@ class CartView extends GetView<CartController>{
 
         }
         if(result.data!.isEmpty || result.data!['activeOrder']==null){
-          return Center(child: Text("empity cart"),);
+          return const Center(child: Text("empity cart"),);
         }
         return
           Column(

@@ -245,7 +245,7 @@ query SearchProducts(\$term: String!, \$skip: Int, \$take: Int) {
     query GetActiveOrder {
     activeOrder {
       __typename
-  id
+       id
   code
   couponCodes
   state
@@ -279,6 +279,7 @@ description
 }
 priceWithTax
 }
+     
     }
   }
   """;

@@ -511,21 +511,29 @@ class ProductView extends GetView<ProductController> {
                           ),
                           Expanded(
                             child: SizedBox(
-                                child: Mutation(
+                                child:Obx(() => controller.isAddingItem.value==true?WidgetConstant.spinkitLoading:
+                                Mutation(
                               options: MutationOptions(
-                                  document: gql(MutationAPp.addItemToOrder)),
+                                  document: gql(MutationAPp.addItemToOrder),
+                              onError: (error){
+                                    controller.isAddingItem.value=false;
+                              },
+                                onCompleted: (data) {
+                                    print(data);
+                                    if(data!.isNotEmpty){
+                                      controller.isAddingItem.value=false;
+                                      Get.snackbar("title", "message");
+                                    }
+
+                                },
+
+                              ),
                               builder: (runMutation, result) {
-                                if (result!.isLoading){
-                                  controller.SnackBarForAddItemToOrder();
-
+                                if(result!.hasException){
+                                  print(result.exception);
                                 }
-                                if(result.hasException){
-                                  controller.SnackBarForAddItemToOrder();
-
-                                }
-                                if(result.data!.isNotEmpty){
-                                  controller.SnackBarForAddItemToOrder();
-
+                                if(result.isLoading){
+                                  controller.isAddingItem.value=true;
                                 }
                                 return ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -535,7 +543,7 @@ class ProductView extends GetView<ProductController> {
                                     ),
                                     onPressed: () async {
                                       runMutation(
-                                          {"variantId": "4", "quantity": 1});
+                                          {"variantId":controller.productDetail.value["product"]["variants"][controller.selectedVariant.value]["id"], "quantity": 1});
                                     },
                                     child: const Text(
                                       "Add To Cart",
@@ -543,7 +551,7 @@ class ProductView extends GetView<ProductController> {
                                           color: ColorConstant.backgroundColor),
                                     ));
                               },
-                            )),
+                            )),)
                           ),
                         ],
                       ),
