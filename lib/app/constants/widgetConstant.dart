@@ -14,7 +14,7 @@ class LoadingSpinkit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpinKitCircle(
-      size: 13,
+      size:25,
       itemBuilder: (BuildContext context, int index) {
         return DecoratedBox(
           decoration: BoxDecoration(

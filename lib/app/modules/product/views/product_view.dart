@@ -481,37 +481,40 @@ class ProductView extends GetView<ProductController> {
                     ),
                     Container(
                       width: Get.width,
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "price with tax",
-                                style:
-                                    TextStyle(color: ColorConstant.iconColor),
-                              ),
-                              Obx(
-                                () => Text(
-                                  "${controller.productVariants.value[controller.selectedVariant.value]["priceWithTax"] / 100} " +
-                                      controller.productVariants.value[
-                                              controller.selectedVariant.value]
-                                          ["currencyCode"],
-                                  style: const TextStyle(
-                                      fontSize: 23,
-                                      color: ColorConstant.primeryColor,
-                                      fontWeight: FontWeight.bold),
+                          Expanded(
+                            flex:1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "price with tax",
+                                  style:
+                                      TextStyle(color: ColorConstant.iconColor),
                                 ),
-                              )
-                            ],
+                                Obx(
+                                  () => Text((controller.productVariants.value[controller.selectedVariant.value]["priceWithTax"] / 100).toString()+
+                                        controller.productVariants.value[
+                                                controller.selectedVariant.value]
+                                            ["currencyCode"],
+                                    style: const TextStyle(
+                                        fontSize: 23,
+                                        color: ColorConstant.primeryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             width: 15,
                           ),
                           Expanded(
+                            flex: 1,
                             child: SizedBox(
-                                child:Obx(() => controller.isAddingItem.value==true?WidgetConstant.spinkitLoading:
+                                child:
                                 Mutation(
                               options: MutationOptions(
                                   document: gql(MutationAPp.addItemToOrder),
@@ -519,23 +522,19 @@ class ProductView extends GetView<ProductController> {
                                     controller.isAddingItem.value=false;
                               },
                                 onCompleted: (data) {
-                                    print(data);
                                     if(data!.isNotEmpty){
                                       controller.isAddingItem.value=false;
-                                      Get.snackbar("title", "message");
+                                      Get.snackbar(data["addItemToOrder"]["lines"][0]["productVariant"]["name"], "add to cart",icon:const Icon(Icons.add_shopping_cart));
                                     }
 
                                 },
 
                               ),
                               builder: (runMutation, result) {
-                                if(result!.hasException){
-                                  print(result.exception);
-                                }
-                                if(result.isLoading){
+                                if(result!.isLoading){
                                   controller.isAddingItem.value=true;
                                 }
-                                return ElevatedButton(
+                                return Obx(() =>ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       elevation: 10,
                                       backgroundColor:
@@ -545,13 +544,14 @@ class ProductView extends GetView<ProductController> {
                                       runMutation(
                                           {"variantId":controller.productDetail.value["product"]["variants"][controller.selectedVariant.value]["id"], "quantity": 1});
                                     },
-                                    child: const Text(
+                                    child:controller.isAddingItem.value==true?WidgetConstant.spinkitLoading:const Text(
                                       "Add To Cart",
                                       style: TextStyle(
                                           color: ColorConstant.backgroundColor),
-                                    ));
+                                    )
+                                ));
                               },
-                            )),)
+                            ))
                           ),
                         ],
                       ),
