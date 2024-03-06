@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
 import 'package:flutter_vendure_stor/app/data/mutation/mutation.dart';
+import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../data/query/query.dart';

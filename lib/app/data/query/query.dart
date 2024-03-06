@@ -241,10 +241,9 @@ query SearchProducts(\$term: String!, \$skip: Int, \$take: Int) {
 }
 
 """;
-  static String getActiveOrder = """
-  query {
+  static const activeOrder = """
+    query {
     activeOrder {
-     __typename
   id
   code
   couponCodes

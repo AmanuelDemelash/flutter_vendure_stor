@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
+  Rx<Map<String, dynamic>> cart = Rx<Map<String, dynamic>>({});
 
-  final count =3.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -18,8 +19,4 @@ class CartController extends GetxController {
     super.onClose();
   }
 
-  void increment(){
-    count.value=count.value-1;
-    update();
-  }
 }

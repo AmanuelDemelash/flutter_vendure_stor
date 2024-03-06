@@ -36,34 +36,33 @@ class CartView extends GetView<CartController>{
           ),
         ],
       ),
-      body: Query(options:QueryOptions(document:gql(QueryApp.getActiveOrder),pollInterval: const Duration(seconds: 10)),
+      body: Query(options:QueryOptions(document:gql(QueryApp.activeOrder)),
         builder:(result, {fetchMore, refetch}) {
         if(result.isLoading){
           return const Center(child: WidgetConstant.spinkitLoading,);
         }
         if(result.hasException){
-          print(result.exception);
           return const Center(child: WidgetConstant.spinkitLoading,);
-
         }
-        if(result.data!.isEmpty || result.data!['activeOrder']==null){
+        if(result.data!["activeOrder"]==null){
           return const Center(child: Text("empty cart"),);
         }
+
         return
           Column(
             children: [
               Expanded(
-                child:Obx(() =>
+                child:
                     ListView.builder(
                       padding:const EdgeInsets.only(left: 10,right: 10),
-                      itemCount:Get.find<CartController>().count.value,
+                      itemCount:3,
                       itemBuilder:(context, index) =>
                           Dismissible(
                             key: Key(index.toString()),
                             background:const Icon(Icons.delete),
                             secondaryBackground:const Icon(Icons.delete),
                             direction: DismissDirection.endToStart,// this will only allow slide to left.
-                            onDismissed:(direction) => Get.find<CartController>().increment(),
+                            onDismissed:(direction) =>{},
                             child: Card(
                               elevation:15,
                               surfaceTintColor: ColorConstant.backgroundColor,
@@ -92,9 +91,9 @@ class CartView extends GetView<CartController>{
                                       Expanded(child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          const Expanded(
+                                           Expanded(
                                             child: ListTile(
-                                              title:Text("Pilot Bags"),
+                                              title:Text(""),
                                               subtitle: Text("description about the product"),
                                               subtitleTextStyle: TextStyle(fontSize:14,color: Colors.black45),
                                             ),
@@ -126,7 +125,7 @@ class CartView extends GetView<CartController>{
                             ),
 
                           ),
-                    ),),),
+                    ),),
               const SizedBox(height: 15,),
               Container(
                 width: Get.width,
