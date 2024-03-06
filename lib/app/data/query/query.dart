@@ -1,5 +1,5 @@
 class QueryApp {
-  static const ACTIVE_ORDER_FRAGMENT = /*GraphQL*/"""
+  static const ACTIVE_ORDER_FRAGMENT = /*GraphQL*/ """
   fragment ActiveOrder on Order {
   __typename
   id
@@ -241,11 +241,11 @@ query SearchProducts(\$term: String!, \$skip: Int, \$take: Int) {
 }
 
 """;
-  static String GetActiveOrder="""
-    query GetActiveOrder {
+  static String getActiveOrder = """
+  query {
     activeOrder {
-      __typename
-       id
+     __typename
+  id
   code
   couponCodes
   state
@@ -255,33 +255,32 @@ query SearchProducts(\$term: String!, \$skip: Int, \$take: Int) {
   shippingWithTax
   totalWithTax
   discounts {
-  description
-  amountWithTax
-}
-lines {
-id
-unitPriceWithTax
-quantity
-linePriceWithTax
-productVariant {
-id
-name
-sku
-}
-featuredAsset {
-id
-preview
-}
-}
-shippingLines {
-shippingMethod {
-description
-}
-priceWithTax
-}
-     
+    description
+    amountWithTax
+  }
+  lines {
+    id
+    unitPriceWithTax
+    quantity
+    linePriceWithTax
+    productVariant {
+      id
+      name
+      sku
+    }
+    featuredAsset {
+      id
+      preview
     }
   }
+  shippingLines {
+    shippingMethod {
+      description
+    }
+    priceWithTax
+  }
+    
+  }
+  }
   """;
-
 }

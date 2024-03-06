@@ -12,7 +12,6 @@ class CartView extends GetView<CartController>{
     const CartView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-   var cartController=Get.lazyPut(() => CartController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -37,7 +36,8 @@ class CartView extends GetView<CartController>{
           ),
         ],
       ),
-      body: Query(options:QueryOptions(document:gql(QueryApp.GetActiveOrder)), builder:(result, {fetchMore, refetch}) {
+      body: Query(options:QueryOptions(document:gql(QueryApp.getActiveOrder),pollInterval: const Duration(seconds: 10)),
+        builder:(result, {fetchMore, refetch}) {
         if(result.isLoading){
           return const Center(child: WidgetConstant.spinkitLoading,);
         }
@@ -47,7 +47,7 @@ class CartView extends GetView<CartController>{
 
         }
         if(result.data!.isEmpty || result.data!['activeOrder']==null){
-          return const Center(child: Text("empity cart"),);
+          return const Center(child: Text("empty cart"),);
         }
         return
           Column(
