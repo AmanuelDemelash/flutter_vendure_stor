@@ -182,9 +182,6 @@ class AuthView extends GetView<AuthController> {
                           if (result!.isLoading) {
                             controller.isLogging.value = true;
                           }
-                          if (result.data?.isNotEmpty != null) {
-                            print(result);
-                          }
                           return Obx(() => SizedBox(
                                 width: Get.width,
                                 child: controller.isLogging.value == true
