@@ -7,6 +7,8 @@ import '../../../routes/app_pages.dart';
 class AuthController extends GetxController {
   RxBool showPassword = false.obs;
   RxBool isLogging = false.obs;
+  RxBool isSignUp = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -34,6 +36,22 @@ class AuthController extends GetxController {
           backgroundColor: ColorConstant.backgroundColor,
           colorText: Colors.green);
       isLogging.value = false;
+      Get.offAllNamed(Routes.HOME);
+    }
+  }
+
+  Future<void> cheekSignup(Map<String, dynamic> data) async {
+    if (data["registerCustomerAccount"]["message"] != null) {
+      Get.snackbar("SignUp error", data["registerCustomerAccount"]["message"],
+          backgroundColor: ColorConstant.backgroundColor,
+          colorText: Colors.red);
+      isSignUp.value = false;
+    }
+    if (data["registerCustomerAccount"]["success"] == true) {
+      Get.snackbar("SignUp Succesfull", "",
+          backgroundColor: ColorConstant.backgroundColor,
+          colorText: Colors.green);
+      isSignUp.value = false;
       Get.offAllNamed(Routes.HOME);
     }
   }

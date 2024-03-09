@@ -15,6 +15,21 @@ mutation LogIn(\$emailAddress: String!, \$password: String!, \$rememberMe: Boole
 
 """;
 
+  static String signup = """
+mutation Register(\$input: RegisterCustomerInput!) {
+  registerCustomerAccount(input: \$input) {
+    ... on Success {
+      success
+    }
+    ...on ErrorResult {
+      errorCode
+      message
+    }
+  }
+}
+
+""";
+
   static String addItemToOrder = """
 mutation AddItemToOrder(\$variantId: ID!, \$quantity: Int!) {
   addItemToOrder(productVariantId: \$variantId, quantity: \$quantity) {

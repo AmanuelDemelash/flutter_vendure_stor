@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
+import 'package:flutter_vendure_stor/app/data/mutation/mutation.dart';
 import 'package:flutter_vendure_stor/app/modules/auth/controllers/auth_controller.dart';
 import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
 import '../../../constants/validation.dart';
 import '../../../routes/app_pages.dart';
@@ -248,24 +251,58 @@ class SignUpView extends GetView<AuthController> {
                       const SizedBox(
                         height: 50,
                       ),
-                      SizedBox(
-                        width: Get.width,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorConstant.backgroundColor,
-                                padding: const EdgeInsets.all(15),
-                                elevation: 0),
-                            onPressed: () {
-                              _formKey.currentState!.save();
-                              if (_formKey.currentState!.validate()) {}
+                      Mutation(
+                        options: MutationOptions(
+                          document: gql(MutationAPp.signup),
+                          onError: (error) {},
+                          onCompleted: (data) {
+                            controller.cheekSignup(data!);
+                          },
+                        ),
+                        builder: (runMutation, result) {
+                          if (result!.isLoading) {
+                            controller.isSignUp.value = true;
+                          }
+                          return Obx(() => SizedBox(
+                                width: Get.width,
+                                child: controller.isSignUp.value == true
+                                    ? WidgetConstant.LoginLoading
+                                    : ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                ColorConstant.backgroundColor,
+                                            padding: const EdgeInsets.all(15),
+                                            elevation: 0),
+                                        onPressed: () {
+                                          _formKey.currentState!.save();
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            runMutation({
+                                              "input": {
+                                                "firstName":
+                                                    firstNameController.text,
+                                                "lastName":
+                                                    lastNameController.text,
+                                                "emailAddress":
+                                                    emailController.text,
+                                                "phoneNumber":
+                                                    phoneController.text,
+                                                "password":
+                                                    passwordController.text
+                                              }
+                                            });
+                                          }
 
-                              //Get.toNamed(Routes.HOME);
-                            },
-                            child: const Text(
-                              "Sign Up",
-                              style:
-                                  TextStyle(color: ColorConstant.primeryColor),
-                            )),
+                                          //Get.toNamed(Routes.HOME);
+                                        },
+                                        child: const Text(
+                                          "Sign Up",
+                                          style: TextStyle(
+                                              color:
+                                                  ColorConstant.primeryColor),
+                                        )),
+                              ));
+                        },
                       )
                     ],
                   )),
