@@ -34,6 +34,9 @@ fragment UpdatedOrder on Order {
     productVariant {
       id
       name
+       featuredAsset {
+        preview
+      }
     }
   }
 }

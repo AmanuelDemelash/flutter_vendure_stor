@@ -525,7 +525,7 @@ class ProductView extends GetView<ProductController> {
                                 onCompleted: (data) {
                                     if(data!.isNotEmpty){
                                       controller.isAddingItem.value=false;
-                                      Get.snackbar(data["addItemToOrder"]["lines"][0]["productVariant"]["name"], "add to cart",icon:const Icon(Icons.add_shopping_cart));
+                                      Get.snackbar(data["addItemToOrder"]["lines"][0]["productVariant"]["name"], "add to cart",);
                                     }
 
                                 },
