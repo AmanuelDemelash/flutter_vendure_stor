@@ -4,6 +4,7 @@ import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 
 class WidgetConstant {
   static const spinkitLoading = LoadingSpinkit();
+  static const LoginLoading = LoginLoadingSpinkit();
 }
 
 class LoadingSpinkit extends StatelessWidget {
@@ -14,7 +15,7 @@ class LoadingSpinkit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpinKitCircle(
-      size:25,
+      size: 25,
       itemBuilder: (BuildContext context, int index) {
         return DecoratedBox(
           decoration: BoxDecoration(
@@ -22,6 +23,28 @@ class LoadingSpinkit extends StatelessWidget {
             color: index.isEven
                 ? ColorConstant.primeryColor
                 : ColorConstant.backgroundColor,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class LoginLoadingSpinkit extends StatelessWidget {
+  const LoginLoadingSpinkit({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SpinKitCircle(
+      itemBuilder: (BuildContext context, int index) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: index.isEven
+                ? ColorConstant.backgroundColor
+                : ColorConstant.backgroundColor.withOpacity(0.4),
           ),
         );
       },

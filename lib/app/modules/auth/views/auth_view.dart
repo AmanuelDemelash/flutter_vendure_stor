@@ -173,36 +173,22 @@ class AuthView extends GetView<AuthController> {
                           document: gql(MutationAPp.login),
                           onError: (error) {
                             controller.isLogging.value = false;
-                            // Get.snackbar("Login Error",error.raw)
                           },
-                          onCompleted: (data) {
-                            if (data!["login"]["message"] != null) {
-                              Get.snackbar(
-                                  "Login error", data["login"]["message"],
-                                  backgroundColor:
-                                      ColorConstant.backgroundColor,
-                                  colorText: Colors.red);
-                              controller.isLogging.value = false;
-                            }
-                            if (data["login"]["id"] != null) {
-                              Get.snackbar("Login Succesfull", "",
-                                  backgroundColor:
-                                      ColorConstant.backgroundColor,
-                                  colorText: Colors.green);
-                              controller.isLogging.value = false;
-                            }
-
-                            print(data);
+                          onCompleted: (data) async {
+                            controller.cheekLogin(data!);
                           },
                         ),
                         builder: (runMutation, result) {
                           if (result!.isLoading) {
                             controller.isLogging.value = true;
                           }
+                          if (result.data?.isNotEmpty != null) {
+                            print(result);
+                          }
                           return Obx(() => SizedBox(
                                 width: Get.width,
                                 child: controller.isLogging.value == true
-                                    ? WidgetConstant.spinkitLoading
+                                    ? WidgetConstant.LoginLoading
                                     : ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor:
