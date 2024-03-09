@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-
-  RxBool showPassword=false.obs;
+  RxBool showPassword = false.obs;
+  RxBool isLogging = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -17,5 +17,4 @@ class AuthController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
 }
