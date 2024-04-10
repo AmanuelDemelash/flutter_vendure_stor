@@ -48,21 +48,28 @@ class CartView extends GetView<CartController> {
         body: Query(
           options: QueryOptions(document: gql(QueryApp.activeOrder)),
           builder: (result, {fetchMore, refetch}) {
-            if(result.isLoading){
-              return Center(child: WidgetConstant.spinkitLoading,);
+            if (result.isLoading) {
+              return const Center(
+                child: WidgetConstant.spinkitLoading,
+              );
             }
-            if(result.data!.isEmpty){
-              return Center(child: WidgetConstant.spinkitLoading,);
+            if (result.data!.isEmpty) {
+              return const Center(
+                child: WidgetConstant.spinkitLoading,
+              );
             }
-            if(result.data!.isNotEmpty){
-              print(result.data!);
+            if (result.data!.isNotEmpty) {
+              print(result.data);
+              return const Center(
+                child: Text("empty cart"),
+              );
             }
             return Column(
               children: [
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    itemCount:2,
+                    itemCount: 2,
                     itemBuilder: (context, index) => Dismissible(
                       key: Key(index.toString()),
                       background: const Icon(Icons.delete),

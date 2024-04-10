@@ -6,6 +6,7 @@ ThemeData light = ThemeData(
   scaffoldBackgroundColor: ColorConstant.backgroundColor,
   colorScheme: ColorScheme.fromSeed(seedColor: ColorConstant.primeryColor),
   useMaterial3: true,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
   brightness: Brightness.light,
   fontFamily: 'myfont',
   elevatedButtonTheme: ElevatedButtonThemeData(

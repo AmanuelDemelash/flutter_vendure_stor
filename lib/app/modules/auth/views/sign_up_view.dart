@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../constants/colorConstant.dart';
 import '../../../constants/validation.dart';
-import '../../../routes/app_pages.dart';
 
 class SignUpView extends GetView<AuthController> {
   SignUpView({Key? key}) : super(key: key);

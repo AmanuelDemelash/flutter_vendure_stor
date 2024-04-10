@@ -5,14 +5,17 @@ import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+import 'package:http/http.dart' as http;
+
 void main() async {
   await initHiveForFlutter();
 
   final HttpLink httpLink = HttpLink(
     ConfigConstant.httpLink,
+    httpClient: http.Client(),
   );
   final AuthLink authLink = AuthLink(
-    getToken: () async => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
+    getToken: () async => 'Bearer <>',
   );
 
   final Link link = authLink.concat(httpLink);

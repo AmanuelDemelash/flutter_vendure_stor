@@ -4,7 +4,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vendure_stor/app/constants/colorConstant.dart';
 import 'package:flutter_vendure_stor/app/constants/widgetConstant.dart';
 import 'package:flutter_vendure_stor/app/data/mutation/mutation.dart';
-import 'package:flutter_vendure_stor/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../data/query/query.dart';
@@ -486,7 +485,7 @@ class ProductView extends GetView<ProductController> {
                       child: Row(
                         children: [
                           Expanded(
-                            flex:1,
+                            flex: 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -496,10 +495,15 @@ class ProductView extends GetView<ProductController> {
                                       TextStyle(color: ColorConstant.iconColor),
                                 ),
                                 Obx(
-                                  () => Text((controller.productVariants.value[controller.selectedVariant.value]["priceWithTax"] / 100).toString()+
+                                  () => Text(
+                                    (controller.productVariants.value[controller
+                                                    .selectedVariant
+                                                    .value]["priceWithTax"] /
+                                                100)
+                                            .toString() +
                                         controller.productVariants.value[
-                                                controller.selectedVariant.value]
-                                            ["currencyCode"],
+                                            controller.selectedVariant
+                                                .value]["currencyCode"],
                                     style: const TextStyle(
                                         fontSize: 23,
                                         color: ColorConstant.primeryColor,
@@ -513,47 +517,56 @@ class ProductView extends GetView<ProductController> {
                             width: 15,
                           ),
                           Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                                child:
-                                Mutation(
-                              options: MutationOptions(
+                              flex: 1,
+                              child: SizedBox(
+                                  child: Mutation(
+                                options: MutationOptions(
                                   document: gql(MutationAPp.addItemToOrder),
-                              onError: (error){
-                                    controller.isAddingItem.value=false;
-                              },
-                                onCompleted: (data) {
-                                    if(data!.isNotEmpty){
-                                      controller.isAddingItem.value=false;
-                                      Get.snackbar(data["addItemToOrder"]["lines"][0]["productVariant"]["name"], "add to cart",);
+                                  onError: (error) {
+                                    controller.isAddingItem.value = false;
+                                  },
+                                  onCompleted: (data) {
+                                    if (data!.isNotEmpty) {
+                                      controller.isAddingItem.value = false;
+                                      print(data);
+                                      Get.snackbar(
+                                        data["addItemToOrder"]["lines"][0]
+                                            ["productVariant"]["name"],
+                                        "add to cart",
+                                      );
                                     }
-
+                                  },
+                                ),
+                                builder: (runMutation, result) {
+                                  if (result!.isLoading) {
+                                    controller.isAddingItem.value = true;
+                                  }
+                                  return Obx(() => ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 10,
+                                        backgroundColor:
+                                            ColorConstant.primeryColor,
+                                      ),
+                                      onPressed: () async {
+                                        runMutation({
+                                          "variantId": controller.productDetail
+                                                  .value["product"]["variants"][
+                                              controller
+                                                  .selectedVariant.value]["id"],
+                                          "quantity": 1
+                                        });
+                                      },
+                                      child:
+                                          controller.isAddingItem.value == true
+                                              ? WidgetConstant.spinkitLoading
+                                              : const Text(
+                                                  "Add To Cart",
+                                                  style: TextStyle(
+                                                      color: ColorConstant
+                                                          .backgroundColor),
+                                                )));
                                 },
-
-                              ),
-                              builder: (runMutation, result) {
-                                if(result!.isLoading){
-                                  controller.isAddingItem.value=true;
-                                }
-                                return Obx(() =>ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 10,
-                                      backgroundColor:
-                                          ColorConstant.primeryColor,
-                                    ),
-                                    onPressed: () async {
-                                      runMutation(
-                                          {"variantId":controller.productDetail.value["product"]["variants"][controller.selectedVariant.value]["id"], "quantity": 1});
-                                    },
-                                    child:controller.isAddingItem.value==true?WidgetConstant.spinkitLoading:const Text(
-                                      "Add To Cart",
-                                      style: TextStyle(
-                                          color: ColorConstant.backgroundColor),
-                                    )
-                                ));
-                              },
-                            ))
-                          ),
+                              ))),
                         ],
                       ),
                     )

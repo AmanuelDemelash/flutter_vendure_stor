@@ -52,6 +52,7 @@ class AuthController extends GetxController {
           backgroundColor: ColorConstant.backgroundColor,
           colorText: Colors.green);
       isSignUp.value = false;
+      print(data);
       Get.offAllNamed(Routes.HOME);
     }
   }
