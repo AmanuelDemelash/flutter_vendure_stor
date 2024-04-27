@@ -42,7 +42,7 @@ class ProductController extends GetxController {
     }
   }
 
-  SnackBarForAddItemToOrder() async {
+  snackBarForAddItemToOrder() async {
     Get.snackbar("Adding to cart", "add item to cart",
         padding: const EdgeInsets.all(15),
         showProgressIndicator: true,

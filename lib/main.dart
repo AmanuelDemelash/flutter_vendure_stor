@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 
 void main() async {
   await initHiveForFlutter();
-
   final HttpLink httpLink = HttpLink(
     ConfigConstant.httpLink,
     httpClient: http.Client(),

@@ -12,7 +12,7 @@ import '../controllers/product_controller.dart';
 class ProductView extends GetView<ProductController> {
   ProductView({Key? key}) : super(key: key);
 
-  String slug = Get.arguments;
+  final String slug = Get.arguments;
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
